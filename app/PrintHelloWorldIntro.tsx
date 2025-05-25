@@ -41,10 +41,32 @@ export default function PrintHelloWorldIntro() {
 
   return (
     <div className="relative h-[2000px]" ref={containRef}>
-      <div className="grid grid-cols-3 h-screen w-full place-items-center">
-        <OptinnWithImg text="Lumina" subText="Web dev" i={1} />
-        <OptinnWithImg text="Etherea" subText="Game" i={2} />
-        <OptinnWithImg text="Solis" subText="Ai"  i={3}/>
+      <div className="grid grid-cols-3 h-screen w-full place-items-center mt-5">
+        <div className="h-full w-full place-items-center">
+          <OptinnWithImg text="Lumina" subText="Web dev" i={1} />
+          <div className="grid grid-cols-2 gap-2 p-4 place-self-center place-items-center pt-5">
+            <Card text="html"/>
+            <Card text="css"/>
+            <Card text="js"/>
+          </div>
+        </div>
+        <div className="h-full w-full place-items-center">
+          <OptinnWithImg text="Etherea" subText="Game" i={2} />
+          <div className="grid grid-cols-2 gap-2 p-4 place-self-center place-items-center pt-5">
+            <Card text="Roblox"/>
+            <Card text="Unity"/>
+            <Card text="3D modeling"/>
+          </div>
+        </div>
+        <div className="h-full w-full place-items-center">
+          <OptinnWithImg text="Solis" subText="Ai" i={3} />
+          <div className="grid grid-cols-2 gap-2 p-4 place-self-center place-items-center pt-5">
+            <Card text="html"/>
+            <Card text="css"/>
+            <Card text="js"/>
+          </div>
+        </div>
+
       </div>
 
       
@@ -57,18 +79,26 @@ const OptinnWithImg = ({ text , subText ,i}: { text: string , subText : string ,
     const [isFocus , setIsFocus] = useState<boolean>(false)
   return (
     <motion.div
-        // initial={{ x: 10 }}
-        // animate={{ y: [2, 0, 3, 0] }} // animate x through multiple values
-        // transition={{
-        //     duration: 1,
-        //     ease: easeInOut,
-        //     repeat : Infinity,
-        //     repeatType : 'mirror',
-        //     delay: 2*i
-        // }}
+        initial={{ boxShadow:  '0 0 10px 2px white' }}
+  animate={{ 
+    boxShadow: [
+      
+      '0 0 20px 5px white',
+      '0 0 10px 2px white',
+     
+    ]
+  }}
+  transition={{
+    duration: 1,
+    ease: 'easeInOut',
+    repeat: Infinity,
+    repeatType: 'reverse',
+    delay: 2 * i // optional per-item delay
+  }}
+  className="rounded-full"
     >
         <motion.div 
-            className={`relative shadow-[0_0_20px_5px_white] rounded-full ${isFocus ? "scale-125" : "scale-100"}`}
+            className={`relative  rounded-full ${isFocus ? "scale-125" : "scale-100"}`}
             initial={{ scale: 0.5 }}
             whileInView={{ scale: 1 }}
             
@@ -101,3 +131,21 @@ const OptinnWithImg = ({ text , subText ,i}: { text: string , subText : string ,
     
   );
 };
+
+const Card = ({text} : {text:string})=> {
+  return (
+    <div 
+      className="relative border-2 rounded-lg p-5 m-5 h-[100%] w-[60%] text-center"
+      >
+      <Image
+        src="/img/tyryu1.png"
+        alt="img"
+        width={500}
+        height={500}
+        className="object-contain rounded-full  "
+
+      />
+      <p>{text}</p>
+    </div>
+  )
+}
