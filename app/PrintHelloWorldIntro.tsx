@@ -45,7 +45,7 @@ export default function PrintHelloWorldIntro() {
         <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
           <OptinnWithImg text="Lumina" subText="Web dev" i={1} />
           <div className="flex gap-1 p-1  pt-5 ">
-            {["html", "css", "js"].map((lang, index) => (
+            {["html", "css", "js" , "java"].map((lang, index) => (
               <Card key={index} text={lang} i={index} />
             ))}
            
@@ -53,7 +53,7 @@ export default function PrintHelloWorldIntro() {
         </div>
         <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
         <div className="flex gap-1 p-1  pt-5 ">
-        {["Roblox", "Unity", "3D modeling"].map((lang, index) => (
+        {["Roblox", "Unity", "3D modeling" , "C#"].map((lang, index) => (
               <Card key={index} text={lang} i={index} />
             ))}
           </div>
