@@ -44,7 +44,7 @@ export default function PrintHelloWorldIntro() {
       <div className="flex flex-col h-screen w-full place-items-center justify-center mt-5">
         <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
           <OptinnWithImg text="Lumina" subText="Web dev" i={1} />
-          <div className="flex gap-1 p-1  pt-5  scale-75">
+          <div className="flex gap-1 p-1  pt-5 ">
             {["html", "css", "js"].map((lang, index) => (
               <Card key={index} text={lang} i={index} />
             ))}
@@ -52,7 +52,7 @@ export default function PrintHelloWorldIntro() {
           </div>
         </div>
         <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
-        <div className="flex gap-1 p-1  pt-5  scale-75">
+        <div className="flex gap-1 p-1  pt-5 ">
         {["Roblox", "Unity", "3D modeling"].map((lang, index) => (
               <Card key={index} text={lang} i={index} />
             ))}
@@ -62,7 +62,7 @@ export default function PrintHelloWorldIntro() {
         </div>
         <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
           <OptinnWithImg text="Solis" subText="Ai" i={3} />
-          <div className="flex gap-1 p-1  pt-5  scale-75">
+          <div className="flex gap-1 p-1  pt-5 ">
           {["html", "css", "js"].map((lang, index) => (
               <Card key={index} text={lang} i={index} />
             ))}
@@ -137,8 +137,8 @@ const OptinnWithImg = ({ text , subText ,i}: { text: string , subText : string ,
 const Card = ({text , i} : {text:string , i : number})=> {
   return (
     <motion.div 
-      className="relative border-2 rounded-lg p-5 m-5 h-[82%] w-[60%] text-center"
-      initial={{ scale: 0.7 ,y : 20}}
+      className="relative border-2 rounded-lg p-5 m-5 h-[60%] w-[45%] text-center"
+      initial={{ scale: 0.8 ,y : 15}}
       whileInView={{ scale: 1 , y:0 }}
       transition={{
         duration: 1,
@@ -150,8 +150,8 @@ const Card = ({text , i} : {text:string , i : number})=> {
       <Image
         src="/img/tyryu1.png"
         alt="img"
-        width={200}
-        height={200}
+        width={150}
+        height={150}
         className="object-contain rounded-full  "
 
       />
