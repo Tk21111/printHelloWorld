@@ -60,14 +60,14 @@ export default function PrintHelloWorldIntro() {
           <OptinnWithImg text="Ethereal" subText="Game" i={2} />
 
         </div>
-        <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
+        {/* <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
           <OptinnWithImg text="Solis" subText="Ai" i={3} />
           <div className="flex gap-1 p-1  pt-5 ">
           {["html", "css", "js"].map((lang, index) => (
               <Card key={index} text={lang} i={index} />
             ))}
           </div>
-        </div>
+        </div> */}
 
       </div>
 
