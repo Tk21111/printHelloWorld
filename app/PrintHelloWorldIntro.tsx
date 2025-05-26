@@ -40,30 +40,32 @@ export default function PrintHelloWorldIntro() {
   );
 
   return (
-    <div className="relative h-[2000px]" ref={containRef}>
-      <div className="grid grid-cols-3 h-screen w-full place-items-center mt-5">
-        <div className="h-full w-full place-items-center">
+    <div className="relative h-[1000px] mt-56" ref={containRef}>
+      <div className="flex flex-col h-screen w-full place-items-center justify-center mt-5">
+        <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
           <OptinnWithImg text="Lumina" subText="Web dev" i={1} />
-          <div className="grid grid-cols-2 gap-2 p-4 place-self-center place-items-center pt-5">
-            <Card text="html"/>
-            <Card text="css"/>
-            <Card text="js"/>
+          <div className="flex gap-1 p-1  pt-5  scale-75">
+            {["html", "css", "js"].map((lang, index) => (
+              <Card key={index} text={lang} i={index} />
+            ))}
+           
           </div>
         </div>
-        <div className="h-full w-full place-items-center">
-          <OptinnWithImg text="Etherea" subText="Game" i={2} />
-          <div className="grid grid-cols-2 gap-2 p-4 place-self-center place-items-center pt-5">
-            <Card text="Roblox"/>
-            <Card text="Unity"/>
-            <Card text="3D modeling"/>
+        <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
+        <div className="flex gap-1 p-1  pt-5  scale-75">
+        {["Roblox", "Unity", "3D modeling"].map((lang, index) => (
+              <Card key={index} text={lang} i={index} />
+            ))}
           </div>
+          <OptinnWithImg text="Ethereal" subText="Game" i={2} />
+
         </div>
-        <div className="h-full w-full place-items-center">
+        <div className="flex flex-row h-[270px] w-full place-items-center justify-center p-5">
           <OptinnWithImg text="Solis" subText="Ai" i={3} />
-          <div className="grid grid-cols-2 gap-2 p-4 place-self-center place-items-center pt-5">
-            <Card text="html"/>
-            <Card text="css"/>
-            <Card text="js"/>
+          <div className="flex gap-1 p-1  pt-5  scale-75">
+          {["html", "css", "js"].map((lang, index) => (
+              <Card key={index} text={lang} i={index} />
+            ))}
           </div>
         </div>
 
@@ -95,11 +97,11 @@ const OptinnWithImg = ({ text , subText ,i}: { text: string , subText : string ,
     repeatType: 'reverse',
     delay: 2 * i // optional per-item delay
   }}
-  className="rounded-full"
+  className="rounded-full scale-75"
     >
         <motion.div 
             className={`relative  rounded-full ${isFocus ? "scale-125" : "scale-100"}`}
-            initial={{ scale: 0.5 }}
+            initial={{ scale: 0.9 }}
             whileInView={{ scale: 1 }}
             
             transition={{
@@ -115,14 +117,14 @@ const OptinnWithImg = ({ text , subText ,i}: { text: string , subText : string ,
             />
 
         <Image
-            src="/img/tyryu.png"
+            src="/img/tyryu2.png"
             alt="img"
-            width={500}
-            height={500}
-            className="object-contain rounded-full  "
+            width={400}
+            height={200}
+            className="object-left-bottom rounded-full"
 
         />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl z-10 font-zenspace text-center">
+        <div className="absolute top-[53%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl z-10 font-zenspace text-center">
             <p>{text}</p>
             <p>{subText}</p>
         </div>
@@ -132,20 +134,30 @@ const OptinnWithImg = ({ text , subText ,i}: { text: string , subText : string ,
   );
 };
 
-const Card = ({text} : {text:string})=> {
+const Card = ({text , i} : {text:string , i : number})=> {
   return (
-    <div 
-      className="relative border-2 rounded-lg p-5 m-5 h-[100%] w-[60%] text-center"
+    <motion.div 
+      className="relative border-2 rounded-lg p-5 m-5 h-[82%] w-[60%] text-center"
+      initial={{ scale: 0.7 ,y : 20}}
+      whileInView={{ scale: 1 , y:0 }}
+      transition={{
+        duration: 1,
+        ease: easeInOut,
+        delay: 0.1 * i, // optional per-item delay
+        type: "spring",
+      }}
       >
       <Image
         src="/img/tyryu1.png"
         alt="img"
-        width={500}
-        height={500}
+        width={200}
+        height={200}
         className="object-contain rounded-full  "
 
       />
-      <p>{text}</p>
-    </div>
+      <p>{text.toUpperCase()}</p>
+    </motion.div>
   )
 }
+
+export {Card}
