@@ -1,15 +1,13 @@
-
-import PrintHelloWorldIntro from "./PrintHelloWorldIntro";
-import MeetTheTeam from "./meetTheTeam";
-import ProjectShowcase from "./ProjectShowcase";
+import Nebula from "./nebula";
 
 export default function Home() {
   return (
     <>
-      <PrintHelloWorldIntro />
+      {/* <PrintHelloWorldIntro /> */}
       {/* <DestopView/> */}
-      <MeetTheTeam/>
-      <ProjectShowcase/>
+      {/* <MeetTheTeam/>
+      <ProjectShowcase/> */}
+      <Nebula/>
     </>
     
   );
