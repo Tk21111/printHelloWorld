@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
-  useScroll,
-  useTransform,
   useMotionValue,
   animate,
   easeInOut,
@@ -14,10 +12,6 @@ import Image from "next/image";
 export default function PrintHelloWorldIntro() {
   const containRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: containRef,
-    offset: ["start end", "end start"],
-  });
 
   const baseY = useMotionValue(0);
 
@@ -32,12 +26,8 @@ export default function PrintHelloWorldIntro() {
     return () => controls.stop();
   }, [baseY]);
 
-  const scrollBoost = useTransform(scrollYProgress, [0, 0.2], [0, -300]);
 
-  const combinedY = useTransform(
-    [baseY, scrollBoost],
-    ([base, boost]: number[]) => base + boost
-  );
+ 
 
   return (
     <div className="relative h-[1000px] mt-56" ref={containRef}>

@@ -2,12 +2,7 @@
 import React from "react";
 
 export default function CircleNavBar() {
-    const navItems = [
-        { label: "Home", href: "#" },
-        { label: "Projects", href: "#" },
-        { label: "Team", href: "#" },
-        { label: "Contact", href: "#" },
-    ];
+    
 
     return (
         <div className="fixed top-1/2  left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
