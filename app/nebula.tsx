@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const animatedImages = [
     "/img/nebula/neb-1/b-1.png",
@@ -11,17 +12,26 @@ const animatedImages = [
 ];
 
 export default function Nebula() {
+
+    const [dot, setDot] = useState("..");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDot((prev) => (prev.length > 5 ? "." : prev + "."));
+    }, 1000);
+
+    return () => clearInterval(interval); // cleanup
+  }, []);
+        
+    
   return (
     <div className="relative h-screen w-screen">
-        <p className="absolute top-1/2 left-1/2  -translate-x-1/2 translate-y-14 text-center text-5xl">in dev</p>
+        <p className="absolute top-1/2 left-1/2  -translate-x-1/2 translate-y-14 text-center text-5xl">{"in dev" + dot}</p>
       <motion.div 
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px]"
         
       >
         
-   
-        
-
         {/* Animated overlay images */}
         {animatedImages.map((src, index) => (
           <motion.div
