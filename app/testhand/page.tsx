@@ -6,6 +6,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export default function HandPage() {
@@ -116,47 +117,29 @@ const Card = () => {
 
 const MemberParent = () => {
   return (
-    <div className="flex h-[2000px] w-full bg-gray-900">
+    <div className="flex h-[500px] w-full bg-gray-900">
       <motion.div className="w-[25%] bg-black">
         {/* Sidebar content can go here */}
       </motion.div>
       <div className="flex-1 relative overflow-hidden">
-         <MemberCard name="Tyryu" img="/img/profile/tyryu2.png" posX={5} posY={1}/>
-         <MemberCard name="Alex" img="/img/profile/tyryu2.png" posX={50} posY={2}/>
-         <MemberCard name="Jordan" img="/img/profile/tyryu2.png" posX={25} posY={3}/>
-         <MemberCard name="Sam" img="/img/profile/tyryu2.png" posX={70} posY={1.5}/>
+         <MemberCard  img="/img/profile/jazer_final.jpg" posX={5} posY={1}/>
+         <MemberCard  img="/img/profile/jazer_final.jpg" posX={35} posY={3}/>
+         <MemberCard  img="/img/card/web.webp" posX={70} posY={1.5}/>
       </div>
     </div>
   )
 };
 
-const StepTarget = 5;
-const MemberCard = ({ name, img, posX, posY }: { name: string; img: string; posX: number; posY: number }) => {
+const MemberCard = ({  img, posX, posY }: { img: string; posX: number; posY: number }) => {
   const [animationSequence, setAnimationSequence] = useState<string[]>([]);
   
   useEffect(() => {
-    let sequence : string[] = ["0%"];
+    let sequence = [];
     
-    let diff : number[] = []
-    for (let i = StepTarget; i > 1; i --) {
-      const tmp1 = posX/i
-      const tmp2 = i > 0 ? posX/(i-1) : 0
-
-      console.log(tmp1)
-      console.log(tmp2)
-      diff.push(Math.abs(tmp1 - tmp2));
-
+    // Create a sequence of positions leading to the final posX
+    for (let i = 0; i <= posX; i += 10) { // Fixed: i += 10 instead of i+5
+      sequence.push(`${i}%`);
     }
-
-    console.log(diff.reverse())
- 
-    diff.reduce((acc, curr) => {
-      acc += curr;
-      sequence.push(`${acc}%`);
-      return acc;
-    } , 0)
-
-    console.log(sequence)
     
     // Ensure we end exactly at posX
     if (sequence[sequence.length - 1] !== `${posX}%`) {
@@ -168,7 +151,7 @@ const MemberCard = ({ name, img, posX, posY }: { name: string; img: string; posX
 
   return (
     <motion.div
-      className="absolute w-[200px] h-[250px] bg-white rounded-lg shadow-xl overflow-hidden"
+      className="absolute w-[200px] h-[300px] bg-white rounded-lg shadow-xl overflow-hidden"
       style={{
         top: `${posY * 15}%`,
       }}
@@ -179,12 +162,12 @@ const MemberCard = ({ name, img, posX, posY }: { name: string; img: string; posX
       }}
       whileInView={{
         left: animationSequence, // This will animate through all positions
-        opacity: [0,0.4,1],
+        opacity: 1,
         scale: 1
       }}
       transition={{
-        duration: 6, // Longer duration for the sequence
-        delay: posY * 0.2,
+        duration: 2, // Longer duration for the sequence
+        delay: (10 - setAnimationSequence.length) * 0.1   , // Delay based on the number of steps in the sequence
         ease: "linear"
       }}
       whileHover={{
@@ -193,22 +176,16 @@ const MemberCard = ({ name, img, posX, posY }: { name: string; img: string; posX
         transition: { duration: 0.2 }
       }}
     >
-      <div className="w-full h-[180px] overflow-hidden">
-        <img 
-          src={img} 
-          alt={name} 
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='180' viewBox='0 0 200 180'%3E%3Crect width='200' height='180' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%236b7280' font-family='Arial' font-size='14'%3ENo Image%3C/text%3E%3C/svg%3E";
-          }}
-        />
-      </div>
-      <div className="p-4 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="text-white font-bold text-lg text-center">{name}</div>
-        <div className="text-white text-xs text-center mt-1">
-          Target: {posX}%
-        </div>
-      </div>
+    <div className="relative w-full h-full overflow-hidden">
+      <Image 
+        src={img}
+        fill
+        style={{ objectFit: 'cover' }}
+        alt={`${name} profile picture`}
+        sizes="180px"
+      />
+    </div>
+      
     </motion.div>
   );
 }
