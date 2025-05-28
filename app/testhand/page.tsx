@@ -28,11 +28,11 @@ export default function HandPage() {
   return (
     <div
       style={{
-        // backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
-        // backgroundRepeat : "repeat-y",
-        // backgroundSize : "contain" ,
-        // backgroundPosition : "center",
-        // top : "2%"
+        backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
+        backgroundRepeat : "repeat-y",
+        backgroundSize : "contain" ,
+        backgroundPosition : "center",
+        top : "2%"
       }}
       className="relative bg-gradient-to-t from-blue-950 to-blue-800"
     >
@@ -52,11 +52,11 @@ export default function HandPage() {
             className="absolute h-fit w-fit"
             style={{
               scale : scale,
-              backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
-                backgroundRepeat : "no-repeat",
-                backgroundSize : "contain" ,
-                backgroundPosition : "center",
-                top : "2%"
+              // backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
+              //   backgroundRepeat : "no-repeat",
+              //   backgroundSize : "contain" ,
+              //   backgroundPosition : "center",
+              //   top : "2%"
             }}
             >
             <Hero/>
@@ -89,26 +89,11 @@ export default function HandPage() {
               className="absolute inset-0 rounded-lg pointer-events-none"
               style={{
                 opacity: opacityHero,
-                background: `radial-gradient(
-                  ellipse at center,
-                  rgba(0, 0, 0, 0) 40%,
-                  rgba(0, 0, 0, 0.6) 100%
-                )`,
-                boxShadow: "inset 0 0 100px rgba(0, 0, 0, 0.7)",
-                transition: 'opacity 0.7s ease-in-out',
+                
               }}
             />
           </motion.div>
-          <motion.div
-            className="absolute h-fit w-fit"
-          >
-            <CardRightDeco/>
-          </motion.div>
         </motion.div>
-        
-    
-        
-        
         <MemberParent />
         <MemberParentG/>
       </ReactLenis>
@@ -137,7 +122,7 @@ const Hero = () => {
         <NavBarTop />
         <RightDeco f={false} />
         <RightDeco f={true} />
-        {/* <CardRightDeco /> */}
+        <CardRightDeco />
       </motion.div>
       
 
@@ -159,7 +144,7 @@ const Hand = () => {
   // Transform values for smoother animation
   const leftCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, -20, -40, -60, -80]);
   const rightCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, 20, 40, 60, 80]);
-  const containerY = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, 50, 100, 300, 500]);
+  const containerY = useTransform(scrollYProgress, [0.6, 0.8, 1], [ -600, 300, 500]);
   const scale = useTransform(scrollYProgress , [0, 0.4, 0.6, 0.8, 1], [0.5,0.7,1,1.05,1.1]);
 
   //hand
@@ -709,19 +694,28 @@ const RightDeco = ({f} : {f : boolean}) => {
   )
 }
 
-const CardRightDeco = () => {
+const CardRightDeco: React.FC = () => {
   return (
-    <div className="absolute top-[50%] left-[90.5%] w-[10.5%] -translate-x-1/2 -translate-y-1/2 space-y-6">
-      
+    <div className="absolute top-[40%] right-[0%] w-[10.5%] -translate-x-1/2 -translate-y-1/2 space-y-[250px]">
       {/* Web Card - Front Layer */}
       <motion.div
-        
         initial={{ opacity: 0, x: 50, rotateY: -20 }}
-        
+        animate={{ 
+          opacity: 1, 
+          x: 0, 
+          rotateY: [0,360],
+          y: [0, -8, 0]
+        }}
         transition={{
           opacity: { duration: 1, delay: 0.5 },
-          x: { duration: 1.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
-          rotateY: { duration: 1.2, delay: 0.5 },
+          x: { duration: 1.2, delay: 0.5 },
+          rotateY: { 
+            duration: 30, 
+            delay: 0.5, 
+            repeat: Infinity, 
+            ease: "linear",
+            repeatType: "loop",
+          },
           y: { 
             duration: 4, 
             repeat: Infinity, 
@@ -731,23 +725,48 @@ const CardRightDeco = () => {
         }}
         whileHover={{ 
           scale: 1.05, 
-          rotateY: 5,
-          z: 20,
-          boxShadow: "0 25px 50px rgba(0,0,0,0.3)"
+          rotateY: 5
         }}
-        className="relative z-20 transform-gpu perspective-1000"
-        style={{
-          filter: "drop-shadow(0 15px 25px rgba(0,0,0,0.4))",
-          transformStyle: "preserve-3d"
+        className="relative z-20"
+        style={{ 
+          transformStyle: "preserve-3d",
+          transformOrigin: "center center"
         }}
       >
-        <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 h-fit w-fit">
-          <Image 
+        {/* Front side */}
+        <div 
+          className="absolute overflow-hidden rounded-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 h-fit w-fit"
+          style={{ 
+            backfaceVisibility: "hidden",
+            transform: "rotateY(0deg)"
+          }}
+        >
+          <img 
             src="/img/card/web.webp"
+            alt="Web Card Front"
             width={150}
             height={100}
-            alt="img"
             className="transition-transform duration-300 hover:scale-110"
+            style={{ display: "block" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/10"></div>
+        </div>
+        
+        {/* Back side */}
+        <div 
+          className="absolute overflow-hidden rounded-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 h-fit w-fit"
+          style={{ 
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)"
+          }}
+        >
+          <img 
+            src="/img/card/game.webp"
+            alt="Web Card Back"
+            width={150}
+            height={100}
+            className="transition-transform duration-300 hover:scale-110"
+            style={{ display: "block" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/10"></div>
         </div>
@@ -757,16 +776,21 @@ const CardRightDeco = () => {
       <motion.div
         initial={{ opacity: 0, x: 30, rotateY: 15, scale: 0.9 }}
         animate={{ 
-          opacity: 0.8, 
+          opacity: 1, 
           x: -10, 
-          rotateY: -8,
+          rotateY: [0,-360],
           scale: 0.95,
           y: [0, 6, 0]
         }}
         transition={{
           opacity: { duration: 1.2, delay: 0.8 },
-          x: { duration: 1.4, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
-          rotateY: { duration: 1.4, delay: 0.8 },
+          x: { duration: 1.4, delay: 0.8 },
+          rotateY: { 
+            duration: 20, 
+            repeat: Infinity, 
+            ease: "linear",
+            repeatType: "loop",
+          },
           scale: { duration: 1.4, delay: 0.8 },
           y: { 
             duration: 5, 
@@ -778,46 +802,56 @@ const CardRightDeco = () => {
         whileHover={{ 
           opacity: 1,
           scale: 1.02, 
-          rotateY: -3,
-          z: 10,
-          boxShadow: "0 20px 40px rgba(0,0,0,0.25)"
+          rotateY: -3
         }}
-        className="relative z-10 transform-gpu perspective-1000"
-        style={{
-          filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.3)) blur(0.5px)",
-          transformStyle: "preserve-3d"
+        className="relative z-10"
+        style={{ 
+          transformStyle: "preserve-3d",
+          transformOrigin: "center center"
         }}
       >
-        <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-sm border border-white/10 h-fit w-fit">
-          <Image 
+        {/* Front side */}
+        <div 
+          className="absolute overflow-hidden rounded-lg bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-sm border border-white/10 h-fit w-fit"
+          style={{ 
+            backfaceVisibility: "hidden",
+            transform: "rotateY(0deg)"
+          }}
+        >
+          <img 
             src="/img/card/game.webp"
             width={150}
             height={100}
-            alt="img"
-            className="transition-all duration-300 hover:scale-105 opacity-100"
+            alt="Game Card Front"
+            className="transition-all duration-300 hover:scale-105"
+            style={{ display: "block" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/10"></div>
+        </div>
+        
+        {/* Back side */}
+        <div 
+          className="absolute overflow-hidden rounded-lg bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-sm border border-white/10 h-fit w-fit"
+          style={{ 
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)"
+          }}
+        >
+          <img 
+            src="/img/card/web.webp"
+            width={150}
+            height={100}
+            alt="Game Card Back"
+            className="transition-all duration-300 hover:scale-105"
+            style={{ display: "block" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/10"></div>
         </div>
       </motion.div>
-
-      {/* Background Ambient Glow */}
-      <div className="absolute inset-0 -z-10">
-        <motion.div
-          animate={{
-            opacity: [0.3, 0.6, 0.3],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="w-full h-full bg-gradient-radial from-blue-500/20 via-purple-500/10 to-transparent rounded-full blur-xl"
-        />
-      </div>
     </div>
-  )
-}
+  );
+};
+
 const NavBarTop = () => {
   return (
 
