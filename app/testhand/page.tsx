@@ -64,14 +64,23 @@ const Hand = () => {
           style={{ 
             x: leftCardX,
           }}
+          initial={{
+            scale : 0.7
+          }}
+          animate={{
+            scale : [0.8,1]
+          }}
+          transition={{
+            duration : 1,
+            ease : 'easeInOut'
+          }}
         >
-          <div className="text-lg font-semibold">Left Card</div>
-          <div className="text-sm mt-2 opacity-80">
-            Scroll progress: {Math.round(scrollYProgress.get() * 100)}%
-          </div>
-          <div className="mt-3 text-xs opacity-70">
-            Moving left as you scroll down
-          </div>
+          <Image 
+            src="/img/card/web.webp"
+            width={300}
+            height={300}
+            alt="img"
+          />
         </motion.div>
 
         {/* Right Card */}
@@ -81,13 +90,12 @@ const Hand = () => {
             x: rightCardX,
           }}
         >
-          <div className="text-lg font-semibold">Right Card</div>
-          <div className="text-sm mt-2 opacity-80">
-            Scroll progress: {Math.round(scrollYProgress.get() * 100)}%
-          </div>
-          <div className="mt-3 text-xs opacity-70">
-            Moving right as you scroll down
-          </div>
+          <Image 
+            src="/img/card/web.webp"
+            width={300}
+            height={300}
+            alt="img"
+          />
         </motion.div>
       </motion.div>
     </motion.div>
@@ -118,13 +126,15 @@ const Card = () => {
 const MemberParent = () => {
   return (
     <div className="flex h-[500px] w-full bg-gray-900">
-      <motion.div className="w-[25%] bg-black">
-        {/* Sidebar content can go here */}
+      <motion.div className="w-[25%] bg-black relative ">
+        <motion.div>
+          <Image src="/img/card/web.webp" width={200} height={200} alt="img logo" />
+        </motion.div>
+        
       </motion.div>
       <div className="flex-1 relative overflow-hidden">
          <MemberCard  img="/img/profile/jazer_final.jpg" posX={5} posY={1}/>
          <MemberCard  img="/img/profile/jazer_final.jpg" posX={35} posY={3}/>
-         <MemberCard  img="/img/card/web.webp" posX={70} posY={1.5}/>
       </div>
     </div>
   )
@@ -181,7 +191,7 @@ const MemberCard = ({  img, posX, posY }: { img: string; posX: number; posY: num
         src={img}
         fill
         style={{ objectFit: 'cover' }}
-        alt={`${name} profile picture`}
+        alt={`profile picture`}
         sizes="180px"
       />
     </div>
