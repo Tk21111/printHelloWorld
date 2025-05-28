@@ -9,55 +9,101 @@ import {
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+import { fadeVariants } from "../comp/fadingStyle";
+import MeetTheTeam from "../meetTheTeam";
+
 export default function HandPage() {
+
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"], // optional: better control scroll range
+  });
+
+  const opacity = useTransform(scrollYProgress , [0.2,0.3] , [0,1])
+  const scale = useTransform(scrollYProgress, [0.15, 1], [1,0.7]);
+
   return (
     <div
       style={{
         backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
         backgroundRepeat : "repeat-y",
         backgroundSize : "contain" ,
-        backgroundPosition : "center"
+        backgroundPosition : "center",
+        top : "2%"
       }}
+      className="relative"
     >
-      <Hero/>
-      <Card />
-      <div className="h-[1000px] bg-gradient-to-b from-gray-500 to-gray-300" />
+      
+      <motion.div 
+        ref={ref}
+        className="realtive h-[4000px] w-fit">
+        <motion.div 
+          className="absolute h-fit w-fit"
+          style={{
+            scale : scale
+          }}
+          >
+          <Hero/>
+        </motion.div>
+        <motion.div 
+          className="absolute h-fit w-fit"
+          style={{
+              opacity : opacity
+            }}
+        >
+          <Card />
+        </motion.div>
+        
+      </motion.div>
+      <motion.div
+          className="sticky"
+        >
+          <CardRightDeco/>
+        </motion.div>
+   
+       
+      
       <MemberParent />
     </div>
   );
 }
 
-const Hero = ()=>{
+
+
+const Hero = () => {
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"], // optional: better control scroll range
+  });
+
+  // Y position moves slightly upward as the user scrolls
+  // const posY = useTransform(scrollYProgress, [0, 1], [0, 300]);
+
+
+
   return (
-    <div className="h-[1000px] relative">
-  <div className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-    <motion.div className="absolute inset-1/2 left-1/4 h-[200px] w-[200px]">
-      <Image
-        src="/img/logo/Print.webp"
-        fill
-        style={{
-          objectFit: "contain",
-        }}
-        alt="print"
-      />
-      <motion.div className="absolute left-[90%] h-[120px] w-[120px] top-1/4">
-        <Image
-          src="/img/logo/moon.webp"
-          fill
-          style={{
-            objectFit: "contain",
-          }}
-          alt="print"
-        />
-    </motion.div>
-    </motion.div>
-    
-
-  </div>
-</div>
-
+    <div ref={ref} className="h-[2000px] w-fit relative">
+      <motion.div
+        className="h-[850px] w-[1720px] sticky top-0"
+      >
+        <Logo />
+        <NavBar />
+        <LeftDeco />
+        <NavBarTop />
+        <RightDeco f={false} />
+        <RightDeco f={true} />
+        {/* <CardRightDeco /> */}
+      </motion.div>
+    </div>
   );
-}
+};
+
+
+
 
 const Hand = () => {
   const ref = useRef(null);
@@ -71,7 +117,7 @@ const Hand = () => {
   const leftCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, -20, -40, -60, -80]);
   const rightCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, 20, 40, 60, 80]);
   const containerY = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, -50, -100, -150, -200]);
-  const scale = useTransform(scrollYProgress , [0, 0.4, 0.6, 0.8, 1], [1.1,1.0,1.0,0.9,0.7]);
+  const scale = useTransform(scrollYProgress , [0, 0.4, 0.6, 0.8, 1], [0.5,0.7,1,1.05,1.1]);
 
   //hand
   const handY = useTransform(scrollYProgress, [0, 0.5, 0.6], [0, -50, -100]);
@@ -80,7 +126,7 @@ const Hand = () => {
   return (
     <motion.div
       ref={ref}
-      className="relative h-[2000px]"
+      className="relative h-[2000px] w-[1720px]"
     >
       <motion.div
         className="sticky top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-5"
@@ -179,9 +225,11 @@ const Card = () => {
 
 const MemberParent = () => {
   return (
-    <div className="flex h-[500px] w-full bg-gray-900">
+    <div className="flex h-[700px] w-[1720px]">
       <motion.div className="w-[25%]  relative ">
-        <motion.div>
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
           <Image src="/img/card/web.webp" width={200} height={200} alt="img logo" />
         </motion.div>
         
@@ -240,16 +288,410 @@ const MemberCard = ({  img, posX, posY }: { img: string; posX: number; posY: num
         transition: { duration: 0.2 }
       }}
     >
-    <div className="relative w-full h-full overflow-hidden">
-      <Image 
-        src={img}
-        fill
-        style={{ objectFit: 'cover' }}
-        alt={`profile picture`}
-        sizes="180px"
-      />
+   <div 
+      className="w-full h-full overflow-hidden rounded-none"
+      style={{
+        backgroundImage: "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377266406843748453/0b0733d09bd67de6.png?ex=683856cb&is=6837054b&hm=eef8125391d0f3600336defad3265f76ac7a540581bcff3f0e7090fa37ec9382&)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"
+      }}
+    >
+      <div className="aspect-[9/15] h-[50%] absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0_5px_30px_rgba(0,0,0,0.1)] ">
+        <Image
+          src="/img/profile/jazer_final.jpg"
+          alt="mem"
+          fill
+          className="object-cover rounded-xl"
+        />
+      </div>
+      <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0_5px_30px_rgba(0,0,0,0.1)] ">
+        <p>jazer</p>
+      </div>
     </div>
+
       
     </motion.div>
   );
+}
+
+
+
+const Logo = ()=> {
+  
+  return (
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2000px] h-[500px] scale-75 max-w-6xl px-4">
+         <motion.div 
+          variants={fadeVariants["elegant"]}
+          initial="hidden"
+          animate="visible"
+          className="h-full w-full"
+    >
+      <div className="absolute top-[51%] left-[-0.5%]  w-[4%] aspect-square -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/logo/dot.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="dot"
+          />
+        </div>
+        <div className="absolute w-3/6 top-[34%] left-[15%]  aspect-[12/5] -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/logo/Print.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="print"
+            className="w-full h-full"
+          />
+        </div>
+        <div className="absolute top-[38.5%] left-[37%] w-1/6 aspect-square -translate-x-1/2 -translate-y-1/2">
+            <Image
+              src="/img/logo/moon.webp"
+              fill
+              style={{
+                objectFit: "contain",
+              }}
+              alt="moon"
+            />
+          </div>
+          <div className="absolute top-[44.5%] left-[55%] w-[24%] aspect-square -translate-x-1/2 -translate-y-1/2">
+            <Image
+              src="/img/logo/Hell.webp"
+              fill
+              style={{
+                objectFit: "contain",
+              }}
+              alt="Hell"
+            />
+          </div>
+          <div className="absolute top-[53%] left-[73.5%] w-1/6 aspect-square -translate-x-1/2 -translate-y-1/2">
+              <motion.div 
+                className="h-full w-full"
+                animate={{
+                  rotate : [0,90,180,270,360]
+                }}
+                transition={{
+                  duration : 10,
+                  ease : "linear",
+                  repeat : Infinity,
+                  repeatType : "loop"
+                }}
+              >
+                <Image
+                src="/img/logo/world.webp"
+                fill
+                style={{
+                  objectFit: "contain",
+                }}
+                alt="world"
+              />
+              </motion.div>
+          </div>
+           <div className="absolute top-[53%] left-[60%] w-[12%] aspect-square -translate-x-1/2">
+            <div
+              className="rotate-[15deg] h-full w-full"
+            >
+              <Image
+                src="/img/logo/w.webp"
+                fill
+                style={{
+                  objectFit: "contain",
+                }}
+                alt="w"
+              />
+            </div>
+          </div>
+          <div className="absolute top-[57%] left-[83.5%] w-[9%] aspect-square -translate-x-1/2 ">
+            <Image
+              src="/img/logo/r.webp"
+              fill
+              style={{
+                objectFit: "contain",
+              }}
+              alt="r"
+            />
+          </div>
+          <div className="absolute top-[50%] left-[87.5%] w-[12.5%] aspect-square -translate-x-1/2 ">
+            <Image
+              src="/img/logo/l.webp"
+              fill
+              style={{
+                objectFit: "contain",
+              }}
+              alt="l"
+            />
+          </div>
+          <div className="absolute top-[49%] left-[93.5%] w-[12.5%] aspect-square -translate-x-1/2 ">
+            <Image
+              src="/img/logo/d.webp"
+              fill
+              style={{
+                objectFit: "contain",
+              }}
+              alt="d"
+            />
+          </div>
+          <div className="absolute top-[60%] left-[103%] w-1/6 aspect-square -translate-x-1/2 -translate-y-1/2 scale-x-[-1]">
+            <Image
+              src="/img/logo/moon.webp"
+              fill
+              style={{
+                objectFit: "contain",
+              }}
+              alt="moon"
+            />
+          </div>
+          <div className="absolute top-[73%] left-[110%]  w-[4%] aspect-square -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/logo/dot.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="dot"
+          />
+        </div>
+      </motion.div>
+    </div>
+   
+  )
+}
+
+const NavBar = ()=>{
+  return (
+
+      <motion.div className="absolute w-[30%] left-1/4 top-3/4 aspect-[12/5] -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/front_page/place_holder.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="place_holder"
+            className="w-full h-full"
+          />
+        </motion.div>
+
+  )
+}
+
+
+
+const LeftDeco = () => {
+  return (
+   <div className="absolute top-[19%] left-[13%] w-[26.5%] aspect-square -translate-x-1/2 -translate-y-1/2">
+        <Image
+          src="/img/front_page/left_deco.webp"
+          fill
+          style={{
+            objectFit: "contain",
+          }}
+          alt="deco_l"
+        /> 
+      </div>
+      
+ 
+  )
+}
+
+const RightDeco = ({f} : {f : boolean}) => {
+  return (
+    <div className={`${f && "scale-y-[-1]"} h-[65%] `}>
+      <motion.div className={`absolute ${f ? "bottom-0" : "top-0"} left-[89%]  w-[18.5%] aspect-square -translate-x-1/2 -translate-y-1/2}`}>
+        <Image
+          src="/img/front_page/card_col.webp"
+          fill
+          style={{
+            objectFit: "contain",
+          }}
+          alt="Hell"
+        />
+        <motion.div className="absolute top-[47%] left-[35.7%]  w-[12%] aspect-square -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/front_page/card_col_1.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="Hell"
+          />
+        </motion.div>
+        <motion.div className="absolute top-[47%] left-[67.7%]  w-[12%] aspect-square -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/front_page/card_col_1.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="Hell"
+          />
+        </motion.div>
+        <motion.div className="absolute top-[44%] left-[52.5%]  w-[20%] aspect-square -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/front_page/card_col_c.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="Hell"
+          />
+        </motion.div>
+        <motion.div className="absolute top-[39%] left-[22.5%]  w-[18%] aspect-square -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/front_page/card_col_l.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="Hell"
+          />
+        </motion.div>
+        <motion.div className="absolute top-[39%] left-[80.5%]  w-[18%] aspect-square -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/front_page/card_col_r.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="Hell"
+          />
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+
+const CardRightDeco = () => {
+  return (
+    <div className="absolute top-[50%] left-[90.5%] w-[10.5%] -translate-x-1/2 -translate-y-1/2 space-y-6">
+      
+      {/* Web Card - Front Layer */}
+      <motion.div
+        
+        initial={{ opacity: 0, x: 50, rotateY: -20 }}
+        animate={{ 
+          opacity: 1, 
+          x: 0, 
+          rotateY: 0,
+          y: [0, -8, 0]
+        }}
+        transition={{
+          opacity: { duration: 1, delay: 0.5 },
+          x: { duration: 1.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+          rotateY: { duration: 1.2, delay: 0.5 },
+          y: { 
+            duration: 4, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: 1
+          }
+        }}
+        whileHover={{ 
+          scale: 1.05, 
+          rotateY: 5,
+          z: 20,
+          boxShadow: "0 25px 50px rgba(0,0,0,0.3)"
+        }}
+        className="relative z-20 transform-gpu perspective-1000"
+        style={{
+          filter: "drop-shadow(0 15px 25px rgba(0,0,0,0.4))",
+          transformStyle: "preserve-3d"
+        }}
+      >
+        <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 h-fit w-fit">
+          <Image 
+            src="/img/card/web.webp"
+            width={150}
+            height={100}
+            alt="img"
+            className="transition-transform duration-300 hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/10"></div>
+        </div>
+      </motion.div>
+
+      {/* Game Card - Back Layer */}
+      <motion.div
+        initial={{ opacity: 0, x: 30, rotateY: 15, scale: 0.9 }}
+        animate={{ 
+          opacity: 0.8, 
+          x: -10, 
+          rotateY: -8,
+          scale: 0.95,
+          y: [0, 6, 0]
+        }}
+        transition={{
+          opacity: { duration: 1.2, delay: 0.8 },
+          x: { duration: 1.4, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+          rotateY: { duration: 1.4, delay: 0.8 },
+          scale: { duration: 1.4, delay: 0.8 },
+          y: { 
+            duration: 5, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: 2
+          }
+        }}
+        whileHover={{ 
+          opacity: 1,
+          scale: 1.02, 
+          rotateY: -3,
+          z: 10,
+          boxShadow: "0 20px 40px rgba(0,0,0,0.25)"
+        }}
+        className="relative z-10 transform-gpu perspective-1000"
+        style={{
+          filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.3)) blur(0.5px)",
+          transformStyle: "preserve-3d"
+        }}
+      >
+        <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-sm border border-white/10 h-fit w-fit">
+          <Image 
+            src="/img/card/game.webp"
+            width={150}
+            height={100}
+            alt="img"
+            className="transition-all duration-300 hover:scale-105 opacity-100"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/10"></div>
+        </div>
+      </motion.div>
+
+      {/* Background Ambient Glow */}
+      <div className="absolute inset-0 -z-10">
+        <motion.div
+          animate={{
+            opacity: [0.3, 0.6, 0.3],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="w-full h-full bg-gradient-radial from-blue-500/20 via-purple-500/10 to-transparent rounded-full blur-xl"
+        />
+      </div>
+    </div>
+  )
+}
+const NavBarTop = () => {
+  return (
+
+      <motion.div className="absolute top-16 left-1/2 w-[17%] aspect-square -translate-x-1/2 -translate-y-1/2">
+        <Image
+          src="/img/front_page/nav.webp"
+          fill
+          style={{
+            objectFit: "contain",
+          }}
+          alt="Hell"
+        />
+      </motion.div>
+
+  )
 }
