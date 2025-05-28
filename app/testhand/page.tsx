@@ -11,11 +11,51 @@ import { useEffect, useRef, useState } from "react";
 
 export default function HandPage() {
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
+        backgroundRepeat : "repeat-y",
+        backgroundSize : "contain" ,
+        backgroundPosition : "center"
+      }}
+    >
+      <Hero/>
       <Card />
-      <div className="h-[2000px] bg-gradient-to-b from-gray-500 to-gray-300" />
+      <div className="h-[1000px] bg-gradient-to-b from-gray-500 to-gray-300" />
       <MemberParent />
     </div>
+  );
+}
+
+const Hero = ()=>{
+  return (
+    <div className="h-[1000px] relative">
+  <div className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <motion.div className="absolute inset-1/2 left-1/4 h-[200px] w-[200px]">
+      <Image
+        src="/img/logo/Print.webp"
+        fill
+        style={{
+          objectFit: "contain",
+        }}
+        alt="print"
+      />
+      <motion.div className="absolute left-[90%] h-[120px] w-[120px] top-1/4">
+        <Image
+          src="/img/logo/moon.webp"
+          fill
+          style={{
+            objectFit: "contain",
+          }}
+          alt="print"
+        />
+    </motion.div>
+    </motion.div>
+    
+
+  </div>
+</div>
+
   );
 }
 
@@ -31,7 +71,7 @@ const Hand = () => {
   const leftCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, -20, -40, -60, -80]);
   const rightCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, 20, 40, 60, 80]);
   const containerY = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, -50, -100, -150, -200]);
-  const opacity = useTransform(scrollYProgress, [0.8, 1], [1, 0]);
+  const scale = useTransform(scrollYProgress , [0, 0.4, 0.6, 0.8, 1], [1.1,1.0,1.0,0.9,0.7]);
 
   //hand
   const handY = useTransform(scrollYProgress, [0, 0.5, 0.6], [0, -50, -100]);
@@ -40,13 +80,12 @@ const Hand = () => {
   return (
     <motion.div
       ref={ref}
-      className="relative h-[2000px] bg-yellow-50"
+      className="relative h-[2000px]"
     >
       <motion.div
         className="sticky top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-5"
         style={{
-          y: containerY,
-          opacity
+          y: containerY
         }}
       >
         <motion.div 
@@ -60,9 +99,11 @@ const Hand = () => {
         </motion.div>
         {/* Left Card */}
         <motion.div
-          className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[20vw] min-w-[200px] bg-gradient-to-br from-purple-600 to-blue-600 text-white p-6 shadow-xl rounded-lg"
+          className="absolute  top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-fit  bg-gradient-to-br text-white shadow-xl rounded-lg"
           style={{ 
             x: leftCardX,
+            boxShadow : '0 0 10px 2px white',
+            scale : scale
           }}
           initial={{
             scale : 0.7
@@ -77,23 +118,36 @@ const Hand = () => {
         >
           <Image 
             src="/img/card/web.webp"
-            width={300}
-            height={300}
+            width={250}
+            height={250}
             alt="img"
           />
         </motion.div>
 
         {/* Right Card */}
         <motion.div
-          className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 w-[20vw] min-w-[200px] bg-gradient-to-br from-pink-600 to-red-600 text-white p-6 shadow-xl rounded-lg"
+          className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 min-h-[324px] min-w-[232px] ] max-w-[1160px] max-h-[1620]  text-white shadow-xl rounded-lg"
           style={{ 
             x: rightCardX,
+            boxShadow : '0 0 10px 2px white',
+            scale : scale
+          }}
+          initial={{
+            scale : 0.7
+          }}
+          animate={{
+            scale : [0.8,1]
+          }}
+          transition={{
+            duration : 1,
+            ease : 'easeInOut'
           }}
         >
           <Image 
-            src="/img/card/web.webp"
-            width={300}
-            height={300}
+            src="/img/card/game.webp"
+            
+            width={250}
+            height={250}  
             alt="img"
           />
         </motion.div>
@@ -126,7 +180,7 @@ const Card = () => {
 const MemberParent = () => {
   return (
     <div className="flex h-[500px] w-full bg-gray-900">
-      <motion.div className="w-[25%] bg-black relative ">
+      <motion.div className="w-[25%]  relative ">
         <motion.div>
           <Image src="/img/card/web.webp" width={200} height={200} alt="img logo" />
         </motion.div>
