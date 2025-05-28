@@ -2,7 +2,6 @@
 
 import {
   motion,
-  useMotionValue,
   useScroll,
   useTransform,
 } from "framer-motion";
@@ -10,7 +9,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { fadeVariants } from "../comp/fadingStyle";
-import MeetTheTeam from "../meetTheTeam";
+// import MeetTheTeam from "../meetTheTeam";
+import ReactLenis from "lenis/react";
 
 export default function HandPage() {
 
@@ -22,50 +22,96 @@ export default function HandPage() {
   });
 
   const opacity = useTransform(scrollYProgress , [0.2,0.3] , [0,1])
+  const opacityHero = useTransform(scrollYProgress , [0.1,0.3] , [0,0.7])
   const scale = useTransform(scrollYProgress, [0.15, 1], [1,0.7]);
 
   return (
     <div
       style={{
-        backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
-        backgroundRepeat : "repeat-y",
-        backgroundSize : "contain" ,
-        backgroundPosition : "center",
-        top : "2%"
+        // backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
+        // backgroundRepeat : "repeat-y",
+        // backgroundSize : "contain" ,
+        // backgroundPosition : "center",
+        // top : "2%"
       }}
-      className="relative"
+      className="relative bg-gradient-to-t from-blue-950 to-blue-800"
     >
-      
-      <motion.div 
-        ref={ref}
-        className="realtive h-[4000px] w-fit">
-        <motion.div 
-          className="absolute h-fit w-fit"
-          style={{
-            scale : scale
-          }}
-          >
-          <Hero/>
-        </motion.div>
-        <motion.div 
-          className="absolute h-fit w-fit"
-          style={{
-              opacity : opacity
-            }}
+      <ReactLenis
+        root
+         options={{
+          // Learn more -> https://github.com/darkroomengineering/lenis?tab=readme-ov-file#instance-settings
+          lerp: 0.05,
+          //   infinite: true,
+          //   syncTouch: true,
+        }}
         >
-          <Card />
+        <motion.div 
+          ref={ref}
+          className="realtive h-[4000px] w-fit">
+          <motion.div 
+            className="absolute h-fit w-fit"
+            style={{
+              scale : scale,
+              backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
+                backgroundRepeat : "no-repeat",
+                backgroundSize : "contain" ,
+                backgroundPosition : "center",
+                top : "2%"
+            }}
+            >
+            <Hero/>
+            <motion.div 
+              className="absolute inset-0 rounded-lg pointer-events-none"
+              style={{
+                opacity: opacityHero,
+                background: `radial-gradient(
+                  ellipse at center,
+                  rgba(0, 0, 0, 0) 40%,
+                  rgba(0, 0, 0, 0.6) 100%
+                )`,
+                boxShadow: "inset 0 0 100px rgba(0, 0, 0, 0.7)",
+                transition: 'opacity 0.7s ease-in-out',
+              }}
+            />
+
+
+
+            
+          </motion.div>
+          <motion.div 
+            className="absolute h-fit w-fit scale-90"
+            style={{
+                opacity : opacity
+              }}
+          >
+            <Card />
+            <motion.div 
+              className="absolute inset-0 rounded-lg pointer-events-none"
+              style={{
+                opacity: opacityHero,
+                background: `radial-gradient(
+                  ellipse at center,
+                  rgba(0, 0, 0, 0) 40%,
+                  rgba(0, 0, 0, 0.6) 100%
+                )`,
+                boxShadow: "inset 0 0 100px rgba(0, 0, 0, 0.7)",
+                transition: 'opacity 0.7s ease-in-out',
+              }}
+            />
+          </motion.div>
+          <motion.div
+            className="absolute h-fit w-fit"
+          >
+            <CardRightDeco/>
+          </motion.div>
         </motion.div>
         
-      </motion.div>
-      <motion.div
-          className="sticky"
-        >
-          <CardRightDeco/>
-        </motion.div>
-   
-       
-      
-      <MemberParent />
+    
+        
+        
+        <MemberParent />
+        <MemberParentG/>
+      </ReactLenis>
     </div>
   );
 }
@@ -74,11 +120,6 @@ export default function HandPage() {
 
 const Hero = () => {
   const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"], // optional: better control scroll range
-  });
 
   // Y position moves slightly upward as the user scrolls
   // const posY = useTransform(scrollYProgress, [0, 1], [0, 300]);
@@ -98,6 +139,8 @@ const Hero = () => {
         <RightDeco f={true} />
         {/* <CardRightDeco /> */}
       </motion.div>
+      
+
     </div>
   );
 };
@@ -116,7 +159,7 @@ const Hand = () => {
   // Transform values for smoother animation
   const leftCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, -20, -40, -60, -80]);
   const rightCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, 20, 40, 60, 80]);
-  const containerY = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, -50, -100, -150, -200]);
+  const containerY = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, 50, 100, 300, 500]);
   const scale = useTransform(scrollYProgress , [0, 0.4, 0.6, 0.8, 1], [0.5,0.7,1,1.05,1.1]);
 
   //hand
@@ -201,17 +244,66 @@ const Hand = () => {
     </motion.div>
   );
 };
+type Member = {
+  img: string;
+  posX: number;
+  posY: number;
+  name: string;
+  web : boolean;
+};
+
+const members: Member[] = [
+  {
+    img: "/img/profile/jazer_final.jpg",
+    posX: 5,
+    posY: 1,
+    name: "jazer",
+    web : true,
+  },
+  {
+    img: "/img/profile/jazer_final.jpg",
+    posX: 35,
+    posY: 3,
+    name: "jazer",
+    web : true,
+  },
+  {
+    img: "/img/profile/jazer_final.jpg",
+    posX: 55,
+    posY: 3,
+    name: "jazer",
+    web : true,
+  }
+];
+
+const membersG: Member[] = [
+  {
+    img: "/img/profile/jazer_final.jpg",
+    posX: 5,
+    posY: 1,
+    name: "jazer",
+    web : false,
+  },
+  {
+    img: "/img/profile/jazer_final.jpg",
+    posX: 35,
+    posY: 3,
+    name: "jazer",
+    web : false,
+  },
+  {
+    img: "/img/profile/jazer_final.jpg",
+    posX: 55,
+    posY: 3,
+    name: "jazer",
+    web : false,
+  }
+];
 
 const Card = () => {
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start center", "end center"],
-  });
 
   return (
-    <div className="h-[4000px]" ref={ref}>
+    <div className="h-[3000px]" >
       <div className="relative">
         <div className="absolute w-8 h-8 bg-blue-500 rounded-full top-4 left-4 flex items-center justify-center text-white text-xs font-bold">
           Start
@@ -225,7 +317,7 @@ const Card = () => {
 
 const MemberParent = () => {
   return (
-    <div className="flex h-[700px] w-[1720px]">
+    <div className="flex h-[700px] w-[1720px] relative">
       <motion.div className="w-[25%]  relative ">
         <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -234,19 +326,67 @@ const MemberParent = () => {
         </motion.div>
         
       </motion.div>
-      <div className="flex-1 relative overflow-hidden">
-         <MemberCard  img="/img/profile/jazer_final.jpg" posX={5} posY={1}/>
-         <MemberCard  img="/img/profile/jazer_final.jpg" posX={35} posY={3}/>
+      <div
+        className="flex-1 relative overflow-hidden"
+
+      >
+         {
+          members.map((member, i) => (
+            <MemberCard
+              key={i}
+              img={member.img}
+              posX={member.posX}
+              posY={member.posY}
+              name={member.name}
+              web={member.web}
+            />
+          ))
+        }
       </div>
+       
     </div>
   )
 };
 
-const MemberCard = ({  img, posX, posY }: { img: string; posX: number; posY: number }) => {
+const MemberParentG = () => {
+  return (
+    <div className="flex h-[700px] w-[1720px] relative">
+      <motion.div className="w-[25%]  relative ">
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          <Image src="/img/card/game.webp" width={200} height={200} alt="img logo" />
+        </motion.div>
+        
+      </motion.div>
+      <div
+        className="flex-1 relative overflow-hidden"
+
+      >
+         {
+          membersG.map((member, i) => (
+            <MemberCard
+              key={i}
+              img={member.img}
+              posX={member.posX}
+              posY={member.posY}
+              name={member.name}
+              web={member.web}
+            />
+          ))
+        }
+      </div>
+       
+    </div>
+  )
+};
+
+
+const MemberCard = ({  img, posX, posY , name ,web }: Member) => {
   const [animationSequence, setAnimationSequence] = useState<string[]>([]);
   
   useEffect(() => {
-    let sequence = [];
+    const sequence = [];
     
     // Create a sequence of positions leading to the final posX
     for (let i = 0; i <= posX; i += 10) { // Fixed: i += 10 instead of i+5
@@ -261,9 +401,11 @@ const MemberCard = ({  img, posX, posY }: { img: string; posX: number; posY: num
     setAnimationSequence(sequence);
   }, [posX]); // Added posX as dependency
 
+  const weB = web ? "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377266406843748453/0b0733d09bd67de6.png?ex=683856cb&is=6837054b&hm=eef8125391d0f3600336defad3265f76ac7a540581bcff3f0e7090fa37ec9382&)" : "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377268230372069406/888ec93ae7fd0e57.png?ex=6838587e&is=683706fe&hm=bdfc4486c07bbb6dfb8554529360f1d66cf8770d6b5e66dfd11cf1188baf44c1&)"
+
   return (
     <motion.div
-      className="absolute w-[200px] h-[300px] bg-white rounded-lg shadow-xl overflow-hidden"
+      className="absolute w-[200px] h-[300px] bg-white rounded-lg shadow-xl overflow-hidden transform-gpu perspective-1000"
       style={{
         top: `${posY * 15}%`,
       }}
@@ -274,12 +416,12 @@ const MemberCard = ({  img, posX, posY }: { img: string; posX: number; posY: num
       }}
       whileInView={{
         left: animationSequence, // This will animate through all positions
-        opacity: 1,
+        opacity: [0,1],
         scale: 1
       }}
       transition={{
         duration: 2, // Longer duration for the sequence
-        delay: (10 - setAnimationSequence.length) * 0.1   , // Delay based on the number of steps in the sequence
+        delay: (10 - setAnimationSequence.length) * 0.01   , // Delay based on the number of steps in the sequence
         ease: "linear"
       }}
       whileHover={{
@@ -288,27 +430,29 @@ const MemberCard = ({  img, posX, posY }: { img: string; posX: number; posY: num
         transition: { duration: 0.2 }
       }}
     >
-   <div 
-      className="w-full h-full overflow-hidden rounded-none"
+   <motion.div 
+      className="w-full h-full overflow-hidden rounded-none "
       style={{
-        backgroundImage: "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377266406843748453/0b0733d09bd67de6.png?ex=683856cb&is=6837054b&hm=eef8125391d0f3600336defad3265f76ac7a540581bcff3f0e7090fa37ec9382&)",
+        backgroundImage: weB,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat: "no-repeat"
-      }}
-    >
+        backgroundRepeat: "no-repeat",
+        filter: "drop-shadow(0 15px 25px rgba(0,0,0,0.4))",
+        transformStyle: "preserve-3d"
+      }}  
+        >
       <div className="aspect-[9/15] h-[50%] absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0_5px_30px_rgba(0,0,0,0.1)] ">
         <Image
-          src="/img/profile/jazer_final.jpg"
+          src={img}
           alt="mem"
           fill
           className="object-cover rounded-xl"
         />
       </div>
       <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0_5px_30px_rgba(0,0,0,0.1)] ">
-        <p>jazer</p>
+        <p>{name}</p>
       </div>
-    </div>
+    </motion.div>
 
       
     </motion.div>
@@ -573,12 +717,7 @@ const CardRightDeco = () => {
       <motion.div
         
         initial={{ opacity: 0, x: 50, rotateY: -20 }}
-        animate={{ 
-          opacity: 1, 
-          x: 0, 
-          rotateY: 0,
-          y: [0, -8, 0]
-        }}
+        
         transition={{
           opacity: { duration: 1, delay: 0.5 },
           x: { duration: 1.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
