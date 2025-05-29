@@ -32,21 +32,32 @@ export default function HandPage() {
   const opacity = useTransform(scrollYProgress, [0.2, 0.3], [0, 1]);
   const opacityHero = useTransform(scrollYProgress, [0.1, 0.3], [0, 0.7]);
   const scale = useTransform(scrollYProgress, [0.15, 1], [1, 0.7]);
+  
+  // Background position animation - moves with scroll
+  // Parallax speeds: slow = 20%, medium = 50%, fast = 80%
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]); // Slow parallax
+  
+  // Alternative speeds you can use:
+  // const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]); // Medium
+  // const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]); // Fast
+  // const backgroundY = useTransform(scrollYProgress, [0, 1], ["30%", "0%"]); // Reverse slow
+  // const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]); // Upward movement
 
   return (
-    <div className="h-full w-full">
-      {/* Main Container */}
-      <div
-        className="relative bg-gradient-to-t from-blue-950 to-blue-800 h-screen w-screen"
+    <div className="h-[320vh] w-full relative">
+      {/* Fixed Background */}
+      <motion.div
+        className="fixed bg-gradient-to-t from-blue-950 to-blue-800 h-screen w-screen top-0 left-0 z-0"
         style={{
-          // Fixed background image URL - removed 'public' and added closing parenthesis
           backgroundImage: "url(/img/bg/bg.webp)",
           backgroundRepeat: "repeat",
-          backgroundSize: "inherit",
-          backgroundPosition: "center",
-         
+          backgroundSize: "cover",
+          backgroundPosition: backgroundY,
         }}
-      >
+      />
+
+      {/* Scrolling Content - Above Background */}
+      <div className="relative z-10">
         <ReactLenis
           root
           options={{
@@ -63,11 +74,38 @@ export default function HandPage() {
 
           {/* Member Sections */}
           <MemberSections />
+          <div className="flex w-full h-[10%] p-5 text-sm justify-end">
+            <p>{"@ design and build by [[ Print('Hello World') ]]"}</p>
+          </div>
         </ReactLenis>
       </div>
     </div>
   );
 }
+
+const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ scale, opacity, opacityHero }, ref) => (
+  <div className="align-middle">
+    <motion.div ref={ref} className="relative h-[350vh] w-full">
+      {/* Hero Section */}
+      <motion.div 
+        className="sticky h-screen w-full z-20"
+        style={{ scale }}
+      >
+        <DarkOverlay opacity={opacityHero} />
+        <Hero />
+      </motion.div>
+
+      {/* Card Section */}
+      <motion.div 
+        className="absolute w-screen aspect-[9/10] scale-90 z-30"
+        style={{ opacity }}
+      >
+        <Hand />
+        <DarkOverlay opacity={opacityHero} />
+      </motion.div>
+    </motion.div>
+  </div>
+));
 // Separated Components
 
 const TechStackLabels = ({ webTech, gameTech }: { webTech: string[], gameTech: string[] }) => (
@@ -148,30 +186,6 @@ interface ScrollingContentProps {
   opacityHero: MotionValue<number>;
 }
 
-const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ scale, opacity, opacityHero }, ref) => (
-  <div className="align-middle">
-    <motion.div ref={ref} className="relative h-[350vh] w-full">
-      {/* Hero Section */}
-      <motion.div 
-        className="sticky h-fit w-full"
-        style={{ scale }}
-      >
-        <DarkOverlay opacity={opacityHero} />
-        <Hero />
-      </motion.div>
-
-      {/* Card Section */}
-      <motion.div 
-        className="absolute w-screen aspect-[9/10] scale-90"
-        style={{ opacity }}
-      >
-         
-        <Hand />
-        <DarkOverlay opacity={opacityHero} />
-      </motion.div>
-    </motion.div>
-  </div>
-));
 
 const DarkOverlay = ({ opacity }: { opacity: MotionValue<number> }) => (
   <motion.div 
@@ -190,7 +204,7 @@ const DarkOverlay = ({ opacity }: { opacity: MotionValue<number> }) => (
 );
 
 const MemberSections = () => (
-  <div className="flex flex-row w-screen aspect-[9/9]">
+  <div className="flex flex-row w-screen aspect-[16/7]">
     <MemberParent />
     <MemberParentG />
   </div>
@@ -253,8 +267,8 @@ const Hand = () => {
   });
 
   // Card movement animations
-  const leftCardX = useTransform(scrollYProgress, [0, 0.2, 0.6, 0.8, 1], [0, -20, -40, -60, -80]);
-  const rightCardX = useTransform(scrollYProgress, [0, 0.2, 0.6, 0.8, 1], [0, 20, 40, 60, 80]);
+  const leftCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], ["100%", "-20%", "-40%", "-25%", "40%"]);
+  const rightCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], ["-100%", "20%", "40%", "25%", "-40%"]);
 
   // Container and scale animations
   const containerY = useTransform(scrollYProgress, [0.1, 1], [0, 200]);
@@ -269,12 +283,31 @@ const Hand = () => {
   const leftCardRotateY = useTransform(scrollYProgress, [0, 1], [0, 15]);
   const rightCardRotateY = useTransform(scrollYProgress, [0, 1], [0, -15]);
 
+  // Separate opacity animations for initial fade-in
+  const leftCardOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const rightCardOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+
   return (
-    <div ref={scrollRef} className="relative h-full w-full">
+    <div ref={scrollRef} className="relative h-full w-full" style={{
+          backgroundImage: "url(/img/bg/light.webp)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "auto",
+          backgroundPosition: "top",
+         
+        }}>
       <motion.div className="relative h-full w-full">
         {/* Tech Stack Labels */}
-        <div className="absolute bottom-[5%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg z-20 w-full">
+        <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg  w-full">
           <TechStackLabels webTech={webTech} gameTech={gameTech} />
+        </div>
+
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
+          <Shimp posX="58%" posY="15%" />
+          <Hex rotate="10deg" />
+          <Hex rotate="45deg" posX="20%" posY="10%" />
+          <Shimp rotate="15deg" posX="30%" posY="25%" />
+       
+
         </div>
 
         
@@ -308,20 +341,15 @@ const Hand = () => {
             <Image src="/img/bg/hand.webp" fill alt="scroll" className="scale-x-[-1]" />
           </motion.div>
           
-          {/* Left Card - Improved animations */}
+          {/* Left Card - Fixed animations */}
           <motion.div
             className="absolute top-0 left-[24.5%] -translate-x-1/2 -translate-y-1/2 w-[15%] text-white shadow-xl rounded-lg"
             style={{ 
               x: leftCardX, 
               scale,
+              opacity: leftCardOpacity,
               rotateY: leftCardRotateY,
               transformStyle: "preserve-3d" 
-            }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              duration: 0.8,
-              ease: "easeOut",
             }}
             whileHover={{ 
               scale: 1.05,
@@ -337,21 +365,15 @@ const Hand = () => {
             </div>
           </motion.div>
 
-          {/* Right Card - Improved animations */}
+          {/* Right Card - Fixed animations */}
           <motion.div
             className="absolute top-0  right-[24.5%] -translate-x-1/2 -translate-y-1/2 w-[15%] text-white shadow-xl rounded-lg"
             style={{ 
               x: rightCardX, 
               scale,
+              opacity: rightCardOpacity,
               rotateY: rightCardRotateY,
               transformStyle: "preserve-3d" 
-            }}
-            initial={{ scale: 0.7, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              duration: 0.8,
-              ease: "easeOut",
-              delay: 0.2
             }}
             whileHover={{ 
               scale: 1.05,
@@ -377,22 +399,31 @@ const MemberParent = () => {
   const webMembers = members.filter(member => member.teach === "Web");
   
   return (
-
-      <div className="grid grid-cols-4 gap-4 h-fit p-4 w-[50%]">
-        {webMembers.map((member, i) => (
-          <MemberCard
-            key={i}
-            index={i}
-            img={member.img}
-            name={member.name}
-            surname={member.surname}
-            nickname={member.nickname}
-            position={member.position}
-            teach={member.teach}
-            code={member.code}
-            tool={member.tool}
+    <div className="flex flex-col h-fit w-[50%]">
+        <div className="relative w-[50%] aspect-[10/3] left-1/2 -translate-x-1/2">
+          <Image 
+            src="/img/logo/web.webp"
+            alt="game"
+            fill
+            className="object-contain"
           />
-        ))}
+        </div>
+        <div className="grid grid-cols-4 gap-4 h-fit p-5 m-5">
+          {webMembers.map((member, i) => (
+            <MemberCard
+              key={i}
+              index={i}
+              img={member.img}
+              name={member.name}
+              surname={member.surname}
+              nickname={member.nickname}
+              position={member.position}
+              teach={member.teach}
+              code={member.code}
+              tool={member.tool}
+            />
+          ))}
+        </div>
       </div>
   );
 };
@@ -402,22 +433,33 @@ const MemberParentG = () => {
   const nonWebMembers = members.filter(member => member.teach === "Game");
   
   return (
-      <div className="grid grid-cols-4 gap-4 h-fit p-4 w-[50%]">
-        {nonWebMembers.map((member, i) => (
-          <MemberCard
-            key={i}
-            index={i}
-            img={member.img}
-            name={member.name}
-            surname={member.surname}
-            nickname={member.nickname}
-            position={member.position}
-            teach={member.teach}
-            code={member.code}
-            tool={member.tool}
-          />
-        ))}
+      <div className="flex flex-col h-fit w-[50%]">
+          <div className="relative w-[50%] aspect-[10/3] left-1/2 -translate-x-1/2">
+            <Image 
+              src="/img/logo/game.webp"
+              alt="game"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <div className="grid grid-cols-4 gap-4 h-fit p-5 m-5 ">
+          {nonWebMembers.map((member, i) => (
+            <MemberCard
+              key={i}
+              index={i}
+              img={member.img}
+              name={member.name}
+              surname={member.surname}
+              nickname={member.nickname}
+              position={member.position}
+              teach={member.teach}
+              code={member.code}
+              tool={member.tool}
+            />
+          ))}
+        </div>
       </div>
+      
   );
 };
 
@@ -438,7 +480,7 @@ const MemberCard = ({
 
   return (
     <motion.div
-      className="w-full h-[300px] bg-white rounded-lg  overflow-hidden transform-gpu"
+      className="w-full aspect-[9/13] bg-white rounded-lg  overflow-hidden transform-gpu"
       initial={{
         opacity: 0,
         y: 50,
@@ -478,16 +520,84 @@ const MemberCard = ({
             className="object-cover rounded-xl"
           />
         </div>
-        <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0_5px_30px_rgba(0,0,0,0.1)] ">
+        <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0_5px_30px_rgba(0,0,0,0.1)] text-[30%] md:text-[50%] lg:text-[80%]">
           <p className="text-white font-semibold text-center">{nickname}</p>
-          <p className="text-white font-semibold text-center ">{code.slice(0,3).toString()}</p>
-          <p className="text-white font-semibold text-center ">{code.slice(3,6).toString()}</p>
+          <p className="text-white text-center md:text-[50%] lg:text-[92%] ">{code.slice(0,3).toString()}</p>
+          <p className="text-white text-center md:text-[50%] lg:text-[92%] ">{code.slice(3,6).toString()}</p>
         </div>
       </motion.div>
     </motion.div>
   );
 };
 
+type ShimpProps = {
+  rotate?: string;
+  posX?: string;
+  posY?: string;
+};
+
+const Shimp = ({ rotate = '0deg', posX = '50%', posY = '50%' }: ShimpProps) => {
+  return (
+    <div
+      className="absolute w-[30%] aspect-square -translate-x-1/2 -translate-y-1/2"
+      style={{
+        left: posX,
+        top: posY,
+        rotate,
+      }}
+    >
+      <div className="absolute w-[17%] aspect-square top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Image src="/img/bg/shimp.webp" className="object-contain" alt="shimp" fill />
+      </div>
+      <div className="absolute w-[35%] aspect-square top-[51%] left-[50.5%] -translate-x-1/2 -translate-y-1/2">
+        <Image src="/img/bg/shimp-border.webp" className="object-contain" alt="shimp" fill />
+      </div>
+      <div className="absolute w-[50%] aspect-square top-[51%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Image src="/img/bg/shimp-eff.webp" className="object-contain" alt="shimp" fill />
+      </div>
+    </div>
+  );
+};
+
+type HexProps = {
+  rotate: string;
+  posX?: string;
+  posY?: string;
+};
+
+const Hex = ({ rotate, posX = '88%', posY = '50%' }: HexProps) => {
+  return (
+    <div
+      className="absolute w-[40%] aspect-square -translate-x-1/2 -translate-y-1/2"
+      style={{
+        left: posX,
+        top: posY,
+      }}
+    >
+      <div style={{ rotate }}>
+        <div className="absolute w-[25%] aspect-square top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Image src="/img/bg/hex.webp" className="object-contain" alt="hex" fill />
+        </div>
+        {['', '-1', '-2'].map((suffix) => (
+          <div
+            key={suffix}
+            className="absolute w-[30%] aspect-square top-1/2 left-[50.5%] -translate-x-1/2 -translate-y-1/2"
+          >
+            <Image
+              src={`/img/bg/hex-border${suffix}.webp`}
+              className="object-contain"
+              alt="hex"
+              fill
+            />
+          </div>
+        ))}
+        <div className="absolute w-[50%] aspect-square top-[51%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Image src="/img/bg/hex-eff.webp" className="object-contain" alt="hex" fill />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 
 const Logo = ()=> {
@@ -621,6 +731,16 @@ const Logo = ()=> {
           <div className="absolute top-[73%] left-[110%]  w-[4%] aspect-square -translate-x-1/2 -translate-y-1/2">
           <Image
             src="/img/logo/dot.webp"
+            fill
+            style={{
+              objectFit: "contain",
+            }}
+            alt="dot"
+          />
+        </div>
+        <div className="absolute top-[130%] left-[56%]  w-[70%] aspect-[16/9] -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/img/logo/down_parent.webp"
             fill
             style={{
               objectFit: "contain",
@@ -905,7 +1025,7 @@ const CardRightDeco: React.FC = () => {
 const NavBarTop = () => {
   return (
 
-      <motion.div className="absolute top-16 left-1/2 w-[17%] aspect-square -translate-x-1/2 -translate-y-1/2">
+      <motion.div className="absolute top-[9%] left-1/2 w-[17%] aspect-square -translate-x-1/2 -translate-y-1/2">
         <Image
           src="/img/front_page/nav.webp"
           fill
