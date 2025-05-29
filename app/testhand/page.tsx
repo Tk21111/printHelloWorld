@@ -12,103 +12,145 @@ import { fadeVariants } from "../comp/fadingStyle";
 // import MeetTheTeam from "../meetTheTeam";
 import ReactLenis from "lenis/react";
 
-export default function HandPage() {
+// Add necessary imports at the top
+import { forwardRef } from 'react';
+import { MotionValue } from 'framer-motion';
 
+export default function HandPage() {
   const ref = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end end"], // optional: better control scroll range
+    offset: ["start start", "end end"],
   });
 
-  const opacity = useTransform(scrollYProgress , [0.2,0.3] , [0,1])
-  const opacityHero = useTransform(scrollYProgress , [0.1,0.3] , [0,0.7])
-  const scale = useTransform(scrollYProgress, [0.15, 1], [1,0.7]);
+  // Scroll-based animations
+  const opacity = useTransform(scrollYProgress, [0.2, 0.3], [0, 1]);
+  const opacityHero = useTransform(scrollYProgress, [0.1, 0.3], [0, 0.7]);
+  const scale = useTransform(scrollYProgress, [0.15, 1], [1, 0.7]);
+
+  // Background image URL
+  const backgroundImageUrl = "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)";
+
+  // Tech stack data
+  const webTech = ["HTML", "CSS", "JS", "JAVA"];
+  const gameTech = ["ROBLOX", "UNITY", "BLENDER"];
 
   return (
-    <div
-      style={{
-        backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
-        backgroundRepeat : "repeat-y",
-        backgroundSize : "contain" ,
-        backgroundPosition : "center",
-        top : "2%"
-      }}
-      className="relative bg-gradient-to-t from-blue-950 to-blue-800 w-screen h-screen"
-    >
-      <ReactLenis
-        root
-         options={{
-          // Learn more -> https://github.com/darkroomengineering/lenis?tab=readme-ov-file#instance-settings
-          lerp: 0.05,
-          //   infinite: true,
-          //   syncTouch: true,
+    <div className="h-full w-full">
+      {/* Tech Stack Labels */}
+      <TechStackLabels webTech={webTech} gameTech={gameTech} />
+
+      {/* Main Container */}
+      <div
+        className="relative bg-gradient-to-t from-blue-950 to-blue-800 h-screen w-screen"
+        style={{
+          backgroundImage: backgroundImageUrl,
+          backgroundRepeat: "repeat-y",
+          backgroundSize: "contain",
+          backgroundPosition: "center",
+          top: "2%"
         }}
+      >
+        <ReactLenis
+          root
+          options={{
+            lerp: 0.05,
+          }}
         >
-          <div className="align-middle">
+          {/* Scrolling Content */}
+          <ScrollingContent 
+            ref={ref}
+            scale={scale}
+            opacity={opacity}
+            opacityHero={opacityHero}
+          />
 
-          
-        <motion.div 
-          ref={ref}
-          className="realtive h-[350vh] w-full">
-          <motion.div 
-            className="absolute h-fit w-full"
-            style={{
-              scale : scale,
-              // backgroundImage : "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)",
-              //   backgroundRepeat : "no-repeat",
-              //   backgroundSize : "contain" ,
-              //   backgroundPosition : "center",
-              //   top : "2%"
-            }}
-            >
-            <motion.div 
-              className="absolute inset-0 rounded-lg pointer-events-none"
-              style={{
-                opacity: opacityHero,
-                background: `radial-gradient(
-                  ellipse at center,
-                  rgba(0, 0, 0, 0) 40%,
-                  rgba(0, 0, 0, 0.8) 100%
-                )`,
-                boxShadow: "inset 0 0 100px rgba(0, 0, 0, 0.7)",
-                transition: 'opacity 0.7s ease-in-out',
-              }}
-            />  
-            <Hero/>
-            
-
-
-
-            
-          </motion.div>
-          <motion.div 
-            className="absolute h-fit w-fit scale-90"
-            style={{
-                opacity : opacity
-              }}
-          >
-            <Card />
-            <motion.div 
-              className="absolute inset-0 rounded-lg pointer-events-none"
-              style={{
-                opacity: opacityHero,
-                
-              }}
-            />
-          </motion.div>
-        </motion.div>
-        
-        </div>
-        <div className="flex flex-row w-screen aspect-square">
-            <MemberParent />
-            <MemberParentG/> 
-        </div>
-      </ReactLenis>
+          {/* Member Sections */}
+          <MemberSections />
+        </ReactLenis>
+      </div>
     </div>
   );
 }
 
+// Separated Components
+const TechStackLabels = ({ webTech, gameTech }: { webTech: string[], gameTech: string[] }) => (
+  <>
+    <motion.div className="absolute top-1/2 left-1/4 text-center text-lg mt-5 flex flex-col place-items-center -translate-x-1/2 -translate-y-1/2">
+      <div className="flex flex-row space-x-2">
+        {webTech.slice(0, 3).map((tech, i) => (
+          <p key={i}>{tech}{i < 2 ? ',' : ''}</p>
+        ))}
+      </div>
+      <p>{webTech[3]}</p>
+    </motion.div>
+
+    <motion.div className="absolute top-1/2 left-3/4 text-center text-lg mt-5 flex flex-col place-items-center -translate-x-1/2 -translate-y-1/2">
+      <div className="flex flex-row space-x-2">
+        {gameTech.slice(0, 2).map((tech, i) => (
+          <p key={i}>{tech}{i < 1 ? ',' : ''}</p>
+        ))}
+      </div>
+      <p>{gameTech[2]},</p>
+    </motion.div>
+  </>
+);
+
+interface ScrollingContentProps {
+  scale: MotionValue<number>;
+  opacity: MotionValue<number>;
+  opacityHero: MotionValue<number>;
+}
+
+const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ scale, opacity, opacityHero }, ref) => (
+  <div className="align-middle">
+    <motion.div ref={ref} className="relative h-[350vh] w-full">
+      {/* Hero Section */}
+      <motion.div 
+        className="absolute h-fit w-full"
+        style={{ scale }}
+      >
+        <DarkOverlay opacity={opacityHero} />
+        <Hero />
+      </motion.div>
+
+      {/* Card Section */}
+      <motion.div 
+        className="absolute h-fit w-fit scale-90"
+        style={{ opacity }}
+      >
+        <Card />
+        <DarkOverlay opacity={opacityHero} />
+      </motion.div>
+    </motion.div>
+  </div>
+));
+
+const DarkOverlay = ({ opacity }: { opacity: MotionValue<number> }) => (
+  <motion.div 
+    className="absolute inset-0 rounded-lg pointer-events-none"
+    style={{
+      opacity,
+      background: `radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 0) 40%,
+        rgba(0, 0, 0, 0.8) 100%
+      )`,
+      boxShadow: "inset 0 0 100px rgba(0, 0, 0, 0.7)",
+      transition: 'opacity 0.7s ease-in-out',
+    }}
+  />
+);
+
+const MemberSections = () => (
+  <div className="flex flex-row w-screen aspect-[9/9]">
+    <MemberParent />
+    <MemberParentG />
+  </div>
+);
+
+ScrollingContent.displayName = 'ScrollingContent';
 
 
 const Hero = () => {
@@ -213,17 +255,7 @@ const Hand = () => {
             />
           </div>
           
-          <motion.div 
-            className="text-center text-lg mt-5 flex flex-row space-x-2"
-            style={{
-              opacity : opacityText
-            }}
-            >
-              <p>HTML,</p>
-              <p>CSS,</p>
-              <p>JS,</p>
-              <p>JAVA</p>
-          </motion.div>
+         
         </motion.div>
 
         {/* Right Card */}
@@ -256,18 +288,6 @@ const Hand = () => {
               alt="img"
             />
           </div>
-          <motion.div 
-            className="text-center text-lg mt-5 flex flex-col space-x-2 place-items-center"
-            style={{
-              opacity : opacityText
-            }}
-            >
-              <div className="flex flex-row">
-                <p>ROBLOX,</p>
-                <p>UNITY</p>
-              </div>
-              <p>BLENDER,</p>
-          </motion.div>
         </motion.div>
       </motion.div>
     </motion.div>
@@ -283,6 +303,11 @@ type Member = {
 
 const members: Member[] = [
   // Web members (web: true)
+  {
+    img: "/img/profile/jazer_final.jpg",
+    name: "jazer",
+    web: true,
+  },
   {
     img: "/img/profile/jazer_final.jpg",
     name: "jazer",
@@ -349,8 +374,8 @@ const MemberParent = () => {
   const webMembers = members.filter(member => member.web === true);
   
   return (
-    <div className="w-[50%] aspect-[16/5]">
-      <div className="grid grid-cols-3 gap-4 h-full p-4">
+
+      <div className="grid grid-cols-4 gap-4 h-[35%] p-4 w-[50%]">
         {webMembers.map((member, i) => (
           <MemberCard
             key={i}
@@ -361,7 +386,6 @@ const MemberParent = () => {
           />
         ))}
       </div>
-    </div>
   );
 };
 
@@ -370,8 +394,7 @@ const MemberParentG = () => {
   const nonWebMembers = members.filter(member => member.web === false);
   
   return (
-    <div className="w-[50%] aspect-auto">
-      <div className="grid grid-cols-3 gap-4 h-full p-4 w-full">
+      <div className="grid grid-cols-4 gap-4 h-[35%] p-4 w-[50%]">
         {nonWebMembers.map((member, i) => (
           <MemberCard
             key={i}
@@ -382,7 +405,6 @@ const MemberParentG = () => {
           />
         ))}
       </div>
-    </div>
   );
 };
 
@@ -393,7 +415,7 @@ const MemberCard = ({ img, name, web, index }: Member & { index: number }) => {
 
   return (
     <motion.div
-      className="w-full h-[30%] bg-white rounded-lg shadow-xl overflow-hidden transform-gpu"
+      className="w-full h-full bg-white rounded-lg shadow-xl overflow-hidden transform-gpu"
       initial={{
         opacity: 0,
         y: 50,
