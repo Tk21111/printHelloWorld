@@ -709,7 +709,7 @@ const Logo = ()=> {
           </div>
            <div className="absolute top-[53%] left-[60%] w-[12%] aspect-square -translate-x-1/2">
             <div
-              className="rotate-[15deg] h-full w-full"
+              className="h-full w-full"
             >
               <Image
                 src="/img/logo/w.webp"
