@@ -20,7 +20,7 @@ import { MotionValue } from 'framer-motion';
 const webTech = ["HTML", "CSS", "JS", "JAVA"];
 const gameTech = ["ROBLOX", "UNITY", "BLENDER"];
 
-export default function HandPage() {
+export default function Intro() {
   const ref = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -37,17 +37,11 @@ export default function HandPage() {
   // Parallax speeds: slow = 20%, medium = 50%, fast = 80%
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]); // Slow parallax
   
-  // Alternative speeds you can use:
-  // const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]); // Medium
-  // const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]); // Fast
-  // const backgroundY = useTransform(scrollYProgress, [0, 1], ["30%", "0%"]); // Reverse slow
-  // const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]); // Upward movement
-
   return (
     <div className="h-[320vh] w-full relative">
       {/* Fixed Background */}
       <motion.div
-        className="fixed bg-gradient-to-t from-blue-950 to-blue-800 h-screen w-screen top-0 left-0 z-0"
+        className="fixed bg-gradient-to-t from-blue-950 to-blue-800 h-screen w-full top-0 left-0 z-0"
         style={{
           backgroundImage: "url(/img/bg/bg.webp)",
           backgroundRepeat: "repeat",
@@ -71,11 +65,15 @@ export default function HandPage() {
             opacity={opacity}
             opacityHero={opacityHero}
           />
-
           {/* Member Sections */}
+          
           <MemberSections />
           <div className="flex w-full h-[10%] p-5 text-sm justify-end">
             <p>{"@ design and build by [[ Print('Hello World') ]]"}</p>
+          </div>
+          <div className="flex w-full h-[10%] p-5 text-sm justify-end bottom-[10%]">
+
+            <p>under construction</p>
           </div>
         </ReactLenis>
       </div>
@@ -85,7 +83,7 @@ export default function HandPage() {
 
 const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ scale, opacity, opacityHero }, ref) => (
   <div className="align-middle">
-    <motion.div ref={ref} className="relative h-[350vh] w-full">
+    <motion.div ref={ref} className="relative h-[200vw] w-full">
       {/* Hero Section */}
       <motion.div 
         className="sticky h-screen w-full z-20"
@@ -97,13 +95,15 @@ const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ sc
 
       {/* Card Section */}
       <motion.div 
-        className="absolute w-screen aspect-[9/10] scale-90 z-30"
+        className="absolute w-full aspect-[9/10] scale-90 z-30 bg-black/80"
         style={{ opacity }}
       >
         <Hand />
         <DarkOverlay opacity={opacityHero} />
       </motion.div>
+      
     </motion.div>
+    
   </div>
 ));
 // Separated Components
@@ -189,7 +189,7 @@ interface ScrollingContentProps {
 
 const DarkOverlay = ({ opacity }: { opacity: MotionValue<number> }) => (
   <motion.div 
-    className="absolute inset-0 rounded-lg pointer-events-none"
+    className="absolute inset-0 rounded-lg pointer-events-non"
     style={{
       opacity,
       background: `radial-gradient(
@@ -204,9 +204,13 @@ const DarkOverlay = ({ opacity }: { opacity: MotionValue<number> }) => (
 );
 
 const MemberSections = () => (
-  <div className="flex flex-row w-screen aspect-[16/7]">
-    <MemberParent />
-    <MemberParentG />
+  <div className="flex flex-col h-full w-full space-y-[10%]">
+
+      
+      <div className="flex flex-row w-full aspect-[16/7]">
+        <MemberParent />
+        <MemberParentG />
+      </div>
   </div>
 );
 
@@ -222,7 +226,7 @@ const Hero = () => {
 
 
   return (
-    <div ref={ref} className=" aspect-[calc(4*3+1)/7] w-screen relative">
+    <div ref={ref} className=" aspect-[calc(4*3+1)/7] w-full relative">
       <motion.div
         className="h-full w-full sticky top-0"
       >
@@ -603,7 +607,7 @@ const Hex = ({ rotate, posX = '88%', posY = '50%' }: HexProps) => {
 const Logo = ()=> {
   
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen aspect-[16/9] scale-[49%] max-w-6xl px-4">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full aspect-[16/9] scale-[49%] max-w-6xl px-4">
          <motion.div 
           variants={fadeVariants["elegant"]}
           initial="hidden"
