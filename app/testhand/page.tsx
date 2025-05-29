@@ -6,7 +6,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import {  useRef } from "react";
 
 import { fadeVariants } from "../comp/fadingStyle";
 // import MeetTheTeam from "../meetTheTeam";
@@ -100,7 +100,7 @@ export default function HandPage() {
         </motion.div>
         
         </div>
-        <div className="flex flex-row w-screen aspect-square]">
+        <div className="flex flex-row w-screen aspect-square">
             <MemberParent />
             <MemberParentG/> 
         </div>
