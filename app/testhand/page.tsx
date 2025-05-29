@@ -16,6 +16,10 @@ import ReactLenis from "lenis/react";
 import { forwardRef } from 'react';
 import { MotionValue } from 'framer-motion';
 
+// Tech stack data
+const webTech = ["HTML", "CSS", "JS", "JAVA"];
+const gameTech = ["ROBLOX", "UNITY", "BLENDER"];
+
 export default function HandPage() {
   const ref = useRef(null);
 
@@ -32,14 +36,11 @@ export default function HandPage() {
   // Background image URL
   const backgroundImageUrl = "url(https://media.discordapp.net/attachments/909307211862396929/1377195824777400360/f32ae98c68234d02.png?ex=6838150f&is=6836c38f&hm=b492042528939fc9fa063c804ce86c8def09af712bb39cd56ee1233b20f3e428&=&format=webp&quality=lossless&width=1423&height=800)";
 
-  // Tech stack data
-  const webTech = ["HTML", "CSS", "JS", "JAVA"];
-  const gameTech = ["ROBLOX", "UNITY", "BLENDER"];
+
 
   return (
     <div className="h-full w-full">
-      {/* Tech Stack Labels */}
-      <TechStackLabels webTech={webTech} gameTech={gameTech} />
+     
 
       {/* Main Container */}
       <div
@@ -75,26 +76,77 @@ export default function HandPage() {
 }
 
 // Separated Components
+
 const TechStackLabels = ({ webTech, gameTech }: { webTech: string[], gameTech: string[] }) => (
-  <>
-    <motion.div className="absolute top-1/2 left-1/4 text-center text-lg mt-5 flex flex-col place-items-center -translate-x-1/2 -translate-y-1/2">
-      <div className="flex flex-row space-x-2">
-        {webTech.slice(0, 3).map((tech, i) => (
-          <p key={i}>{tech}{i < 2 ? ',' : ''}</p>
-        ))}
+  <div 
+    className="absolute w-full h-full"
+    
+    >
+    <motion.div
+      initial={{
+            opacity : 0,
+            scale : 0.6
+          }}
+      whileInView={{
+        opacity : 1,
+        scale : 1
+      }}
+      transition={{
+        duration : 0.3,
+        ease : "easeOut"
+      }}
+    >
+      <div 
+        className="absolute left-[27.6%] text-center text-lg mt-5 flex flex-col place-items-center -translate-x-1/2 -translate-y-1/2 p-[5%]"
+        style={{
+        backgroundImage : "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377263211044147300/1df011b0c5fb2d47.png?ex=6838fc91&is=6837ab11&hm=204c68f3c6a8111cddfb0be1f8ac9fb6665303caa466dba0084d0e97841151b1&)",
+        backgroundSize: "contain",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+        >
+        <div className="flex flex-row space-x-2">
+          {webTech.slice(0, 3).map((tech, i) => (
+            <p key={i}>{tech}{i < 2 ? ',' : ''}</p>
+          ))}
+        </div>
+        <p>{webTech[3]}</p>
       </div>
-      <p>{webTech[3]}</p>
     </motion.div>
 
-    <motion.div className="absolute top-1/2 left-3/4 text-center text-lg mt-5 flex flex-col place-items-center -translate-x-1/2 -translate-y-1/2">
-      <div className="flex flex-row space-x-2">
-        {gameTech.slice(0, 2).map((tech, i) => (
-          <p key={i}>{tech}{i < 1 ? ',' : ''}</p>
-        ))}
+    <motion.div
+      initial={{
+            opacity : 0,
+            scale : 0.6
+          }}
+      whileInView={{
+        opacity : 1,
+        scale : 1
+      }}
+      transition={{
+        duration : 0.3,
+        ease : "easeOut"
+      }}
+    >
+      <div 
+        className="absolute left-[72%] text-center text-lg mt-5 flex flex-col place-items-center -translate-x-1/2 -translate-y-1/2 p-[5%]"
+        style={{
+        backgroundImage : "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377263211044147300/1df011b0c5fb2d47.png?ex=6838fc91&is=6837ab11&hm=204c68f3c6a8111cddfb0be1f8ac9fb6665303caa466dba0084d0e97841151b1&)",
+        backgroundSize: "contain",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+        >
+        <div className="flex flex-row space-x-2">
+          {gameTech.slice(0, 2).map((tech, i) => (
+            <p key={i}>{tech}{i < 1 ? ',' : ''}</p>
+          ))}
+        </div>
+        <p>{gameTech[2]},</p>
       </div>
-      <p>{gameTech[2]},</p>
     </motion.div>
-  </>
+    
+  </div>
 );
 
 interface ScrollingContentProps {
@@ -120,6 +172,7 @@ const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ sc
         className="absolute h-fit w-fit scale-90"
         style={{ opacity }}
       >
+         
         <Card />
         <DarkOverlay opacity={opacityHero} />
       </motion.div>
@@ -192,15 +245,15 @@ const Hand = () => {
   });
 
   // Transform values for smoother animation
-  const leftCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, -20, -40, -60, -80]);
   const rightCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, 20, 40, 60, 80]);
-  const containerY = useTransform(scrollYProgress, [0.6, 0.8, 1], [ -600, 300, 500]);
+  const containerY = useTransform(scrollYProgress, [0.6, 0.8, 1], [ -500, "50%", "100%"]);
   const scale = useTransform(scrollYProgress , [0, 0.4, 0.6, 0.8, 1], [0.5,0.7,1,1.05,1.1]);
-  const opacityText = useTransform(scrollYProgress , [0.5,1] , [0,1])
 
   //hand
   const handY = useTransform(scrollYProgress, [0, 0.5, 0.6], [0, -50, -100]);
   const opacityHand = useTransform(scrollYProgress, [0,0.5,0.6], [1, 1, 0]);
+
+  
 
 
   return (
@@ -208,6 +261,17 @@ const Hand = () => {
       ref={ref}
       className="relative h-full w-full"
     >
+      {/* Tech Stack Labels */}
+        <div className="absolute bottom-[-90%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg z-20 w-full">
+          <TechStackLabels webTech={webTech} gameTech={gameTech} />
+        
+          
+        </div>
+        <motion.div className="absolute bottom-[-150%] w-[42%] aspect-[10/5] left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Image src="/img/bg/hand.webp" fill alt="scroll" />
+        </motion.div>
+
+        
       <motion.div
         className="sticky top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-5"
         style={{
@@ -225,32 +289,40 @@ const Hand = () => {
         </motion.div>
         {/* Left Card */}
         <motion.div
-          className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-fit  text-white shadow-xl rounded-lg"
+          className="absolute top-1/2 left-[15.2%] -translate-x-1/2 -translate-y-1/2 w-[15%]  text-white shadow-xl rounded-lg"
           style={{ 
-            x: leftCardX,
-            
-            scale : scale
+            x: rightCardX,
+            scale : scale,
+            transformStyle: "preserve-3d",
           }}
           initial={{
-            scale : 0.7
+            scale : 0.7,
+            rotateY : 0
           }}
           animate={{
-            scale : [0.8,1]
+            scale : [0.8,1],
+            rotateY : [0,360]
           }}
           transition={{
             duration : 1,
-            ease : 'easeInOut'
+            ease : 'easeInOut',
+            rotateY : {
+              duration : 50,
+              ease : "linear",
+              repeat : Infinity,
+              repeatType : "reverse", 
+            }
           }}
         >
           <div
             style={{
               boxShadow : '0 0 10px 2px white',
             }}  
+            className="w-full aspect-[12/16]"
           >
             <Image 
               src="/img/card/web.webp"
-              width={250}
-              height={250}
+              fill
               alt="img"
             />
           </div>
@@ -260,31 +332,40 @@ const Hand = () => {
 
         {/* Right Card */}
         <motion.div
-          className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 min-h-[324px] min-w-[232px] max-w-[1160px] max-h-[1620]  text-white shadow-xl rounded-lg"
+          className="absolute top-1/2 right-1/4 -translate-x-1/2 -translate-y-1/2 w-[15%]  text-white shadow-xl rounded-lg"
           style={{ 
             x: rightCardX,
-            scale : scale
+            scale : scale,
+            transformStyle: "preserve-3d",
           }}
           initial={{
-            scale : 0.7
+            scale : 0.7,
+            rotateY : 0
           }}
           animate={{
-            scale : [0.8,1]
+            scale : [0.8,1],
+            rotateY : [0,360]
           }}
           transition={{
             duration : 1,
-            ease : 'easeInOut'
+            ease : 'easeInOut',
+            rotateY : {
+              duration : 50,
+              ease : "linear",
+              repeat : Infinity,
+              repeatType : "reverse", 
+            }
           }}
         >
           <div
             style={{
               boxShadow : '0 0 10px 2px white',
             }}  
+            className="w-full aspect-[12/16]"
           >
             <Image 
               src="/img/card/game.webp"
-              width={250}
-              height={250}
+              fill
               alt="img"
             />
           </div>
@@ -360,6 +441,7 @@ const Card = () => {
   return (
     <div className="w-screen aspect-[9/7]">
       <div className="relative">
+        
         <div className="absolute w-8 h-8 bg-blue-500 rounded-full top-4 left-4 flex items-center justify-center text-white text-xs font-bold">
           Start
         </div>
@@ -468,7 +550,7 @@ const MemberCard = ({ img, name, web, index }: Member & { index: number }) => {
 const Logo = ()=> {
   
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2000px] h-[500px] scale-75 max-w-6xl px-4">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen aspect-[16/9] scale-[49%] max-w-6xl px-4">
          <motion.div 
           variants={fadeVariants["elegant"]}
           initial="hidden"
