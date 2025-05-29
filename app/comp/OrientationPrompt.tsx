@@ -3,12 +3,16 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+
 
 interface OrientationPromptProps {
   onContinue?: () => void;
 }
 
 const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => {
+
+    const router = useRouter()
   const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
@@ -34,9 +38,14 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
     };
   }, []);
 
-  const handleContinue = () => {
+  const handleContinueF = () => {
     setShowPrompt(false);
     if (onContinue) onContinue();
+  };
+
+   const handleContinueM = () => {
+    setShowPrompt(false);
+    router.push("/waiting")
   };
 
   return (
@@ -46,7 +55,14 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-                >
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          style={{
+          backgroundImage: "url(/img/bg/bg.webp)",
+          backgroundRepeat: "repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        >
           {/* Animated background particles */}
           <div className="absolute inset-0 overflow-hidden">
             {[...Array(4)].map((_, i) => (
@@ -93,7 +109,7 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
             </h1>
 
             <p className="mb-8 text-lg opacity-90">
-              For the best experience, please flip your device to horizontal orientation
+              กรุณาเปลี่ยนหน้าจอเป็นแนวนอน
             </p>
 
             {/* Device rotation demo */}
@@ -116,7 +132,7 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
             </div>
 
             <motion.button
-              onClick={handleContinue}
+              onClick={handleContinueM}
               className="mb-4 rounded-full bg-gradient-to-r from-red-500 to-pink-500 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300"
               whileHover={{ 
                 scale: 1.05, 
@@ -128,7 +144,7 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
             </motion.button>
 
             <button
-              onClick={handleContinue}
+              onClick={handleContinueF}
               className="block w-full text-sm text-white/70 transition-colors duration-300 hover:text-white hover:underline"
             >
               Skip this message

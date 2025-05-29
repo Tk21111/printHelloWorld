@@ -237,6 +237,35 @@ const Hero = () => {
         <RightDeco f={false} />
         <RightDeco f={true} />
         <CardRightDeco />
+        <motion.div
+          className="w-[5%] aspect-square absolute top-[70%] left-[47%] -translate-x-1/2"
+          animate={{
+            y: [0, -10, 0], // move up 10px and back
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <div className="w-[100%] aspect-square absolute top-[60%] left-1/2">
+          <Image
+            src="/img/bg/down_arr.webp"
+            alt="a"
+            fill
+            className="object-contain"
+          />
+        </div>
+          <div className="w-[100%] aspect-square absolute top-[90%] left-1/2">
+          <Image
+            src="/img/bg/down_arr.webp"
+            alt="a"
+            fill
+            className="object-contain"
+          />
+        </div>
+        </motion.div>
+        
       </motion.div>
       
 
