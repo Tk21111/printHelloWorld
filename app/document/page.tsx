@@ -1,5 +1,5 @@
-import CircleNavBar from "../navBar";
-import { Card } from "../PrintHelloWorldIntro";
+import CircleNavBar from "../comp/navBar";
+import { Card } from "../comp/PrintHelloWorldIntro";
 
 export default function Document() {
     return (
