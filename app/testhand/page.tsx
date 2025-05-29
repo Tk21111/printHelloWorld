@@ -34,7 +34,7 @@ export default function HandPage() {
         backgroundPosition : "center",
         top : "2%"
       }}
-      className="relative bg-gradient-to-t from-blue-950 to-blue-800"
+      className="relative bg-gradient-to-t from-blue-950 to-blue-800 w-screen h-screen"
     >
       <ReactLenis
         root
@@ -45,9 +45,12 @@ export default function HandPage() {
           //   syncTouch: true,
         }}
         >
+          <div className="align-middle">
+
+          
         <motion.div 
           ref={ref}
-          className="realtive h-[4000px] w-fit">
+          className="realtive h-[350vh] w-fit">
           <motion.div 
             className="absolute h-fit w-fit"
             style={{
@@ -59,7 +62,6 @@ export default function HandPage() {
               //   top : "2%"
             }}
             >
-            <Hero/>
             <motion.div 
               className="absolute inset-0 rounded-lg pointer-events-none"
               style={{
@@ -67,12 +69,14 @@ export default function HandPage() {
                 background: `radial-gradient(
                   ellipse at center,
                   rgba(0, 0, 0, 0) 40%,
-                  rgba(0, 0, 0, 0.6) 100%
+                  rgba(0, 0, 0, 0.8) 100%
                 )`,
                 boxShadow: "inset 0 0 100px rgba(0, 0, 0, 0.7)",
                 transition: 'opacity 0.7s ease-in-out',
               }}
-            />
+            />  
+            <Hero/>
+            
 
 
 
@@ -96,6 +100,7 @@ export default function HandPage() {
         </motion.div>
         <MemberParent />
         <MemberParentG/>
+        </div>
       </ReactLenis>
     </div>
   );
@@ -146,10 +151,12 @@ const Hand = () => {
   const rightCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0, 20, 40, 60, 80]);
   const containerY = useTransform(scrollYProgress, [0.6, 0.8, 1], [ -600, 300, 500]);
   const scale = useTransform(scrollYProgress , [0, 0.4, 0.6, 0.8, 1], [0.5,0.7,1,1.05,1.1]);
+  const opacityText = useTransform(scrollYProgress , [0.99,1] , [0,1])
 
   //hand
   const handY = useTransform(scrollYProgress, [0, 0.5, 0.6], [0, -50, -100]);
   const opacityHand = useTransform(scrollYProgress, [0,0.5,0.6], [1, 1, 0]);
+
 
   return (
     <motion.div
@@ -163,7 +170,7 @@ const Hand = () => {
         }}
       >
         <motion.div 
-          className="absolute w-8 h-8 bg-blue-500 rounded-full top-[200px] -translate-y-1/2 left-1/2 flex items-center justify-center text-white text-xs font-bold"
+          className="absolute w-8 h-8 rounded-full top-[200px] -translate-y-1/2 left-1/2 flex items-center justify-center text-white text-xs font-bold"
           style={{ 
             opacity: opacityHand ,
             y : handY
@@ -173,10 +180,10 @@ const Hand = () => {
         </motion.div>
         {/* Left Card */}
         <motion.div
-          className="absolute  top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-fit  bg-gradient-to-br text-white shadow-xl rounded-lg"
+          className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-fit  text-white shadow-xl rounded-lg"
           style={{ 
             x: leftCardX,
-            boxShadow : '0 0 10px 2px white',
+            
             scale : scale
           }}
           initial={{
@@ -190,20 +197,37 @@ const Hand = () => {
             ease : 'easeInOut'
           }}
         >
-          <Image 
-            src="/img/card/web.webp"
-            width={250}
-            height={250}
-            alt="img"
-          />
+          <div
+            style={{
+              boxShadow : '0 0 10px 2px white',
+            }}  
+          >
+            <Image 
+              src="/img/card/web.webp"
+              width={250}
+              height={250}
+              alt="img"
+            />
+          </div>
+          
+          <motion.div 
+            className="text-center text-lg mt-5 flex flex-row space-x-2"
+            style={{
+              opacity : opacityText
+            }}
+            >
+              <p>HTML,</p>
+              <p>CSS,</p>
+              <p>JS,</p>
+              <p>JAVA</p>
+          </motion.div>
         </motion.div>
 
         {/* Right Card */}
         <motion.div
-          className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 min-h-[324px] min-w-[232px] ] max-w-[1160px] max-h-[1620]  text-white shadow-xl rounded-lg"
+          className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 min-h-[324px] min-w-[232px] max-w-[1160px] max-h-[1620]  text-white shadow-xl rounded-lg"
           style={{ 
             x: rightCardX,
-            boxShadow : '0 0 10px 2px white',
             scale : scale
           }}
           initial={{
@@ -217,13 +241,30 @@ const Hand = () => {
             ease : 'easeInOut'
           }}
         >
-          <Image 
-            src="/img/card/game.webp"
-            
-            width={250}
-            height={250}  
-            alt="img"
-          />
+          <div
+            style={{
+              boxShadow : '0 0 10px 2px white',
+            }}  
+          >
+            <Image 
+              src="/img/card/game.webp"
+              width={250}
+              height={250}
+              alt="img"
+            />
+          </div>
+          <motion.div 
+            className="text-center text-lg mt-5 flex flex-col space-x-2 place-items-center"
+            style={{
+              opacity : opacityText
+            }}
+            >
+              <div className="flex flex-row">
+                <p>ROBLOX,</p>
+                <p>UNITY</p>
+              </div>
+              <p>BLENDER,</p>
+          </motion.div>
         </motion.div>
       </motion.div>
     </motion.div>
@@ -271,14 +312,14 @@ const membersG: Member[] = [
   },
   {
     img: "/img/profile/jazer_final.jpg",
-    posX: 35,
+    posX: 50,
     posY: 3,
     name: "jazer",
     web : false,
   },
   {
     img: "/img/profile/jazer_final.jpg",
-    posX: 55,
+    posX: 90,
     posY: 3,
     name: "jazer",
     web : false,
@@ -336,18 +377,6 @@ const MemberParent = () => {
 const MemberParentG = () => {
   return (
     <div className="flex h-[700px] w-[1720px] relative">
-      <motion.div className="w-[25%]  relative ">
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        >
-          <Image src="/img/card/game.webp" width={200} height={200} alt="img logo" />
-        </motion.div>
-        
-      </motion.div>
-      <div
-        className="flex-1 relative overflow-hidden"
-
-      >
          {
           membersG.map((member, i) => (
             <MemberCard
@@ -359,9 +388,7 @@ const MemberParentG = () => {
               web={member.web}
             />
           ))
-        }
-      </div>
-       
+        }       
     </div>
   )
 };
@@ -374,13 +401,13 @@ const MemberCard = ({  img, posX, posY , name ,web }: Member) => {
     const sequence = [];
     
     // Create a sequence of positions leading to the final posX
-    for (let i = 0; i <= posX; i += 10) { // Fixed: i += 10 instead of i+5
+    for (let i = 0; i <= posY; i += 10) { // Fixed: i += 10 instead of i+5
       sequence.push(`${i}%`);
     }
     
     // Ensure we end exactly at posX
-    if (sequence[sequence.length - 1] !== `${posX}%`) {
-      sequence.push(`${posX}%`);
+    if (sequence[sequence.length - 1] !== `${posY}%`) {
+      sequence.push(`${posY}%`);
     }
     
     setAnimationSequence(sequence);
@@ -392,7 +419,7 @@ const MemberCard = ({  img, posX, posY , name ,web }: Member) => {
     <motion.div
       className="absolute w-[200px] h-[300px] bg-white rounded-lg shadow-xl overflow-hidden transform-gpu perspective-1000"
       style={{
-        top: `${posY * 15}%`,
+        left : posX
       }}
       initial={{
         left: '0%',
@@ -590,7 +617,19 @@ const Logo = ()=> {
   )
 }
 
-const NavBar = ()=>{
+const NavBar = (/*{oritext} : { oritext : string }*/)=>{
+
+  // const [dot, setDot] = useState("..");
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setDot((prev) => (prev.length > 5 ? "." : prev + "."));
+  //   }, 1000);
+
+  //   return () => clearInterval(interval); // cleanup
+  // }, []);
+
+
   return (
 
       <motion.div className="absolute w-[30%] left-1/4 top-3/4 aspect-[12/5] -translate-x-1/2 -translate-y-1/2">
@@ -603,6 +642,9 @@ const NavBar = ()=>{
             alt="place_holder"
             className="w-full h-full"
           />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-2xl ">
+              !! Welcome !!
+          </div>
         </motion.div>
 
   )
