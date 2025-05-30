@@ -2,6 +2,7 @@
 
 import {
   motion,
+  ScrollMotionValues,
   useScroll,
   useTransform,
 } from "framer-motion";
@@ -30,8 +31,11 @@ export default function Intro() {
 
   // Scroll-based animations
   const opacity = useTransform(scrollYProgress, [0.2, 0.3], [0, 1]);
+
   const opacityHero = useTransform(scrollYProgress, [0.1, 0.3], [0, 0.7]);
-  const scale = useTransform(scrollYProgress, [0.15, 1], [1, 0.7]);
+  const XHero = useTransform(scrollYProgress , [0.1,0.8] , ["0deg","35deg"])
+  const ZHero = useTransform(scrollYProgress , [0.1,0.8] , ["0deg","45deg"])
+  const scale = useTransform(scrollYProgress, [0.15, 1], [1, 0.5]);
   
   // Background position animation - moves with scroll
   // Parallax speeds: slow = 20%, medium = 50%, fast = 80%
@@ -64,16 +68,35 @@ export default function Intro() {
             scale={scale}
             opacity={opacity}
             opacityHero={opacityHero}
+            XHero={XHero}
+            ZHero={ZHero}
+            scrollY={scrollYProgress}
           />
           {/* Member Sections */}
-          
-          <MemberSections />
-          <div className="flex w-full h-[10%] p-5 text-sm justify-end">
-            <p>{"@ design and build by [[ Print('Hello World') ]]"}</p>
+          <MeetTheTeam/>
+          <div className="h-fit w-full flex flex-col space-y-[15%] absolute top-[60%] z-20">
+            <MemberSections />
+            <div className="absolute top-[150%] h-fit w-full">
+              <WhatWeTeach/>
+              <div className="flex flex-row h-fit w-full">
+                <div className="w-1/2">
+                  <TechStackParent />
+                </div>
+                <div className="w-1/2">
+                  <TechStackParentG />
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex w-full h-[10%] p-5 text-sm justify-end bottom-[10%]">
 
+        
+          <footer className="flex w-full h-[10%] p-5 text-sm justify-end">
+            
+            <p>{"@ design and build by [[ Print('Hello World') ]]"}</p>
             <p>under construction</p>
+          </footer>
+          <div className="flex h-[10%] w-ful">
+            <ContratParent/>
           </div>
         </ReactLenis>
       </div>
@@ -81,26 +104,32 @@ export default function Intro() {
   );
 }
 
-const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ scale, opacity, opacityHero }, ref) => (
+const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ scale, opacity, opacityHero , XHero ,ZHero ,scrollY}, ref) => (
   <div className="align-middle">
     <motion.div ref={ref} className="relative h-[200vw] w-full">
       {/* Hero Section */}
       <motion.div 
-        className="sticky h-screen w-full z-20"
-        style={{ scale }}
+        className="sticky h-screen w-full z-20 top-0"
+        style={{ 
+          scale ,
+          transformStyle : "preserve-3d",
+          rotateZ : ZHero,
+          rotateX : XHero,
+          perspective: 1000, // Add perspective for 3D effect
+        }}
       >
         <DarkOverlay opacity={opacityHero} />
-        <Hero />
+        <Hero scrollY={scrollY} />
       </motion.div>
 
-      {/* Card Section */}
+      {/* Card Section
       <motion.div 
         className="absolute w-full aspect-[9/10] scale-90 z-30 bg-black/80"
         style={{ opacity }}
       >
         <Hand />
         <DarkOverlay opacity={opacityHero} />
-      </motion.div>
+      </motion.div> */}
       
     </motion.div>
     
@@ -184,6 +213,10 @@ interface ScrollingContentProps {
   scale: MotionValue<number>;
   opacity: MotionValue<number>;
   opacityHero: MotionValue<number>;
+  XHero: MotionValue<string>;
+  ZHero : MotionValue<string>;
+  scrollY : MotionValue<number>;
+
 }
 
 
@@ -217,20 +250,35 @@ const MemberSections = () => (
 ScrollingContent.displayName = 'ScrollingContent';
 
 
-const Hero = () => {
-  const ref = useRef(null);
+const Hero = ({ scrollY }: {scrollY : MotionValue<number>}) => {
 
   // Y position moves slightly upward as the user scrolls
   // const posY = useTransform(scrollYProgress, [0, 1], [0, 300]);
 
-
+  const tranformZ = useTransform(scrollY , [0,1] ,[0,500])
+  const opacitySlo = useTransform(scrollY , [0.1,1],[0,1])
 
   return (
-    <div ref={ref} className=" aspect-[calc(4*3+1)/7] w-full relative">
+    <div className=" aspect-[calc(4*3+1)/7] w-full relative">
       <motion.div
-        className="h-full w-full sticky top-0"
+        className="h-full w-full "
+        style={{
+          transformStyle : "preserve-3d",
+          perspective : 200
+        }}
       >
-        <Logo />
+        <motion.div
+          className="h-full w-full"
+          style={{
+            z:tranformZ
+          }}
+        >
+          <Logo scrollY={scrollY}/>
+        
+        </motion.div>
+        <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl" style={{ opacity : opacitySlo}}>
+          <p>learn by doing not imagination</p>
+        </motion.div>
         <NavBar />
         <LeftDeco />
         <NavBarTop />
@@ -433,7 +481,7 @@ const MemberParent = () => {
   
   return (
     <div className="flex flex-col h-fit w-[50%]">
-        <div className="relative w-[50%] aspect-[10/3] left-1/2 -translate-x-1/2">
+        <div className="relative w-[30%] aspect-[10/3] left-1/2 -translate-x-1/2">
           <Image 
             src="/img/logo/web.webp"
             alt="game"
@@ -467,7 +515,7 @@ const MemberParentG = () => {
   
   return (
       <div className="flex flex-col h-fit w-[50%]">
-          <div className="relative w-[50%] aspect-[10/3] left-1/2 -translate-x-1/2">
+          <div className="relative w-[30%] aspect-[10/3] left-1/2 -translate-x-1/2">
             <Image 
               src="/img/logo/game.webp"
               alt="game"
@@ -633,8 +681,9 @@ const Hex = ({ rotate, posX = '88%', posY = '50%' }: HexProps) => {
 };
 
 
-const Logo = ()=> {
+const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
   
+  const worldRotate = useTransform(scrollY , [0,1] ,["0deg","360deg"])
   return (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full aspect-[16/9] scale-[49%] max-w-6xl px-4">
          <motion.div 
@@ -687,8 +736,8 @@ const Logo = ()=> {
           <div className="absolute top-[53%] left-[73.5%] w-1/6 aspect-square -translate-x-1/2 -translate-y-1/2">
               <motion.div 
                 className="h-full w-full"
-                animate={{
-                  rotate : [0,90,180,270,360]
+                style={{
+                  rotate : worldRotate
                 }}
                 transition={{
                   duration : 10,
@@ -832,8 +881,8 @@ const LeftDeco = () => {
 
 const RightDeco = ({f} : {f : boolean}) => {
   return (
-    <div className={`${f && "scale-y-[-1]"} h-[65%] `}>
-      <motion.div className={`absolute ${f ? "bottom-0" : "top-0"} left-[89%]  w-[18.5%] aspect-square -translate-x-1/2 -translate-y-1/2}`}>
+    <div className={`${f && "scale-y-[-1]"} h-0 `}>
+      <motion.div className={`absolute ${f ? "top-[10%]" : "top-0"} left-[89%]  w-[18.5%] aspect-square -translate-x-1/2 -translate-y-1/2}`}>
         <Image
           src="/img/front_page/card_col.webp"
           fill
@@ -1071,3 +1120,129 @@ const NavBarTop = () => {
 
   )
 }
+
+const MeetTheTeam = () => {
+
+  return (
+    <div className="absolute w-screen h-[1%] top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+      <div className="absolute w-[12%] aspect-[16/9] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Image
+          src="/img/logo/meet_the_team.webp"
+          fill
+          className="object-contain"
+          alt="meet_the_team"
+        />
+      </div>
+      <div className="absolute w-[22%] aspect-[16/7] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Image
+          src="/img/profile/cover.webp"
+          fill
+          className="object-contain"
+          alt="meet_the_team"
+        />
+      </div>
+    </div>
+  )
+}
+
+const WhatWeTeach = () => {
+
+  return (
+    <div className="absolute w-[70%] top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+      <div className="absolute w-[9%] aspect-sqaure top-1/2 left-[42%] -translate-y-1/2 ">
+        <p className="text-[100%]">WHAT WE TEACH</p>
+      </div>
+      <div className="absolute w-[32%] aspect-[16/7] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Image
+          src="/img/profile/cover.webp"
+          fill
+          className="object-contain"
+          alt="meet_the_team"
+        />
+      </div>
+    </div>
+  )
+}
+
+const TechStackParent = () => {
+  return (
+    <div className="w-full">
+      <div className="flex flex-row flex-wrap items-center justify-center px-2 gap-2">
+        <TechStackCard tSImg="/img/techstack/html.webp" context="HTML" />
+        <TechStackCard tSImg="/img/techstack/css.webp" context="CSS" />
+        <TechStackCard tSImg="/img/techstack/js.webp" context="JS" />
+        <TechStackCard tSImg="/img/techstack/java.webp" context="JAVA" />
+      </div>
+    </div>
+  );
+};
+
+
+const TechStackParentG = () => {
+  return (
+    <div className="w-full">
+      <div className="flex flex-row w-full h-fititems-center justify-center px-[1%] ">
+        <TechStackCard tSImg="/img/techstack/roblox.webp" context="ROBLOX" />
+        <TechStackCard tSImg="/img/techstack/unity.webp" context="UNITY" />
+        <TechStackCard tSImg="/img/techstack/lua.webp" context="LUA" />
+        <TechStackCard tSImg="/img/techstack/csharp.webp" context="C#" />
+        <TechStackCard tSImg="/img/techstack/blender.webp" context="BLENDER" />
+      </div>
+    </div>
+  );
+};
+
+const TechStackCard = ({
+
+  tSImg,
+  context,
+}: {
+  tSImg: string;
+  context: string;
+}) => {
+
+
+  return (
+    <motion.div
+      className="relative w-[10vw] aspect-[3/5] bg-center bg-no-repeat bg-contain"
+      initial={{ x: -50, opacity: 0 }}
+      whileInView={{
+        x: 0,
+        opacity: 1,
+        transition: { type: "spring", duration: 2 },
+      }}
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.1 }}
+    >
+      <div className="absolute inset-0 flex items-center justify-center p-4">
+        <div className="relative w-4/5 aspect-[16/9]">
+          <Image
+            src={tSImg}
+            fill
+            className="object-contain"
+            alt="stack logo"
+          />
+        </div>
+      </div>
+      <p className="absolute inset-0 flex items-center justify-center p-4 top-[32%]">
+        {context}
+      </p>
+    </motion.div>
+  );
+};
+
+const ContratParent = () => {
+  return (
+    <div className="flex flex-row h-[500px] m-[2%]">
+      <Contract img="/img/techstack/ig.webp" />
+    </div>
+  );
+};
+
+const Contract = ({ img }: { img: string }) => {
+  return (
+    <div className="flex flex-row items-center space-x-4">
+      <a target="_blank" className="underline" href="https://www.instagram.com/print.hell0w0rld/">instagram</a>
+    </div>
+  );
+};
