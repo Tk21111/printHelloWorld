@@ -2,7 +2,6 @@
 
 import {
   motion,
-  ScrollMotionValues,
   useScroll,
   useTransform,
 } from "framer-motion";
@@ -17,9 +16,6 @@ import ReactLenis from "lenis/react";
 import { forwardRef } from 'react';
 import { MotionValue } from 'framer-motion';
 
-// Tech stack data
-const webTech = ["HTML", "CSS", "JS", "JAVA"];
-const gameTech = ["ROBLOX", "UNITY", "BLENDER"];
 
 export default function Intro() {
   const ref = useRef(null);
@@ -77,7 +73,7 @@ export default function Intro() {
           <div className="h-fit w-full flex flex-col space-y-[15%] absolute top-[60%] z-20">
             <MemberSections />
             <div className="absolute top-[150%] h-fit w-full">
-              <WhatWeTeach/>
+              {/* <WhatWeTeach/> */}
               <div className="flex flex-row h-fit w-full">
                 <div className="w-1/2">
                   <TechStackParent />
@@ -104,7 +100,7 @@ export default function Intro() {
   );
 }
 
-const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ scale, opacity, opacityHero , XHero ,ZHero ,scrollY}, ref) => (
+const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ scale, opacityHero , XHero ,ZHero ,scrollY}, ref) => (
   <div className="align-middle">
     <motion.div ref={ref} className="relative h-[200vw] w-full">
       {/* Hero Section */}
@@ -137,77 +133,7 @@ const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ sc
 ));
 // Separated Components
 
-const TechStackLabels = ({ webTech, gameTech }: { webTech: string[], gameTech: string[] }) => (
-  <div 
-    className="absolute w-full h-full"
-    
-    >
-    <motion.div
-      initial={{
-            opacity : 0,
-            scale : 0.6
-          }}
-      whileInView={{
-        opacity : 1,
-        scale : 1
-      }}
-      transition={{
-        duration : 0.3,
-        ease : "easeOut"
-      }}
-    >
-      <div 
-        className="absolute left-[27.6%] text-center text-lg mt-5 flex flex-col place-items-center -translate-x-1/2 -translate-y-1/2 p-[5%]"
-        style={{
-        backgroundImage : "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377263211044147300/1df011b0c5fb2d47.png?ex=6838fc91&is=6837ab11&hm=204c68f3c6a8111cddfb0be1f8ac9fb6665303caa466dba0084d0e97841151b1&)",
-        backgroundSize: "contain",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-        >
-        <div className="flex flex-row space-x-2">
-          {webTech.slice(0, 3).map((tech, i) => (
-            <p key={i}>{tech}{i < 2 ? ',' : ''}</p>
-          ))}
-        </div>
-        <p>{webTech[3]}</p>
-      </div>
-    </motion.div>
 
-    <motion.div
-      initial={{
-            opacity : 0,
-            scale : 0.6
-          }}
-      whileInView={{
-        opacity : 1,
-        scale : 1
-      }}
-      transition={{
-        duration : 0.3,
-        ease : "easeOut"
-      }}
-    >
-      <div 
-        className="absolute left-[72%] text-center text-lg mt-5 flex flex-col place-items-center -translate-x-1/2 -translate-y-1/2 p-[5%]"
-        style={{
-        backgroundImage : "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377263211044147300/1df011b0c5fb2d47.png?ex=6838fc91&is=6837ab11&hm=204c68f3c6a8111cddfb0be1f8ac9fb6665303caa466dba0084d0e97841151b1&)",
-        backgroundSize: "contain",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-        >
-        <div className="flex flex-row space-x-2">
-          {gameTech.slice(0, 2).map((tech, i) => (
-            <p key={i}>{tech}{i < 1 ? ',' : ''}</p>
-          ))}
-        </div>
-        <p>{gameTech[2]},</p>
-      </div>
-    </motion.div>
-    
-  </div>
-);
 
 interface ScrollingContentProps {
   scale: MotionValue<number>;
@@ -339,141 +265,141 @@ type Member = {
 
 import members from "./comp/data.json"
 
-const Hand = () => {
-  const scrollRef = useRef(null);
+// const Hand = () => {
+//   const scrollRef = useRef(null);
 
-  const { scrollYProgress } = useScroll({
-    target: scrollRef,
-    offset: ["start center", "end center"],
-  });
+//   const { scrollYProgress } = useScroll({
+//     target: scrollRef,
+//     offset: ["start center", "end center"],
+//   });
 
-  // Card movement animations
-  const leftCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], ["100%", "-20%", "-40%", "-25%", "40%"]);
-  const rightCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], ["-100%", "20%", "40%", "25%", "-40%"]);
+//   // Card movement animations
+//   const leftCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], ["100%", "-20%", "-40%", "-25%", "40%"]);
+//   const rightCardX = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], ["-100%", "20%", "40%", "25%", "-40%"]);
 
-  // Container and scale animations
-  const containerY = useTransform(scrollYProgress, [0.1, 1], [0, 200]);
-  const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0.5, 0.7, 1, 1.05, 1.1]);
+//   // Container and scale animations
+//   const containerY = useTransform(scrollYProgress, [0.1, 1], [0, 200]);
+//   const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [0.5, 0.7, 1, 1.05, 1.1]);
 
-  // Hand animations (now actually used)
-  const handY = useTransform(scrollYProgress, [0, 0.5, 0.8], [0, -50, -120]);
-  const handOpacity = useTransform(scrollYProgress, [0, 0.4, 0.7], [1, 0.8, 0]);
-  const handScale = useTransform(scrollYProgress, [0, 0.3, 0.6], [1, 1.1, 0.9]);
+//   // Hand animations (now actually used)
+//   const handY = useTransform(scrollYProgress, [0, 0.5, 0.8], [0, -50, -120]);
+//   const handOpacity = useTransform(scrollYProgress, [0, 0.4, 0.7], [1, 0.8, 0]);
+//   const handScale = useTransform(scrollYProgress, [0, 0.3, 0.6], [1, 1.1, 0.9]);
 
-  // More subtle card rotation based on scroll
-  const leftCardRotateY = useTransform(scrollYProgress, [0, 1], [0, 15]);
-  const rightCardRotateY = useTransform(scrollYProgress, [0, 1], [0, -15]);
+//   // More subtle card rotation based on scroll
+//   const leftCardRotateY = useTransform(scrollYProgress, [0, 1], [0, 15]);
+//   const rightCardRotateY = useTransform(scrollYProgress, [0, 1], [0, -15]);
 
-  // Separate opacity animations for initial fade-in
-  const leftCardOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
-  const rightCardOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+//   // Separate opacity animations for initial fade-in
+//   const leftCardOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+//   const rightCardOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
 
-  return (
-    <div ref={scrollRef} className="relative h-full w-full" style={{
-          backgroundImage: "url(/img/bg/light.webp)",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "auto",
-          backgroundPosition: "top",
+//   return (
+//     <div ref={scrollRef} className="relative h-full w-full" style={{
+//           backgroundImage: "url(/img/bg/light.webp)",
+//           backgroundRepeat: "no-repeat",
+//           backgroundSize: "auto",
+//           backgroundPosition: "top",
          
-        }}>
-      <motion.div className="relative h-full w-full">
-        {/* Tech Stack Labels */}
-        <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg  w-full">
-          <TechStackLabels webTech={webTech} gameTech={gameTech} />
-        </div>
+//         }}>
+//       <motion.div className="relative h-full w-full">
+//         {/* Tech Stack Labels */}
+//         <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg  w-full">
+//           <TechStackLabels webTech={webTech} gameTech={gameTech} />
+//         </div>
 
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
-          <Shimp posX="58%" posY="15%" />
-          <Hex rotate="10deg" />
-          <Hex rotate="45deg" posX="20%" posY="10%" />
-          <Shimp rotate="15deg" posX="30%" posY="25%" />
+//         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
+//           <Shimp posX="58%" posY="15%" />
+//           <Hex rotate="10deg" />
+//           <Hex rotate="45deg" posX="20%" posY="10%" />
+//           <Shimp rotate="15deg" posX="30%" posY="25%" />
        
 
-        </div>
+//         </div>
 
         
 
-        {/* Scroll-Affected Container */}
-        <motion.div
-          className="sticky top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[40%]"
-          style={{ y: containerY }}
-        >
+//         {/* Scroll-Affected Container */}
+//         <motion.div
+//           className="sticky top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[40%]"
+//           style={{ y: containerY }}
+//         >
 
-          {/* Background Hand Image - Now with animations */}
-          <motion.div 
-            className="absolute top-1/2 w-[20%] aspect-[10/5] right-[18%] -translate-x-1/2 -translate-y-1/2"
-            style={{ 
-              y: handY, 
-              opacity : handOpacity,
-              scale: handScale
-            }}
-          >
-            <Image src="/img/bg/hand.webp" fill alt="scroll" />
-          </motion.div>
+//           {/* Background Hand Image - Now with animations */}
+//           <motion.div 
+//             className="absolute top-1/2 w-[20%] aspect-[10/5] right-[18%] -translate-x-1/2 -translate-y-1/2"
+//             style={{ 
+//               y: handY, 
+//               opacity : handOpacity,
+//               scale: handScale
+//             }}
+//           >
+//             <Image src="/img/bg/hand.webp" fill alt="scroll" />
+//           </motion.div>
 
-          <motion.div 
-            className="absolute top-1/2 w-[20%] aspect-[10/5] left-[18%] -translate-x-1/2 -translate-y-1/2 "
-            style={{ 
-              y: handY, 
-              opacity : handOpacity,
-              scale: handScale
-            }}
-          >
-            <Image src="/img/bg/hand.webp" fill alt="scroll" className="scale-x-[-1]" />
-          </motion.div>
+//           <motion.div 
+//             className="absolute top-1/2 w-[20%] aspect-[10/5] left-[18%] -translate-x-1/2 -translate-y-1/2 "
+//             style={{ 
+//               y: handY, 
+//               opacity : handOpacity,
+//               scale: handScale
+//             }}
+//           >
+//             <Image src="/img/bg/hand.webp" fill alt="scroll" className="scale-x-[-1]" />
+//           </motion.div>
           
-          {/* Left Card - Fixed animations */}
-          <motion.div
-            className="absolute top-0 left-[24.5%] -translate-x-1/2 -translate-y-1/2 w-[15%] text-white shadow-xl rounded-lg"
-            style={{ 
-              x: leftCardX, 
-              scale,
-              opacity: leftCardOpacity,
-              rotateY: leftCardRotateY,
-              transformStyle: "preserve-3d" 
-            }}
-            whileHover={{ 
-              scale: 1.05,
-              rotateY: 10,
-              transition: { duration: 0.3 }
-            }}
-          >
-            <div 
-              style={{ boxShadow: "0 0 10px 2px white" }} 
-              className="w-full aspect-[12/16] rounded-lg overflow-hidden"
-            >
-              <Image src="/img/card/web.webp" fill alt="Web Development" />
-            </div>
-          </motion.div>
+//           {/* Left Card - Fixed animations */}
+//           <motion.div
+//             className="absolute top-0 left-[24.5%] -translate-x-1/2 -translate-y-1/2 w-[15%] text-white shadow-xl rounded-lg"
+//             style={{ 
+//               x: leftCardX, 
+//               scale,
+//               opacity: leftCardOpacity,
+//               rotateY: leftCardRotateY,
+//               transformStyle: "preserve-3d" 
+//             }}
+//             whileHover={{ 
+//               scale: 1.05,
+//               rotateY: 10,
+//               transition: { duration: 0.3 }
+//             }}
+//           >
+//             <div 
+//               style={{ boxShadow: "0 0 10px 2px white" }} 
+//               className="w-full aspect-[12/16] rounded-lg overflow-hidden"
+//             >
+//               <Image src="/img/card/web.webp" fill alt="Web Development" />
+//             </div>
+//           </motion.div>
 
-          {/* Right Card - Fixed animations */}
-          <motion.div
-            className="absolute top-0  right-[24.5%] -translate-x-1/2 -translate-y-1/2 w-[15%] text-white shadow-xl rounded-lg"
-            style={{ 
-              x: rightCardX, 
-              scale,
-              opacity: rightCardOpacity,
-              rotateY: rightCardRotateY,
-              transformStyle: "preserve-3d" 
-            }}
-            whileHover={{ 
-              scale: 1.05,
-              rotateY: -10,
-              transition: { duration: 0.3 }
-            }}
-          >
-            <div 
-              style={{ boxShadow: "0 0 10px 2px white" }} 
-              className="w-full aspect-[12/16] rounded-lg overflow-hidden"
-            >
-              <Image src="/img/card/game.webp" fill alt="Game Development" />
-            </div>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-    </div>
-  );
-};
+//           {/* Right Card - Fixed animations */}
+//           <motion.div
+//             className="absolute top-0  right-[24.5%] -translate-x-1/2 -translate-y-1/2 w-[15%] text-white shadow-xl rounded-lg"
+//             style={{ 
+//               x: rightCardX, 
+//               scale,
+//               opacity: rightCardOpacity,
+//               rotateY: rightCardRotateY,
+//               transformStyle: "preserve-3d" 
+//             }}
+//             whileHover={{ 
+//               scale: 1.05,
+//               rotateY: -10,
+//               transition: { duration: 0.3 }
+//             }}
+//           >
+//             <div 
+//               style={{ boxShadow: "0 0 10px 2px white" }} 
+//               className="w-full aspect-[12/16] rounded-lg overflow-hidden"
+//             >
+//               <Image src="/img/card/game.webp" fill alt="Game Development" />
+//             </div>
+//           </motion.div>
+//         </motion.div>
+//       </motion.div>
+//     </div>
+//   );
+// };
 
 const MemberParent = () => {
   // Filter members where web is true
@@ -556,8 +482,8 @@ const MemberCard = ({
  
  }: Member & { index: number }) => {
   const weB = teach === "Web" 
-    ? "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377266406843748453/0b0733d09bd67de6.png?ex=683856cb&is=6837054b&hm=eef8125391d0f3600336defad3265f76ac7a540581bcff3f0e7090fa37ec9382&)" 
-    : "url(https://cdn.discordapp.com/attachments/1377199049052262471/1377268230372069406/888ec93ae7fd0e57.png?ex=6838587e&is=683706fe&hm=bdfc4486c07bbb6dfb8554529360f1d66cf8770d6b5e66dfd11cf1188baf44c1&)";
+    ? "url(/img/profile/web.webp)" 
+    : "url(/img/profile/game.webp)";
 
   return (
     <motion.div
@@ -611,74 +537,74 @@ const MemberCard = ({
   );
 };
 
-type ShimpProps = {
-  rotate?: string;
-  posX?: string;
-  posY?: string;
-};
+// type ShimpProps = {
+//   rotate?: string;
+//   posX?: string;
+//   posY?: string;
+// };
 
-const Shimp = ({ rotate = '0deg', posX = '50%', posY = '50%' }: ShimpProps) => {
-  return (
-    <div
-      className="absolute w-[30%] aspect-square -translate-x-1/2 -translate-y-1/2"
-      style={{
-        left: posX,
-        top: posY,
-        rotate,
-      }}
-    >
-      <div className="absolute w-[17%] aspect-square top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Image src="/img/bg/shimp.webp" className="object-contain" alt="shimp" fill />
-      </div>
-      <div className="absolute w-[35%] aspect-square top-[51%] left-[50.5%] -translate-x-1/2 -translate-y-1/2">
-        <Image src="/img/bg/shimp-border.webp" className="object-contain" alt="shimp" fill />
-      </div>
-      <div className="absolute w-[50%] aspect-square top-[51%] left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Image src="/img/bg/shimp-eff.webp" className="object-contain" alt="shimp" fill />
-      </div>
-    </div>
-  );
-};
+// const Shimp = ({ rotate = '0deg', posX = '50%', posY = '50%' }: ShimpProps) => {
+//   return (
+//     <div
+//       className="absolute w-[30%] aspect-square -translate-x-1/2 -translate-y-1/2"
+//       style={{
+//         left: posX,
+//         top: posY,
+//         rotate,
+//       }}
+//     >
+//       <div className="absolute w-[17%] aspect-square top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+//         <Image src="/img/bg/shimp.webp" className="object-contain" alt="shimp" fill />
+//       </div>
+//       <div className="absolute w-[35%] aspect-square top-[51%] left-[50.5%] -translate-x-1/2 -translate-y-1/2">
+//         <Image src="/img/bg/shimp-border.webp" className="object-contain" alt="shimp" fill />
+//       </div>
+//       <div className="absolute w-[50%] aspect-square top-[51%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+//         <Image src="/img/bg/shimp-eff.webp" className="object-contain" alt="shimp" fill />
+//       </div>
+//     </div>
+//   );
+// };
 
-type HexProps = {
-  rotate: string;
-  posX?: string;
-  posY?: string;
-};
+// type HexProps = {
+//   rotate: string;
+//   posX?: string;
+//   posY?: string;
+// };
 
-const Hex = ({ rotate, posX = '88%', posY = '50%' }: HexProps) => {
-  return (
-    <div
-      className="absolute w-[40%] aspect-square -translate-x-1/2 -translate-y-1/2"
-      style={{
-        left: posX,
-        top: posY,
-      }}
-    >
-      <div style={{ rotate }}>
-        <div className="absolute w-[25%] aspect-square top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Image src="/img/bg/hex.webp" className="object-contain" alt="hex" fill />
-        </div>
-        {['', '-1', '-2'].map((suffix) => (
-          <div
-            key={suffix}
-            className="absolute w-[30%] aspect-square top-1/2 left-[50.5%] -translate-x-1/2 -translate-y-1/2"
-          >
-            <Image
-              src={`/img/bg/hex-border${suffix}.webp`}
-              className="object-contain"
-              alt="hex"
-              fill
-            />
-          </div>
-        ))}
-        <div className="absolute w-[50%] aspect-square top-[51%] left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Image src="/img/bg/hex-eff.webp" className="object-contain" alt="hex" fill />
-        </div>
-      </div>
-    </div>
-  );
-};
+// const Hex = ({ rotate, posX = '88%', posY = '50%' }: HexProps) => {
+//   return (
+//     <div
+//       className="absolute w-[40%] aspect-square -translate-x-1/2 -translate-y-1/2"
+//       style={{
+//         left: posX,
+//         top: posY,
+//       }}
+//     >
+//       <div style={{ rotate }}>
+//         <div className="absolute w-[25%] aspect-square top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+//           <Image src="/img/bg/hex.webp" className="object-contain" alt="hex" fill />
+//         </div>
+//         {['', '-1', '-2'].map((suffix) => (
+//           <div
+//             key={suffix}
+//             className="absolute w-[30%] aspect-square top-1/2 left-[50.5%] -translate-x-1/2 -translate-y-1/2"
+//           >
+//             <Image
+//               src={`/img/bg/hex-border${suffix}.webp`}
+//               className="object-contain"
+//               alt="hex"
+//               fill
+//             />
+//           </div>
+//         ))}
+//         <div className="absolute w-[50%] aspect-square top-[51%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+//           <Image src="/img/bg/hex-eff.webp" className="object-contain" alt="hex" fill />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 
 const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
@@ -993,7 +919,7 @@ const CardRightDeco: React.FC = () => {
             transform: "rotateY(0deg)"
           }}
         >
-          <img 
+          <Image 
             src="/img/card/web.webp"
             alt="Web Card Front"
             width={150}
@@ -1012,7 +938,7 @@ const CardRightDeco: React.FC = () => {
             transform: "rotateY(180deg)"
           }}
         >
-          <img 
+          <Image 
             src="/img/card/game.webp"
             alt="Web Card Back"
             width={150}
@@ -1070,7 +996,7 @@ const CardRightDeco: React.FC = () => {
             transform: "rotateY(0deg)"
           }}
         >
-          <img 
+          <Image 
             src="/img/card/game.webp"
             width={150}
             height={100}
@@ -1089,7 +1015,7 @@ const CardRightDeco: React.FC = () => {
             transform: "rotateY(180deg)"
           }}
         >
-          <img 
+          <Image 
             src="/img/card/web.webp"
             width={150}
             height={100}
@@ -1145,24 +1071,24 @@ const MeetTheTeam = () => {
   )
 }
 
-const WhatWeTeach = () => {
+// const WhatWeTeach = () => {
 
-  return (
-    <div className="absolute w-[70%] top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-      <div className="absolute w-[9%] aspect-sqaure top-1/2 left-[42%] -translate-y-1/2 ">
-        <p className="text-[100%]">WHAT WE TEACH</p>
-      </div>
-      <div className="absolute w-[32%] aspect-[16/7] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Image
-          src="/img/profile/cover.webp"
-          fill
-          className="object-contain"
-          alt="meet_the_team"
-        />
-      </div>
-    </div>
-  )
-}
+//   return (
+//     <div className="absolute w-[70%] top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+//       <div className="absolute w-[9%] aspect-sqaure top-1/2 left-[42%] -translate-y-1/2 ">
+//         <p className="text-[100%]">WHAT WE TEACH</p>
+//       </div>
+//       <div className="absolute w-[32%] aspect-[16/7] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+//         <Image
+//           src="/img/profile/cover.webp"
+//           fill
+//           className="object-contain"
+//           alt="meet_the_team"
+//         />
+//       </div>
+//     </div>
+//   )
+// }
 
 const TechStackParent = () => {
   return (
@@ -1234,12 +1160,12 @@ const TechStackCard = ({
 const ContratParent = () => {
   return (
     <div className="flex flex-row h-[500px] m-[2%]">
-      <Contract img="/img/techstack/ig.webp" />
+      <Contract />
     </div>
   );
 };
 
-const Contract = ({ img }: { img: string }) => {
+const Contract = () => {
   return (
     <div className="flex flex-row items-center space-x-4">
       <a target="_blank" className="underline" href="https://www.instagram.com/print.hell0w0rld/">instagram</a>
