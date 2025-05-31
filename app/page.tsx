@@ -58,6 +58,7 @@ export default function Intro() {
             lerp: 0.05,
           }}
         >
+          
           {/* Scrolling Content */}
           <ScrollingContent 
             ref={ref}
@@ -69,20 +70,12 @@ export default function Intro() {
             scrollY={scrollYProgress}
           />
           {/* Member Sections */}
-          <MeetTheTeam/>
-          <div className="h-fit w-full flex flex-col space-y-[15%] absolute top-[60%] z-20">
+          
+          
+          <div className="h-fit w-full flex flex-col space-y-[15%] absolute top-[47%] z-20">
+            <MeetTheTeam/>
             <MemberSections />
-            <div className="absolute top-[150%] h-fit w-full">
-              {/* <WhatWeTeach/> */}
-              <div className="flex flex-row h-fit w-full">
-                <div className="w-1/2">
-                  <TechStackParent />
-                </div>
-                <div className="w-1/2">
-                  <TechStackParentG />
-                </div>
-              </div>
-            </div>
+            
           </div>
 
         
@@ -102,7 +95,7 @@ export default function Intro() {
 
 const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ scale, opacityHero , XHero ,ZHero ,scrollY}, ref) => (
   <div className="align-middle">
-    <motion.div ref={ref} className="relative h-[200vw] w-full">
+    <motion.div ref={ref} className="relative h-[800vh] w-full">
       {/* Hero Section */}
       <motion.div 
         className="sticky h-screen w-full z-20 top-0"
@@ -117,6 +110,9 @@ const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ sc
         <DarkOverlay opacity={opacityHero} />
         <Hero scrollY={scrollY} />
       </motion.div>
+      <div className="relative top-[200vh] w-full aspect-[16/9] z-30">
+        <TwoPath/>
+      </div>
 
       {/* Card Section
       <motion.div 
@@ -1050,7 +1046,7 @@ const NavBarTop = () => {
 const MeetTheTeam = () => {
 
   return (
-    <div className="absolute w-screen h-[1%] top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+    <div className="absolute w-full h-[1%] top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
       <div className="absolute w-[12%] aspect-[16/9] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <Image
           src="/img/logo/meet_the_team.webp"
@@ -1092,7 +1088,12 @@ const MeetTheTeam = () => {
 
 const TechStackParent = () => {
   return (
-    <div className="w-full">
+    <div className=" h-[40vh] space-y-[-10%] border-4 border-white pt-[5%] rounded-lg bg-gradient-to-tr from-teal-500 via-blue-600 to-teal-600">
+      <div className="flex flex-col">
+        <p className="text-center">Want to build website learn how client side , server side work</p>
+        <p className="text-center">Fronend : HTML CSS JAVASCIRPT</p>
+        <p className="text-center">Backend : JAVA Springboot</p>
+      </div>
       <div className="flex flex-row flex-wrap items-center justify-center px-2 gap-2">
         <TechStackCard tSImg="/img/techstack/html.webp" context="HTML" />
         <TechStackCard tSImg="/img/techstack/css.webp" context="CSS" />
@@ -1106,7 +1107,13 @@ const TechStackParent = () => {
 
 const TechStackParentG = () => {
   return (
-    <div className="w-full">
+    <div className="h-[40vh] space-y-[-10%] border-4 border-white pt-[5%] rounded-lg bg-gradient-to-tr from-blue-500 via-purple-600 to-blue-600">
+        <div className="flex flex-col">
+          <p className="text-center">Want to game learn how to implyment 3d world space , game mechanic work</p>
+          <p className="text-center">Engine : Unity , Roblox studio</p>
+          <p className="text-center">Language : C# , Lua</p>
+          <p className="text-center">Modeling : Blender 3d</p>
+        </div>      
       <div className="flex flex-row w-full h-fititems-center justify-center px-[1%] ">
         <TechStackCard tSImg="/img/techstack/roblox.webp" context="ROBLOX" />
         <TechStackCard tSImg="/img/techstack/unity.webp" context="UNITY" />
@@ -1172,3 +1179,138 @@ const Contract = () => {
     </div>
   );
 };
+
+const TwoPath = () => {
+  return (
+    <>
+      <p className="absolute text-xl left-1/2 -translate-x-1/2 top-[10%]">TWO PATCH</p>
+      <div className="absolute w-[10%] aspect-square top-[34%] left-1/2 -translate-x-1/2 z-20">
+        <Image
+          src="/img/bg/hand.webp"
+          alt="hand"
+          fill
+          className="object-contain"
+        />
+      </div>
+      <div className="absolute w-[15%] aspect-square top-[27%] left-1/2 -translate-x-1/2 z-20">
+        <Image
+          src="/img/bg/light.webp"
+          alt="light"
+          fill
+          className="object-contain"
+        />
+      </div>
+      <div className="absolute top-[5%] left-1/2 -translate-x-1/2 z-20 h-[50vh] w-[50%]">
+        <TwoCardSide/>
+      </div>
+      <div className="absolute top-[50%] left-1/2 -translate-x-1/2 w-full">
+        {/* <WhatWeTeach/> */}
+        <div className="flex flex-row h-fit w-full p-[1%] space-x-1">
+          <div className="w-1/2">
+            <TechStackParent />
+          </div>
+          <div className="w-1/2">
+            <TechStackParentG />
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+const TwoCardSide = () => {
+  return (
+    <>
+        {/* Left Card */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 ">
+        <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ 
+          opacity: 1, 
+          scale: 0.95,
+        }}
+        transition={{
+          opacity: { duration: 1.2, delay: 0.8 },
+          scale: { duration: 1.4, delay: 0.8 },
+         
+        }}
+        whileHover={{ 
+          opacity: 1,
+          scale: 1.02, 
+        }}
+        className="relative z-10"
+        style={{ 
+          transformStyle: "preserve-3d",
+          transformOrigin: "center center"
+        }}
+      >
+        {/* Front side */}
+        <div 
+          className="overflow-hidden rounded-lg bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-sm border border-white/10 h-fit w-fit"
+          style={{ 
+            backfaceVisibility: "hidden",
+            transform: "rotateY(0deg)"
+          }}
+        >
+          <Image 
+            src="/img/card/web.webp"
+            width={150}
+            height={100}
+            alt="Game Card Front"
+            className="transition-all duration-300 hover:scale-105"
+            style={{ display: "block" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/10"></div>
+        </div>
+        
+      </motion.div>
+     
+
+      </div>
+      
+      {/* Right Card */}
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2">
+       <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ 
+          opacity: 1, 
+          scale: 0.95,
+        }}
+        transition={{
+          opacity: { duration: 1.2, delay: 0.8 },
+          scale: { duration: 1.4, delay: 0.8 },
+         
+        }}
+        whileHover={{ 
+          opacity: 1,
+          scale: 1.02, 
+        }}
+        className="relative z-10"
+        style={{ 
+          transformStyle: "preserve-3d",
+          transformOrigin: "center center"
+        }}
+      >
+        {/* Front side */}
+        <div 
+          className="overflow-hidden rounded-lg bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-sm border border-white/10 h-fit w-fit"
+          style={{ 
+            backfaceVisibility: "hidden",
+            transform: "rotateY(0deg)"
+          }}
+        >
+          <Image 
+            src="/img/card/game.webp"
+            width={150}
+            height={100}
+            alt="Game Card Front"
+            className="transition-all duration-300 hover:scale-105"
+            style={{ display: "block" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/10"></div>
+        </div>
+      </motion.div>
+      </div>
+    </>
+  )
+}
