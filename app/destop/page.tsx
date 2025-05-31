@@ -5,7 +5,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import {  useRef, useState } from "react";
 
 import { fadeVariants } from "../comp/fadingStyle";
@@ -184,7 +184,7 @@ const MemberSections = () => (
 
 ScrollingContent.displayName = 'ScrollingContent';
 
-
+import DownArr from "../comp/img/bg/down_arr.webp" 
 const Hero = ({ scrollY }: {scrollY : MotionValue<number>}) => {
 
   // Y position moves slightly upward as the user scrolls
@@ -233,16 +233,16 @@ const Hero = ({ scrollY }: {scrollY : MotionValue<number>}) => {
         >
           <div className="w-[100%] aspect-square absolute top-[60%] left-1/2">
           <Image
-            src="/img/bg/down_arr.webp"
-            alt="a"
+            src={DownArr}
+            alt="downarrtop"
             fill
             className="object-contain"
           />
         </div>
           <div className="w-[100%] aspect-square absolute top-[90%] left-1/2">
           <Image
-            src="/img/bg/down_arr.webp"
-            alt="a"
+            src={DownArr}
+            alt="downarrbottom"
             fill
             className="object-contain"
           />
@@ -410,6 +410,7 @@ import members from "../comp/data.json"
 //   );
 // };
 
+import WebLogo from "../comp/img/logo/web.webp"
 const MemberParent = () => {
   // Filter members where web is true
   const webMembers = members.filter(member => member.teach === "Web");
@@ -418,8 +419,8 @@ const MemberParent = () => {
     <div className="flex flex-col h-fit w-[50%]">
         <div className="relative w-[30%] aspect-[10/3] left-1/2 -translate-x-1/2">
           <Image 
-            src="/img/logo/web.webp"
-            alt="game"
+            src={WebLogo}
+            alt="web"
             fill
             className="object-contain"
           />
@@ -444,6 +445,7 @@ const MemberParent = () => {
   );
 };
 
+import GameLogo from "../comp/img/logo/game.webp"
 const MemberParentG = () => {
   // Filter members where web is false
   const nonWebMembers = members.filter(member => member.teach === "Game");
@@ -452,7 +454,7 @@ const MemberParentG = () => {
       <div className="flex flex-col h-fit w-[50%]">
           <div className="relative w-[30%] aspect-[10/3] left-1/2 -translate-x-1/2">
             <Image 
-              src="/img/logo/game.webp"
+              src={GameLogo}
               alt="game"
               fill
               className="object-contain"
@@ -480,6 +482,10 @@ const MemberParentG = () => {
 };
 
 
+
+import GameMem from "./../comp/img/profile/game.webp"
+import WebMem from "./../comp/img/profile/web.webp"
+
 const MemberCard = ({
   index,
   img,
@@ -493,7 +499,7 @@ const MemberCard = ({
 
   return (
     <motion.div
-      className="w-[22%] aspect-[9/13] rounded-lg"
+      className="w-[28%] aspect-[9/13] rounded-lg"
       style={{ perspective: '1200px' }}
       initial={{
         opacity: 0,
@@ -536,7 +542,7 @@ const MemberCard = ({
         >
           {/* Background Image */}
           <Image
-            src={teach === "Web" ? "/img/profile/web.webp" : "/img/profile/game.webp"}
+            src={teach === "Web" ? WebMem : GameMem}
             alt="background"
             fill
             className="object-cover rounded-lg"
@@ -577,7 +583,7 @@ const MemberCard = ({
           <p className="text-white text-xs mt-2 z-20">ID: {position}</p>
           <p className="text-white text-xs mt-2 z-20">Tool: {tool.toString()}</p>
           <Image
-            src={teach === "Web" ? "/img/profile/web.webp" : "/img/profile/game.webp"}
+            src={teach === "Web" ? WebMem : GameMem}
             alt="background"
             fill
             className="object-cover rounded-lg"
@@ -593,6 +599,9 @@ type ShimpProps = {
   posY?: string;
 };
 
+import ShimpImg from "../comp/img/bg/shimp.webp"
+import ShimpImgBorder from "../comp/img/bg/shimp-border.webp"
+import ShimpImgEff from "../comp/img/bg/shimp-eff.webp"
 const Shimp = ({ rotate = '0deg', posX = '50%', posY = '50%' }: ShimpProps) => {
   return (
     <div
@@ -604,13 +613,13 @@ const Shimp = ({ rotate = '0deg', posX = '50%', posY = '50%' }: ShimpProps) => {
       }}
     >
       <div className="absolute w-[17%] aspect-square top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Image src="/img/bg/shimp.webp" className="object-contain" alt="shimp" fill />
+        <Image src={ShimpImg} className="object-contain" alt="shimp" fill />
       </div>
       <div className="absolute w-[35%] aspect-square top-[51%] left-[50.5%] -translate-x-1/2 -translate-y-1/2">
-        <Image src="/img/bg/shimp-border.webp" className="object-contain" alt="shimp" fill />
+        <Image src={ShimpImgBorder} className="object-contain" alt="shimp" fill />
       </div>
       <div className="absolute w-[50%] aspect-square top-[51%] left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Image src="/img/bg/shimp-eff.webp" className="object-contain" alt="shimp" fill />
+        <Image src={ShimpImgEff} className="object-contain" alt="shimp" fill />
       </div>
     </div>
   );
@@ -622,6 +631,9 @@ type HexProps = {
   posY?: string;
 };
 
+import HexBorder from "../comp/img/bg/hex-border.webp"
+import HexBorder1 from "../comp/img/bg/hex-border-1.webp"
+import HexBorder2 from "../comp/img/bg/hex-border-2.webp"
 const Hex = ({ rotate = "0deg", posX = '88%', posY = '50%' }: HexProps) => {
   return (
     <div
@@ -635,13 +647,13 @@ const Hex = ({ rotate = "0deg", posX = '88%', posY = '50%' }: HexProps) => {
         <div className="absolute w-[25%] aspect-square top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Image src="/img/bg/hex.webp" className="object-contain" alt="hex" fill />
         </div>
-        {['', '-1', '-2'].map((suffix) => (
+        {[HexBorder, HexBorder1, HexBorder2].map((suffix,i) => (
           <div
-            key={suffix}
+            key={i}
             className="absolute w-[30%] aspect-square top-1/2 left-[50.5%] -translate-x-1/2 -translate-y-1/2"
           >
             <Image
-              src={`/img/bg/hex-border${suffix}.webp`}
+              src={suffix}
               className="object-contain"
               alt="hex"
               fill
@@ -656,6 +668,17 @@ const Hex = ({ rotate = "0deg", posX = '88%', posY = '50%' }: HexProps) => {
   );
 };
 
+import Dot from "../comp/img/logo/dot.webp"
+import Print from "../comp/img/logo/Print.webp"
+import Moon from "../comp/img/logo/moon.webp"
+import Hell from "../comp/img/logo/Hell.webp"
+import World from "../comp/img/logo/world.webp"
+import w from "../comp/img/logo/w.webp"
+import r from "../comp/img/logo/r.webp"
+import l from "../comp/img/logo/l.webp"
+import d from "../comp/img/logo/d.webp"
+
+import DownParent from "../comp/img/logo/down_parent.webp"
 
 const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
   
@@ -670,7 +693,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
     >
       <div className="absolute top-[51%] left-[-0.5%]  w-[4%] aspect-square -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/logo/dot.webp"
+            src={Dot}
             fill
             style={{
               objectFit: "contain",
@@ -680,7 +703,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
         </div>
         <div className="absolute w-3/6 top-[34%] left-[15%]  aspect-[12/5] -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/logo/Print.webp"
+            src={Print}
             fill
             style={{
               objectFit: "contain",
@@ -691,7 +714,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
         </div>
         <div className="absolute top-[38.5%] left-[37%] w-1/6 aspect-square -translate-x-1/2 -translate-y-1/2">
             <Image
-              src="/img/logo/moon.webp"
+              src={Moon}
               fill
               style={{
                 objectFit: "contain",
@@ -701,7 +724,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
           </div>
           <div className="absolute top-[44.5%] left-[55%] w-[24%] aspect-square -translate-x-1/2 -translate-y-1/2">
             <Image
-              src="/img/logo/Hell.webp"
+              src={Hell}
               fill
               style={{
                 objectFit: "contain",
@@ -723,7 +746,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
                 }}
               >
                 <Image
-                src="/img/logo/world.webp"
+                src={World}
                 fill
                 style={{
                   objectFit: "contain",
@@ -737,7 +760,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
               className="h-full w-full"
             >
               <Image
-                src="/img/logo/w.webp"
+                src={w}
                 fill
                 style={{
                   objectFit: "contain",
@@ -748,7 +771,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
           </div>
           <div className="absolute top-[57%] left-[83.5%] w-[9%] aspect-square -translate-x-1/2 ">
             <Image
-              src="/img/logo/r.webp"
+              src={r}
               fill
               style={{
                 objectFit: "contain",
@@ -758,7 +781,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
           </div>
           <div className="absolute top-[50%] left-[87.5%] w-[12.5%] aspect-square -translate-x-1/2 ">
             <Image
-              src="/img/logo/l.webp"
+              src={l}
               fill
               style={{
                 objectFit: "contain",
@@ -768,7 +791,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
           </div>
           <div className="absolute top-[49%] left-[93.5%] w-[12.5%] aspect-square -translate-x-1/2 ">
             <Image
-              src="/img/logo/d.webp"
+              src={d}
               fill
               style={{
                 objectFit: "contain",
@@ -778,7 +801,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
           </div>
           <div className="absolute top-[60%] left-[103%] w-1/6 aspect-square -translate-x-1/2 -translate-y-1/2 scale-x-[-1]">
             <Image
-              src="/img/logo/moon.webp"
+              src={Moon}
               fill
               style={{
                 objectFit: "contain",
@@ -788,7 +811,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
           </div>
           <div className="absolute top-[73%] left-[110%]  w-[4%] aspect-square -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/logo/dot.webp"
+            src={Dot}
             fill
             style={{
               objectFit: "contain",
@@ -798,7 +821,7 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
         </div>
         <div className="absolute top-[130%] left-[56%]  w-[70%] aspect-[16/9] -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/logo/down_parent.webp"
+            src={DownParent}
             fill
             style={{
               objectFit: "contain",
@@ -811,16 +834,14 @@ const Logo = ({scrollY} : {scrollY : MotionValue<number>})=> {
    
   )
 }
-
+import PlaceHolder from "../comp/img/front_page/place_holder.webp"
 const NavBar = (/*{oritext} : { oritext : string }*/)=>{
-
-
 
   return (
 
       <motion.div className="absolute w-[25%] left-[13%] top-3/4 aspect-[12/5] -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/front_page/place_holder.webp"
+            src={PlaceHolder}
             fill
             style={{
               objectFit: "contain",
@@ -836,13 +857,13 @@ const NavBar = (/*{oritext} : { oritext : string }*/)=>{
   )
 }
 
-
+import LeftDecoImg from "../comp/img/front_page/left_deco.webp"
 
 const LeftDeco = () => {
   return (
    <div className="absolute top-[19%] left-[13%] w-[26.5%] aspect-square -translate-x-1/2 -translate-y-1/2">
         <Image
-          src="/img/front_page/left_deco.webp"
+          src={LeftDecoImg}
           fill
           style={{
             objectFit: "contain",
@@ -854,13 +875,18 @@ const LeftDeco = () => {
  
   )
 }
+import CardCol from "../comp/img/front_page/card_col.webp"
+import CardCol1 from "../comp/img/front_page/card_col_1.webp"
+import CardColC from "../comp/img/front_page/card_col_c.webp"
+import CardColl from "../comp/img/front_page/card_col_l.webp"
+import CardColr from "../comp/img/front_page/card_col_r.webp"
 
 const RightDeco = ({f} : {f : boolean}) => {
   return (
     <div className={`${f && "scale-y-[-1]"} h-0 `}>
       <motion.div className={`absolute ${f ? "top-[10%]" : "top-0"} left-[89%]  w-[18.5%] aspect-square -translate-x-1/2 -translate-y-1/2}`}>
         <Image
-          src="/img/front_page/card_col.webp"
+          src={CardCol}
           fill
           style={{
             objectFit: "contain",
@@ -869,7 +895,7 @@ const RightDeco = ({f} : {f : boolean}) => {
         />
         <motion.div className="absolute top-[47%] left-[35.7%]  w-[12%] aspect-square -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/front_page/card_col_1.webp"
+            src={CardCol1}
             fill
             style={{
               objectFit: "contain",
@@ -879,7 +905,7 @@ const RightDeco = ({f} : {f : boolean}) => {
         </motion.div>
         <motion.div className="absolute top-[47%] left-[67.7%]  w-[12%] aspect-square -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/front_page/card_col_1.webp"
+            src={CardCol1}
             fill
             style={{
               objectFit: "contain",
@@ -889,7 +915,7 @@ const RightDeco = ({f} : {f : boolean}) => {
         </motion.div>
         <motion.div className="absolute top-[44%] left-[52.5%]  w-[20%] aspect-square -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/front_page/card_col_c.webp"
+            src={CardColC}
             fill
             style={{
               objectFit: "contain",
@@ -899,7 +925,7 @@ const RightDeco = ({f} : {f : boolean}) => {
         </motion.div>
         <motion.div className="absolute top-[39%] left-[22.5%]  w-[18%] aspect-square -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/front_page/card_col_l.webp"
+            src={CardColl}
             fill
             style={{
               objectFit: "contain",
@@ -909,7 +935,7 @@ const RightDeco = ({f} : {f : boolean}) => {
         </motion.div>
         <motion.div className="absolute top-[39%] left-[80.5%]  w-[18%] aspect-square -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/img/front_page/card_col_r.webp"
+            src={CardColr}
             fill
             style={{
               objectFit: "contain",
@@ -970,7 +996,7 @@ const CardRightDeco: React.FC = () => {
           }}
         >
           <Image 
-            src="/img/card/web.webp"
+            src={WebCard}
             alt="Web Card Front"
             width={150}
             height={100}
@@ -989,7 +1015,7 @@ const CardRightDeco: React.FC = () => {
           }}
         >
           <Image 
-            src="/img/card/game.webp"
+            src={GameCard}
             alt="Web Card Back"
             width={150}
             height={100}
@@ -1047,7 +1073,7 @@ const CardRightDeco: React.FC = () => {
           }}
         >
           <Image 
-            src="/img/card/game.webp"
+            src={GameCard}
             width={150}
             height={100}
             alt="Game Card Front"
@@ -1066,7 +1092,7 @@ const CardRightDeco: React.FC = () => {
           }}
         >
           <Image 
-            src="/img/card/web.webp"
+            src={WebCard}
             width={150}
             height={100}
             alt="Game Card Back"
@@ -1080,12 +1106,13 @@ const CardRightDeco: React.FC = () => {
   );
 };
 
+import NavBarTopImg from "../comp/img/front_page/nav.webp"
 const NavBarTop = () => {
   return (
 
       <motion.div className="absolute top-[9%] left-1/2 w-[17%] aspect-square -translate-x-1/2 -translate-y-1/2">
         <Image
-          src="/img/front_page/nav.webp"
+          src={NavBarTopImg}
           fill
           style={{
             objectFit: "contain",
@@ -1097,13 +1124,16 @@ const NavBarTop = () => {
   )
 }
 
+import MeetTheTeamIMG from "../comp/img/logo/meet_the_team.webp"
+import MeetTheTeamImgCover from "../comp/img/profile/cover.webp"
+
 const MeetTheTeam = () => {
 
   return (
     <div className="absolute w-full h-[1%] top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
       <div className="absolute w-[12%] aspect-[16/9] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <Image
-          src="/img/logo/meet_the_team.webp"
+          src={MeetTheTeamIMG}
           fill
           className="object-contain"
           alt="meet_the_team"
@@ -1111,7 +1141,7 @@ const MeetTheTeam = () => {
       </div>
       <div className="absolute w-[22%] aspect-[16/7] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <Image
-          src="/img/profile/cover.webp"
+          src={MeetTheTeamImgCover}
           fill
           className="object-contain"
           alt="meet_the_team"
@@ -1139,7 +1169,10 @@ const MeetTheTeam = () => {
 //     </div>
 //   )
 // }
-
+import Js from "../comp/img/techstack/js.webp"
+import Css from "../comp/img/techstack/css.webp"
+import Html from "../comp/img/techstack/html.webp"
+import Java from "../comp/img/techstack/java.webp"
 const TechStackParent = () => {
   return (
     <div className=" h-[40vh] space-y-[-10%] border-4 border-white pt-[5%] rounded-lg bg-gradient-to-tr from-teal-500 via-blue-600 to-teal-600">
@@ -1149,19 +1182,24 @@ const TechStackParent = () => {
         <p className="text-center">Backend : JAVA Springboot</p>
       </div>
       <div className="flex flex-row w-full h-fit items-center justify-center px-[1%] ">
-        <TechStackCard tSImg="/img/techstack/html.webp" context="HTML" />
-        <TechStackCard tSImg="/img/techstack/css.webp" context="CSS" />
-        <TechStackCard tSImg="/img/techstack/js.webp" context="JS" />
-        <TechStackCard tSImg="/img/techstack/java.webp" context="JAVA" />
+        <TechStackCard tSImg={Html} context="HTML" />
+        <TechStackCard tSImg={Css} context="CSS" />
+        <TechStackCard tSImg={Js} context="JS" />
+        <TechStackCard tSImg={Java} context="JAVA" />
       </div>
     </div>
   );
 };
 
+import Roblox from "../comp/img/techstack/roblox.webp"
+import Unity from "../comp/img/techstack/unity.webp"
+import Lua from "../comp/img/techstack/lua.webp"
+import Csharp from "../comp/img/techstack/csharp.webp"
+import Blender from "../comp/img/techstack/blender.webp"
 
 const TechStackParentG = () => {
   return (
-    <div className="h-[40vh] space-y-[-10%] border-4 border-white pt-[5%] rounded-lg bg-gradient-to-tr from-blue-500 via-purple-600 to-blue-600">
+    <div className="h-[100%] space-y-[-10%] border-4 border-white pt-[5%] rounded-lg bg-gradient-to-tr from-blue-500 via-purple-600 to-blue-600">
         <div className="flex flex-col">
           <p className="text-center">Want to game learn how to implyment 3d world space , game mechanic work</p>
           <p className="text-center">Engine : Unity , Roblox studio</p>
@@ -1169,11 +1207,11 @@ const TechStackParentG = () => {
           <p className="text-center">Modeling : Blender 3d</p>
         </div>      
       <div className="flex flex-row w-full h-fit items-center justify-center px-[1%] ">
-        <TechStackCard tSImg="/img/techstack/roblox.webp" context="ROBLOX" />
-        <TechStackCard tSImg="/img/techstack/unity.webp" context="UNITY" />
-        <TechStackCard tSImg="/img/techstack/lua.webp" context="LUA" />
-        <TechStackCard tSImg="/img/techstack/csharp.webp" context="C#" />
-        <TechStackCard tSImg="/img/techstack/blender.webp" context="BLENDER" />
+        <TechStackCard tSImg={Roblox} context="ROBLOX" />
+        <TechStackCard tSImg={Unity} context="UNITY" />
+        <TechStackCard tSImg={Lua} context="LUA" />
+        <TechStackCard tSImg={Csharp} context="C#" />
+        <TechStackCard tSImg={Blender} context="BLENDER" />
       </div>
     </div>
   );
@@ -1184,7 +1222,7 @@ const TechStackCard = ({
   tSImg,
   context,
 }: {
-  tSImg: string;
+  tSImg: StaticImageData ;
   context: string;
 }) => {
 
@@ -1234,6 +1272,9 @@ const Contract = () => {
   );
 };
 
+import Hand from "../comp/img/bg/hand.webp"
+import Light from "../comp/img/bg/light.webp"
+
 const TwoPath = () => {
 
   return (
@@ -1244,17 +1285,17 @@ const TwoPath = () => {
       <Hex posX="10%" posY="70%" rotate="0deg"/>
       {/* Hand Image */}
       <div className="absolute w-[10%] aspect-square top-[34%] left-1/2 -translate-x-1/2 z-20">
-        <Image src="/img/bg/hand.webp" alt="hand" fill className="object-contain" />
+        <Image src={Hand} alt="hand" fill className="object-contain" />
       </div>
 
       {/* Light Image */}
       <div className="absolute w-[15%] aspect-square top-[27%] left-1/2 -translate-x-1/2 z-20">
-        <Image src="/img/bg/light.webp" alt="light" fill className="object-contain" />
+        <Image src={Light} alt="light" fill className="object-contain" />
       </div>
 
       {/* TwoCardSide appears based on scroll */}
       <motion.div
-        className="absolute top-[5%] left-1/2 -translate-x-1/2 z-20 h-[50vh] w-[110%]"
+        className="absolute top-[5%] left-1/2 -translate-x-1/2 z-20 h-[50%] w-[110%]"
       >
         <TwoCardSide />
       </motion.div>
@@ -1264,7 +1305,7 @@ const TwoPath = () => {
         <div className={`flex flex-row h-fit w-full p-[1%] space-x-[10%] justify-center`}>
           {/* Web Card */}
           <motion.div
-            className="w-[35%]"
+            className="w-[45%]"
             initial={{ rotateX: 45, rotateY: 25, opacity: 0 }}
             whileInView={{ rotateX: 5, rotateY: 5, opacity: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
@@ -1278,7 +1319,7 @@ const TwoPath = () => {
 
           {/* Game Card */}
           <motion.div
-            className="w-[35%] mt-[1%]"
+            className="w-[45%] mt-[1%]"
             initial={{ rotateX: 40, rotateY: 20, opacity: 0 }}
             whileInView={{ rotateX: 3, rotateY: 3, opacity: 1 }}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
@@ -1294,6 +1335,8 @@ const TwoPath = () => {
     </>
   );
 };
+import GameCard from "./../comp/img/card/game.webp";
+import WebCard from "./../comp/img/card/web.webp";
 
 const TwoCardSide = () => {
   return (
@@ -1330,7 +1373,7 @@ const TwoCardSide = () => {
           }}
         >
           <Image 
-            src="/img/card/web.webp"
+            src={WebCard}
             width={180}
             height={100}
             alt="Game Card Front"
@@ -1377,7 +1420,7 @@ const TwoCardSide = () => {
           }}
         >
           <Image 
-            src="/img/card/game.webp"
+            src={GameCard}
             width={180}
             height={100}
             alt="Game Card Front"

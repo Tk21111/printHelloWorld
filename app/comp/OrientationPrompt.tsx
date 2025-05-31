@@ -6,27 +6,38 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
 
-interface OrientationPromptProps {
-  onContinue?: () => void;
-}
 
-const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => {
+const OrientationPrompt: React.FC = () => {
 
-    const router = useRouter()
+  const router = useRouter()
   const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => {
+      const isMobile = /iPhone|iPod|Android/i.test(navigator.userAgent);
+      const isIpad = /iPad/i.test(navigator.userAgent);
+
+      if (isMobile){
+        router.push('/moblie');
+      } else if(!isIpad) {
+        router.push('/destop')
+      }
+    };
+
     const checkOrientation = () => {
       const isPortrait = window.innerHeight > window.innerWidth;
-      const isMobile = window.innerWidth < 1024;
       
-      setShowPrompt(isPortrait && isMobile);
+      setShowPrompt(isPortrait);
+      if(!isPortrait){
+        router.push('/destop')
+      }
     };
 
     // Initial check
     checkOrientation();
+    checkMobile();
 
-    // Listen for orientation and resize changes
+     // Listen for orientation and resize changes
     window.addEventListener('orientationchange', () => {
       setTimeout(checkOrientation, 100);
     });
@@ -36,28 +47,14 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
       window.removeEventListener('orientationchange', checkOrientation);
       window.removeEventListener('resize', checkOrientation);
     };
+
   }, []);
 
-  useEffect(()=>{
-    if(showPrompt){
-      
-      router.push("/moblie")
-      setShowPrompt(false);
-    } else {
-      router.push('/destop');
-      setShowPrompt(false);
 
-    }
-  },[showPrompt])
 
-  const handleContinueF = () => {
+  const handleContinue = () => {
     setShowPrompt(false);
-    if (onContinue) onContinue();
-  };
-
-   const handleContinueM = () => {
-    setShowPrompt(false);
-    router.push("/moblie")
+    router.push('/moblie')
   };
 
   return (
@@ -117,11 +114,14 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
             </motion.div>
 
             <h1 className="mb-4 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-3xl font-bold text-transparent">
-              Await loading
+              It seem like u r using ipad.
+            </h1>
+            <h1 className="mb-4 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-3xl font-bold text-transparent text-red-500">
+               rotate pls
             </h1>
 
             <p className="mb-8 text-lg opacity-90">
-              await loading
+              สำหรับ ipad user เปลี่ยนเป็นแนวนอน
             </p>
 
             {/* Device rotation demo */}
@@ -144,7 +144,7 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
             </div>
 
             <motion.button
-              onClick={handleContinueM}
+              onClick={handleContinue}
               className="mb-4 rounded-full bg-gradient-to-r from-red-500 to-pink-500 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300"
               whileHover={{ 
                 scale: 1.05, 
@@ -156,7 +156,7 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
             </motion.button>
 
             <button
-              onClick={handleContinueF}
+              onClick={handleContinue}
               className="block w-full text-sm text-white/70 transition-colors duration-300 hover:text-white hover:underline"
             >
               Skip this message

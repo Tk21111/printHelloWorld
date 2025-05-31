@@ -48,19 +48,10 @@ export const metadata: Metadata = {
 
   // Open Graph for Social Media Previews
   openGraph: {
-    title: "Print( 'Hello world' )",
+    title: "Print('Hello world')",
     description: "The Web and Game coder group that will bring your dreams into reality. Apply now!",
     url: "https://printhelloworld.xyz/", // Replace with your actual domain
-    siteName: "Gamification World", 
-    images: [
-      {
-        url: "https://printhelloworld.xyz/og-image.jpg", // Fixed: proper image URL
-        width: 1200,
-        height: 630,
-        alt: "Print Hello World - Gamification World",
-        type: "image/jpeg",
-      },
-    ],
+    siteName: "print('helloworld')", 
     locale: "th_TH", // Thai locale as you specified
     type: "website",
   },
