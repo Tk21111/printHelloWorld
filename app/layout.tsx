@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 import OrientationPrompt from "./comp/OrientationPrompt";
+import { Analytics } from "@vercel/analytics/next";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Analytics/>
         <OrientationPrompt />
         {children}
       </body>
