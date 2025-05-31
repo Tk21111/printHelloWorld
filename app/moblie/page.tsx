@@ -508,8 +508,6 @@ const MemberCard = ({
   nickname,
   teach,
   code,
-  name,
-  surname,
   tool,
   position
 }: Member & { index: number }) => {
@@ -517,7 +515,7 @@ const MemberCard = ({
 
   return (
     <motion.div
-      className="w-[45%] aspect-[9/13] rounded-lg"
+      className="w-[22%] aspect-[9/13] rounded-lg"
       style={{ perspective: '1200px' }}
       initial={{
         opacity: 0,
@@ -597,8 +595,7 @@ const MemberCard = ({
           }}
         >
           
-          <p className="text-white font-bold text-lg mb-2 z-20">{name}</p>
-          <p className="text-white text-sm z-20">{surname}</p>
+
           <p className="text-white text-xs mt-2 z-20">ID: {position}</p>
           <p className="text-white text-xs mt-2 z-20">Tool: {tool.toString()}</p>
           <Image

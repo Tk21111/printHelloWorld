@@ -486,8 +486,6 @@ const MemberCard = ({
   nickname,
   teach,
   code,
-  name,
-  surname,
   tool,
   position
 }: Member & { index: number }) => {
@@ -575,8 +573,7 @@ const MemberCard = ({
           }}
         >
           
-          <p className="text-white font-bold text-lg mb-2 z-20">{name}</p>
-          <p className="text-white text-sm z-20">{surname}</p>
+
           <p className="text-white text-xs mt-2 z-20">ID: {position}</p>
           <p className="text-white text-xs mt-2 z-20">Tool: {tool.toString()}</p>
           <Image
