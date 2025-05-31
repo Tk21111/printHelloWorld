@@ -38,6 +38,18 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
     };
   }, []);
 
+  useEffect(()=>{
+    if(showPrompt){
+      
+      router.push("/moblie")
+      setShowPrompt(false);
+    } else {
+      router.push('/destop');
+      setShowPrompt(false);
+
+    }
+  },[showPrompt])
+
   const handleContinueF = () => {
     setShowPrompt(false);
     if (onContinue) onContinue();
@@ -45,7 +57,7 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
 
    const handleContinueM = () => {
     setShowPrompt(false);
-    router.push("/waiting")
+    router.push("/moblie")
   };
 
   return (
@@ -105,11 +117,11 @@ const OrientationPrompt: React.FC<OrientationPromptProps> = ({ onContinue }) => 
             </motion.div>
 
             <h1 className="mb-4 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-3xl font-bold text-transparent">
-              Please Rotate Your Device
+              Await loading
             </h1>
 
             <p className="mb-8 text-lg opacity-90">
-              กรุณาเปลี่ยนหน้าจอเป็นแนวนอน
+              await loading
             </p>
 
             {/* Device rotation demo */}
