@@ -26,10 +26,13 @@ const OrientationPrompt: React.FC = () => {
 
     const checkOrientation = () => {
       const isPortrait = window.innerHeight > window.innerWidth;
-      
-      setShowPrompt(isPortrait);
-      if(!isPortrait){
+      const isIpad = /iPad/i.test(navigator.userAgent);
+
+      if(!isPortrait && isIpad){
+        
         router.push('/destop')
+      } else if (isIpad){
+        setShowPrompt(isPortrait && isIpad);
       }
     };
 
