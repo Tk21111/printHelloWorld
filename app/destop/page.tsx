@@ -76,7 +76,7 @@ export default function Intro() {
           
           
           <div 
-            className="h-fit w-full flex flex-col space-y-[15%] absolute bottom-[1%] z-20 scale-[92%]"
+            className="h-fit w-full flex flex-col space-y-[15%] absolute bottom-0 z-20 scale-[92%]"
             
             >
             <MeetTheTeam/>
@@ -187,7 +187,7 @@ const MemberSections = () => (
   <div className="flex flex-col h-full w-full space-y-[10%]" >
 
       
-      <div className="flex flex-row w-full aspect-[16/7]">
+      <div className="flex flex-row w-full aspect-[16/6]">
         <MemberParent />
         <MemberParentG />
       </div>
