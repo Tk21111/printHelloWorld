@@ -41,7 +41,7 @@ export default function Intro() {
 
   
   return (
-    <div className="h-[320vh] w-full relative">
+    <div className="h-[350vh] w-full relative">
       {/* Fixed Background */}
       <motion.div
         className="fixed bg-gradient-to-t from-blue-950 to-blue-800 h-screen w-full top-0 left-0 z-0"
@@ -73,21 +73,10 @@ export default function Intro() {
             scrollY={scrollYProgress}
           />
           {/* Member Sections */}
-          <div 
-            className="absolute top-[45%] w-full aspect-[16/9] z-30 bg-gray-800"
-            style={{
-              background: `radial-gradient(
-                      ellipse at center,
-                      rgba(0, 0, 0, 0) 40%,
-                      rgba(0, 0, 0, 0.8) 100%
-                    )`,            
-            }}
-            >
-            <TwoPath />
-          </div>
+          
           
           <div 
-            className="h-fit w-full flex flex-col space-y-[15%] absolute top-[58%] z-20"
+            className="h-fit w-full flex flex-col space-y-[15%] absolute bottom-[1%] z-20 scale-[92%]"
             
             >
             <MeetTheTeam/>
@@ -125,7 +114,9 @@ const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ sc
         <DarkOverlay opacity={opacityHero} />
         <Hero scrollY={scrollY} />
       </motion.div>
-     
+
+      
+      <TwoPathParent scrollY={scrollY}/>
 
       {/* Card Section
       <motion.div 
@@ -141,6 +132,27 @@ const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ sc
   </div>
 ));
 // Separated Components
+
+const TwoPathParent = ({ scrollY }: { scrollY: MotionValue }) => {
+  const opacity = useTransform(scrollY, [0.4, 0.45, 0.5, 0.7 , 0.8], [0,0.7, 1, 1,0]);
+  const y = useTransform(scrollY , [0.3,0.5, 0.65,0.75] , ["5%" , "0%" , "0%" , "-10%"])
+  return (
+    <motion.div
+      className="sticky top-[-10%] w-full aspect-[16/9] scale-[90%] z-30 bg-gray-800"
+      style={{
+        background: `radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0) 40%,
+          rgba(0, 0, 0, 0.8) 100%
+        )`,
+        opacity,
+        y
+      }}
+    >
+      <TwoPath />
+    </motion.div>
+  );
+};
 
 
 
@@ -1278,7 +1290,7 @@ import Light from "../comp/img/bg/light.webp"
 const TwoPath = () => {
 
   return (
-    <>
+    <div className="sticky h-full w-full left-1/2 -translation-x-1/2">
      
       <p className="absolute text-xl left-1/2 -translate-x-1/2 top-[10%]">TWO PATH</p>
       <Shimp posX="90%" posY="45%" />
@@ -1332,7 +1344,7 @@ const TwoPath = () => {
           </motion.div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 import GameCard from "./../comp/img/card/game.webp";
