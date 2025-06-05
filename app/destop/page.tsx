@@ -85,7 +85,7 @@ export default function Intro() {
           </div>
 
      
-          <footer className="absolute flex-row w-full h-[2%] p-5 text-sm justify-end">
+          <footer className="absolute flex-row w-full h-[2%] bottom-0 p-5 text-sm justify-end">
             <Contract/>
             <p>{"@ design and build by [[ Print('Hello World') ]]"}</p>
             <p>under construction</p>
