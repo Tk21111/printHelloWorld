@@ -138,7 +138,7 @@ const TwoPathParent = ({ scrollY }: { scrollY: MotionValue }) => {
   const y = useTransform(scrollY , [0.3,0.5, 0.65,0.75] , ["5%" , "0%" , "0%" , "-10%"])
   return (
     <motion.div
-      className="sticky top-[-10%] w-full aspect-[16/9] scale-[90%] z-30 bg-gray-800"
+      className="sticky top-0 w-full aspect-[16/9] scale-[90%] z-30 bg-gray-800"
       style={{
         background: `radial-gradient(
           ellipse at center,
