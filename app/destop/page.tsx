@@ -73,8 +73,8 @@ export default function Intro() {
             scrollY={scrollYProgress}
           />
           {/* Member Sections */}
-          
-          
+          <Moonn/>
+          <Prop1/>
           <div 
             className="h-fit w-full flex flex-col space-y-[15%] absolute bottom-0 z-20 scale-[92%]"
             
@@ -83,6 +83,8 @@ export default function Intro() {
             <MemberSections />
             
           </div>
+
+
 
      
           <footer className="absolute flex-row w-full h-[2%] bottom-0 p-5 text-sm justify-end">
@@ -114,9 +116,13 @@ const ScrollingContent = forwardRef<HTMLDivElement, ScrollingContentProps>(({ sc
         <DarkOverlay opacity={opacityHero} />
         <Hero scrollY={scrollY} />
       </motion.div>
-
       
+      {/* <motion.div className="sticky top-0 bg-black h-full w-full z-0">
+
+      </motion.div> */}
+      <Roket scrollY={scrollY}/>
       <TwoPathParent scrollY={scrollY}/>
+      <SaturnCom/>
 
       {/* Card Section
       <motion.div 
@@ -138,7 +144,7 @@ const TwoPathParent = ({ scrollY }: { scrollY: MotionValue }) => {
   const y = useTransform(scrollY , [0.3,0.5, 0.65,0.75] , ["5%" , "0%" , "0%" , "-10%"])
   return (
     <motion.div
-      className="sticky top-0 w-full aspect-[16/9] scale-[90%] z-30 bg-gray-800"
+      className="sticky top-0 w-full aspect-[16/9] scale-[90%] z-50 bg-gray-800"
       style={{
         background: `radial-gradient(
           ellipse at center,
@@ -149,6 +155,7 @@ const TwoPathParent = ({ scrollY }: { scrollY: MotionValue }) => {
         y
       }}
     >
+      
       <TwoPath />
     </motion.div>
   );
@@ -1181,6 +1188,135 @@ const MeetTheTeam = () => {
 //     </div>
 //   )
 // }
+
+import Rocket from "../comp/img/front_page/rocket.webp";
+const Roket = ({scrollY} : {scrollY : MotionValue}) => {
+  const translateY = useTransform(scrollY, [0,0.4, 1],  ["0%", "10%", "50%"]);
+  const opacity = useTransform(scrollY , [ 0,0.1,0.9,1] , [0,1,1,0])
+  return (
+    <motion.div 
+      className="sticky left-1/2 w-[10%] -translate-x-1/2 z-50" 
+      style={{ top : translateY , opacity}}>
+      <motion.div className="absolute top-1/2  w-full aspect-square rotate-90">
+        <Image
+          src={Rocket}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+import Saturn from "../comp/img/front_page/saturn.webp"
+import Saturn1 from "../comp/img/front_page/saturn1.webp"
+import Saturn2 from "../comp/img/front_page/saturn2.webp"
+const SaturnCom = () => {
+  return (
+    <div className="absolute top-[55%] left-[35%] w-full aspect-[21/9] -translate-x-1/2">
+      <motion.div className="absolute top-1/2 left-1/2 w-[15%] aspect-square -translate-x-1/2 ">
+        <Image
+          src={Saturn}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+      <motion.div className="absolute top-[47%] left-[50%] w-[20%] aspect-square -translate-x-1/2 ">
+        <Image
+          src={Saturn1}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+      <motion.div className="absolute top-[65%] left-[44%] w-[5%] aspect-square -translate-x-1/2 ">
+        <Image
+          src={Saturn2}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+      <motion.div className="absolute top-[62.5%] left-[48%] w-[4.8%] aspect-square -translate-x-1/2 ">
+        <Image
+          src={Saturn2}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+      <motion.div className="absolute top-[60%] left-[52%] w-[4.6%] aspect-square -translate-x-1/2 ">
+        <Image
+          src={Saturn2}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+      <motion.div className="absolute top-[54.5%] left-[56%] w-[4.2%] aspect-square -translate-x-1/2 ">
+        <Image
+          src={Saturn2}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+    </div>
+  )
+}
+
+
+
+import Propp from "../comp/img/front_page/prop.webp";
+const Prop1 = () => {
+  return (
+    <div className="absolute top-1/2 left-0 w-full h-fit">
+      <motion.div className="absolute top-1/2 left-0 w-full h-[70px]">
+        <Image
+          src={Propp}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+    </div>
+  )
+}
+
+import HalfMoon from "../comp/img/front_page/moon.webp"
+import HalfMoon1 from "../comp/img/front_page/moon_1.webp"
+const Moonn = () => {
+  return (
+    <div className="absolute top-[40%] left-[85%] w-full aspect-[21/9] -translate-x-1/2">
+      <motion.div className="absolute top-1/2 left-1/2 w-[15%] aspect-square -translate-x-1/2 ">
+        <Image
+          src={HalfMoon}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+      <motion.div className="absolute top-[75%] left-[48%] w-[4%] aspect-[9/16] -translate-x-1/2">
+        <Image
+          src={HalfMoon1}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+      <motion.div className="absolute top-[72%] left-[50%] w-[4%] aspect-[9/16] -translate-x-1/2">
+        <Image
+          src={HalfMoon1}
+          fill
+          className="object-contain"
+          alt="rocket"
+        />
+      </motion.div>
+    </div>
+  )
+}
 import Js from "../comp/img/techstack/js.webp"
 import Css from "../comp/img/techstack/css.webp"
 import Html from "../comp/img/techstack/html.webp"
@@ -1296,12 +1432,12 @@ const TwoPath = () => {
       <Shimp posX="90%" posY="45%" />
       <Hex posX="10%" posY="70%" rotate="0deg"/>
       {/* Hand Image */}
-      <div className="absolute w-[10%] aspect-square top-[34%] left-1/2 -translate-x-1/2 z-20">
+      <div className="absolute w-[10%] aspect-square top-[34%] left-1/2 -translate-x-1/2">
         <Image src={Hand} alt="hand" fill className="object-contain" />
       </div>
 
       {/* Light Image */}
-      <div className="absolute w-[15%] aspect-square top-[27%] left-1/2 -translate-x-1/2 z-20">
+      <div className="absolute w-[15%] aspect-square top-[27%] left-1/2 -translate-x-1/2">
         <Image src={Light} alt="light" fill className="object-contain" />
       </div>
 
@@ -1370,7 +1506,7 @@ const TwoCardSide = () => {
           opacity: 1,
           scale: 1.02, 
         }}
-        className="relative z-10"
+        className="relative"
         style={{ 
           transformStyle: "preserve-3d",
           transformOrigin: "center center"
@@ -1417,7 +1553,7 @@ const TwoCardSide = () => {
           opacity: 1,
           scale: 1.02, 
         }}
-        className="relative z-10"
+        className="relative"
         style={{ 
           transformStyle: "preserve-3d",
           transformOrigin: "center center"
