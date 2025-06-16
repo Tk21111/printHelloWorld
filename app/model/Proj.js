@@ -14,7 +14,11 @@ const ProjShcma = new mongoose.Schema({
     },
     dateEnd : {
         type : Date,
-        default : new Date(Date.parse(Date.now().getMonth() + 4))
+        default: (() => {
+            const date = new Date();
+            date.setMonth(date.getMonth() + 4);
+            return date;
+        })()
     },
     description : {
         type : String

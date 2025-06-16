@@ -1,0 +1,4 @@
+{
+    "techStack" : ["html" , "css" , "javaScirpt" , "C#" , "C" , "C++" , "python" , "java" , "lua" , "rust" , "go" , "brainFuck"],
+    "toolStack" : ["vs code" , "github"]
+}

@@ -7,17 +7,26 @@ export async function POST(req) {
     
     await connectToDatabase();
     try {
-        const { user, pwd , email , name , surname } = await req.json();
-        if (!user || !pwd || !email || !name || !surname) return NextResponse.json({ status: 400 });
+        const { user, pwd , email , name , surname ,  nickname , techStack , toolStack , projRefType } = await req.json();
+        if (!user || !pwd || !email || !name || !surname || !nickname ) return NextResponse.json({ status: 400 });
 
         const duplicate = await User.findOne({ username: user }).lean().exec();
         if (duplicate) return NextResponse.json({ status: 409 }); // Conflict
 
         const hashpwd = await bcrypt.hash(pwd, 10);
 
+        const tmp ={}
+        if(techStack) tmp.techStack = techStack;
+        if(toolStack) tmp.toolStack = toolStack;
+        if(projRefType) tmp.projRefType = projRefType;
+
         await User.create({
             username: user,
             password: hashpwd,
+            email,
+            name,
+            surname,
+            ...tmp
         });
 
         return NextResponse.json({ status: 200 });

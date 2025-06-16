@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
     toolStack : {
         type : [String]
     },
-    ProjRefType : {
+    projRefType : {
         type : String,
         required : true
     },
