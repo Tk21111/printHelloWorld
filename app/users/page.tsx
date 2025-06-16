@@ -4,12 +4,10 @@ import { useSelector } from "react-redux";
 import { selectRoles } from "../api/redux/authSlice";
 import { useRouter } from "next/navigation";
 
-interface Proj{
 
-}
 export default function Users() {
 
-    const [data , setData] = useState<Proj[]>();
+    const [data , setData] = useState();
     const navigate = useRouter()
     const roles = useSelector(selectRoles)
     if(!roles?.includes("Admin")){
@@ -25,6 +23,8 @@ export default function Users() {
 
         fetchProjs();
     },[])
+
+    console.log(data)
 
 
     return (

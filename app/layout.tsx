@@ -86,7 +86,7 @@ export const metadata: Metadata = {
   referrer: "origin-when-cross-origin",
 };
 
-import OrientationPrompt from "./comp/OrientationPrompt";
+// import OrientationPrompt from "./comp/OrientationPrompt";
 import { Analytics } from "@vercel/analytics/next";
 import AuthProvider from "./utils/AuthWrapper";
 import Providers from "./utils/Provider";

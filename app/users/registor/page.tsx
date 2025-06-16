@@ -18,7 +18,7 @@ export default function Register() {
     const [techStack, setTechStack] = useState<string[]>([]);
     const [toolStack, setToolStack] = useState<string[]>([]);
 
-    const [projPerType , setProjPerType] = useState<String>();
+    const [projPerType , setProjPerType] = useState<string>();
 
     const router = useRouter();
 
@@ -41,7 +41,8 @@ export default function Register() {
                     surname,
                     nickname,
                     techStack,
-                    toolStack
+                    toolStack,
+                    projPerType
                 }),
             });
 
@@ -132,7 +133,7 @@ export default function Register() {
                         <div className="flex flex-row items-center space-x-2" key={`tech-${i}`}>
                             <input
                                 type="checkbox"
-                                onChange={(e) => handleAddArr(val, "tech")}
+                                onChange={() => handleAddArr(val, "tech")}
                                 value={val}
                                 checked={techStack.includes(val)}
                             />
@@ -147,7 +148,7 @@ export default function Register() {
                         <div className="flex flex-row items-center space-x-2" key={`tool-${i}`}>
                             <input
                                 type="checkbox"
-                                onChange={(e) => handleAddArr(val, "tool")}
+                                onChange={() => handleAddArr(val, "tool")}
                                 value={val}
                                 checked={toolStack.includes(val)}
                             />
@@ -156,7 +157,20 @@ export default function Register() {
                     ))}
                 </div>
 
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col border rounded bg-white h-[20vh]">
+                    <p className="text-2xl text-black">{"Choose yours path : " + projPerType}</p>
+                    <div className="flex flex-row justify-around border rounded bg-white text-black mt-[5vh]"> 
+                        <button className={`border rounded ${ projPerType === "web" ? "bg-yellow-300" : "bg-gray-500"} text-xl scale-125 hover:scale-150 transition-all duration-100 p-2`} onClickCapture={(e) => {e.preventDefault();setProjPerType("web");}}>
+                            web
+                        </button>
+                        <button className={`border rounded ${ projPerType === "game" ? "bg-yellow-300" : "bg-gray-500"} text-xl scale-125 hover:scale-150 transition-all duration-100 p-2`} onClickCapture={(e) => {e.preventDefault();setProjPerType("game");}}>
+                            game
+                        </button>
+                    </div>
+                </div>
+                
+
+                <div className="flex justify-between items-center mb-[5vh]">
                     {name && surname && email && username && pwd ? (
                         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
                             Submit

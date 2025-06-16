@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 
 //logout
-export async function GET(req) {
+export async function GET() {
     await connectToDatabase();
 
     const users = await User.find({

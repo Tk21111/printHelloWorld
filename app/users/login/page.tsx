@@ -5,9 +5,9 @@ import { useState } from "react";
 
 export default function Login() {
 
-    const [username , setUsername] = useState<String>()
-    const [pwd , setPwd ] = useState<String>()
-    const [show , setShow] = useState<Boolean>(false)
+    const [username , setUsername] = useState<string>()
+    const [pwd , setPwd ] = useState<string>()
+    const [show , setShow] = useState<boolean>(false)
 
     const navigater = useRouter();
 
