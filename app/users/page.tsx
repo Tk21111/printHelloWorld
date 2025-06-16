@@ -30,6 +30,7 @@ export default function Login() {
     return (
         <div className="flex h-screen w-full place-items-center justify-center ">
             <form onSubmit={sendLogin} className="space-y-2 ">
+                <p className="text-2xl">Login</p>
                 <input 
                     type="text"
                     onChange={(e)=> setUsername(e.target.value)}
