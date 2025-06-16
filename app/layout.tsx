@@ -88,6 +88,8 @@ export const metadata: Metadata = {
 
 import OrientationPrompt from "./comp/OrientationPrompt";
 import { Analytics } from "@vercel/analytics/next";
+import AuthProvider from "./utils/AuthWrapper";
+import Providers from "./utils/Provider";
 
 export default function RootLayout({
   children,
@@ -100,8 +102,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Analytics/>
-        <OrientationPrompt />
-        {children}
+        <AuthProvider>
+          {/* <OrientationPrompt /> */}
+          <Providers>{children}</Providers>
+        </AuthProvider>
       </body>
     </html>
   );

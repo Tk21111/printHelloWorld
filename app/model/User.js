@@ -11,7 +11,40 @@ const userSchema = new mongoose.Schema({
     },
     roles: {
         type : [String],
+        //User , Ta , Admin
         default : ["User"]
+    },
+    name : {
+        type : String,
+        required : true,
+    },
+    surname : {
+        type : String,
+        required : true,
+    },
+    email : {
+        type : String,
+        required : true,
+    },
+    proj : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Proj'
+    },
+    checkArr : {
+        type : Object
+    },
+    techStack : {
+        type : [String]
+    },
+    toolStack : {
+        type : [String]
+    },
+    ProjRefType : {
+        type : String,
+        required : true
+    },
+    decription : {
+        type : String
     }
 
 })
