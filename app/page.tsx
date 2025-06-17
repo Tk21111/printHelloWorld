@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import OrientationPrompt from "./comp/OrientationPrompt";
 
 
 const Logo = ()=> {
@@ -9,10 +10,12 @@ const Logo = ()=> {
   
   return (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full aspect-[16/9] scale-[49%] max-w-6xl px-4">
+                   <OrientationPrompt />
+         
          <div 
           className="h-full w-full"
     >
-      <button onClickCapture={()=> {router.push("/users/registor")}} className="absoute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[20vh] w-[20vw] text-3xl bg-yellow-300">to Register</button>
+      <button onClickCapture={()=> {router.push("/users/registor")}} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[20vh] w-[20vw] text-3xl bg-yellow-300">to Register</button>
       <div className="absolute top-[51%] left-[-0.5%]  w-[4%] aspect-square -translate-x-1/2 -translate-y-1/2">
           <Image
             src="/img/logo/dot.webp"
