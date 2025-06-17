@@ -26,3 +26,10 @@ body {
   background: var(--background);
   font-family: var(--font-main);
 }
+
+input {
+  background-color: transparent;
+  border: 2px solid #ededed;
+  border-radius: 10px;
+  
+}

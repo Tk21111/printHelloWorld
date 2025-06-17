@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Format from "../../model/format.json";
 
+import { CardRightDeco } from "@/app/destop/page";
+
 export default function Register() {
     const [username, setUsername] = useState<string>();
     const [pwd, setPwd] = useState<string>();
@@ -18,7 +20,9 @@ export default function Register() {
     const [techStack, setTechStack] = useState<string[]>([]);
     const [toolStack, setToolStack] = useState<string[]>([]);
 
-    const [projPerType , setProjPerType] = useState<string>();
+    const [addTechStack , setAddTechStack] = useState<string[]>([]);
+
+    const [projPerType , setProjPerType] = useState<string>("");
 
     const router = useRouter();
 
@@ -65,9 +69,15 @@ export default function Register() {
     };
 
     return (
-        <div className="flex h-full w-full place-items-center justify-center lg:p-3 pl-[7%] pt-[3%] pr-[7%]">
-        <div className="flex h-full lg:w-[30%] w-full place-items-center justify-center justify-self-center">
-            <form onSubmit={(e) => { e.preventDefault(); sendLogin(); }} className="space-y-4">
+        <div className="flex h-full w-full place-items-center justify-center lg:p-3 pl-[7%] pt-[3%] pr-[7%]"
+            style={{
+                backgroundImage: "url(/img/bg/bg.webp)",
+                backgroundRepeat: "repeat",
+                backgroundSize: "cover",
+            }}
+        >
+        <div className="relative h-full lg:w-[30%] w-full place-items-center justify-center justify-self-center border-2 rounded p-[1%] shadow-2xl shadow-yellow-100 m-[2%]">
+            <form onSubmit={(e) => { e.preventDefault(); sendLogin(); }} className="space-y-4 z-10 relative">
                 <p className="text-2xl font-bold">Register</p>
 
                 <input
@@ -127,7 +137,7 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="p-2 border rounded bg-white text-black">
+                <div className="p-2 border rounded">
                     <p className="font-semibold">Tech Stack</p>
                     {Format.techStack.map((val, i) => (
                         <div className="flex flex-row items-center space-x-2" key={`tech-${i}`}>
@@ -137,12 +147,12 @@ export default function Register() {
                                 value={val}
                                 checked={techStack.includes(val)}
                             />
-                            <label>{val}</label>
+                            <label className=" opacity-60">{val}</label>
                         </div>
                     ))}
                 </div>
 
-                <div className="p-2 border rounded bg-white text-black">
+                <div className="p-2 border rounded">
                     <p className="font-semibold">Tool Stack</p>
                     {Format.toolStack?.map((val, i) => (
                         <div className="flex flex-row items-center space-x-2" key={`tool-${i}`}>
@@ -152,18 +162,17 @@ export default function Register() {
                                 value={val}
                                 checked={toolStack.includes(val)}
                             />
-                            <label>{val}</label>
+                            <label className="opacity-60">{val}</label>
                         </div>
                     ))}
                 </div>
-
-                <div className="flex flex-col border rounded bg-white h-[20vh]">
-                    <p className="text-2xl text-black">{"Choose yours path : " + projPerType}</p>
-                    <div className="flex flex-row justify-around border rounded bg-white text-black mt-[5vh]"> 
-                        <button className={`border rounded ${ projPerType === "web" ? "bg-yellow-300" : "bg-gray-500"} text-xl scale-125 hover:scale-150 transition-all duration-100 p-2`} onClickCapture={(e) => {e.preventDefault();setProjPerType("web");}}>
+                <div className="flex flex-col border rounded h-[20vh] p-2">
+                    <p className="text-xl">{"Choose yours path : " + projPerType}</p>
+                    <div className="flex flex-row justify-around rounded mt-[5vh]"> 
+                        <button className={`border-2 rounded ${ projPerType === "web" ? "bg-blue-800 text-white" : ""} text-sm scale-125 hover:scale-150 transition-all duration-100 p-2`} onClickCapture={(e) => {e.preventDefault();setProjPerType("web");}}>
                             web
                         </button>
-                        <button className={`border rounded ${ projPerType === "game" ? "bg-yellow-300" : "bg-gray-500"} text-xl scale-125 hover:scale-150 transition-all duration-100 p-2`} onClickCapture={(e) => {e.preventDefault();setProjPerType("game");}}>
+                        <button className={`border-2 rounded ${ projPerType === "game" ? "bg-blue-800 text-white" : ""} text-sm scale-125 hover:scale-150 transition-all duration-100 p-2`} onClickCapture={(e) => {e.preventDefault();setProjPerType("game");}}>
                             game
                         </button>
                     </div>
@@ -188,6 +197,8 @@ export default function Register() {
                     </button>
                 </div>
             </form>
+        <div className="absolute inset-0 pointer-events-none rounded-xl z-0 backdrop-blur-lg bg-white/10 border border-white/20 shadow-xl before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-br before:from-white/10 before:to-white/5 before:opacity-60"></div>
+
         </div>
           </div>
     );
