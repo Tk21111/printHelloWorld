@@ -8,7 +8,8 @@ export async function POST(req) {
     await connectToDatabase();
     try {
         const { user, pwd , email , name , surname ,  nickname , techStack , toolStack , projRefType } = await req.json();
-        if (!user || !pwd || !email || !name || !surname || !nickname ) return NextResponse.json({ status: 400 });
+
+        if (!user || !pwd || !email || !name || !surname || !nickname  || !projRefType) return NextResponse.json({ status: 400 });
 
         const duplicate = await User.findOne({ username: user }).lean().exec();
         if (duplicate) return NextResponse.json({ status: 409 }); // Conflict
@@ -18,7 +19,6 @@ export async function POST(req) {
         const tmp ={}
         if(techStack) tmp.techStack = techStack;
         if(toolStack) tmp.toolStack = toolStack;
-        if(projRefType) tmp.projRefType = projRefType;
 
         await User.create({
             username: user,
@@ -26,12 +26,13 @@ export async function POST(req) {
             email,
             name,
             surname,
-            ...tmp
+            ...tmp,
+            projRefType
         });
 
         return NextResponse.json({ status: 200 });
     } catch (err) {
-        console.error("Error creating user:", err);
+        console.log("Error creating user:", err);
         return NextResponse.json({ status: 500, error: err.message });
     }
 }

@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Format from "../../model/format.json";
 
-import { CardRightDeco } from "@/app/destop/page";
-
 export default function Register() {
     const [username, setUsername] = useState<string>();
     const [pwd, setPwd] = useState<string>();
@@ -20,9 +18,13 @@ export default function Register() {
     const [techStack, setTechStack] = useState<string[]>([]);
     const [toolStack, setToolStack] = useState<string[]>([]);
 
-    const [addTechStack , setAddTechStack] = useState<string[]>([]);
+    const [addTechStack , setAddTechStack] = useState<string>();
+    const [addToolStack , setAddToolStack] = useState<string>();
+
+    const [err , setErr] = useState<string>();
 
     const [projPerType , setProjPerType] = useState<string>("");
+    const [sent , setSent] = useState<boolean>(false);
 
     const router = useRouter();
 
@@ -31,8 +33,10 @@ export default function Register() {
             return;
         }
 
+        setSent(true)
+
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/create`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -44,13 +48,34 @@ export default function Register() {
                     name,
                     surname,
                     nickname,
-                    techStack,
-                    toolStack,
-                    projPerType
+                    techStack : [...techStack ].concat(addTechStack?.split(",") || []),
+                    toolStack : [...toolStack ].concat(addToolStack?.split(",") || []),
+                    projRefType : projPerType
                 }),
             });
 
-            router.push("/"); // Redirect after success
+            const result = await res.json()
+            if(result.status === 200){
+                // router.push("/"); 
+                setName("");
+                setEmail("");
+                setSurname("");
+                setUsername("");
+                setAddTechStack("");
+                setAddToolStack("");
+                setTechStack([]);
+                setToolStack([]);
+                setProjPerType("");
+                setNickname("");
+                setPwd("");
+                setPwdConf("");
+            }else if (result.status === 400){
+                setErr("bad req")
+            }else if (result.status === 409){
+                setErr("conflict")
+            } else {
+                setErr("something wrong")
+            }
         } catch (err) {
             console.log("login error", err);
         }
@@ -76,15 +101,16 @@ export default function Register() {
                 backgroundSize: "cover",
             }}
         >
-        <div className="relative h-full lg:w-[30%] w-full place-items-center justify-center justify-self-center border-2 rounded p-[1%] shadow-2xl shadow-yellow-100 m-[2%]">
+        <div className="relative h-full lg:w-[30%] w-full place-items-center justify-center justify-self-center p-[1%] shadow-2xl shadow-white  m-[2%]">
             <form onSubmit={(e) => { e.preventDefault(); sendLogin(); }} className="space-y-4 z-10 relative">
+                <p className="text-red-600 text-sm">{err ? err : ""}</p>
                 <p className="text-2xl font-bold">Register</p>
 
                 <input
                     type="text"
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Username"
-                    className="text-black p-2 w-full"
+                    className="p-2 w-full"
                 />
 
                 <div className="flex flex-row items-center space-x-2">
@@ -92,7 +118,7 @@ export default function Register() {
                         type={show ? "text" : "password"}
                         placeholder="Password"
                         onChange={(e) => setPwd(e.target.value)}
-                        className="text-black p-2 w-full"
+                        className=" p-2 w-full"
                     />
                     <input
                         type="checkbox"
@@ -105,7 +131,7 @@ export default function Register() {
                     type={show ? "text" : "password"}
                     placeholder="Confirm Password"
                     onChange={(e) => setPwdConf(e.target.value)}
-                    className="text-black p-2 w-full"
+                    className=" p-2 w-full"
                 />
                 {pwd !== pwdConf && <p className="text-red-600 text-sm">Passwords do not match</p>}
 
@@ -115,25 +141,25 @@ export default function Register() {
                         type="text"
                         placeholder="Email"
                         onChange={(e) => setEmail(e.target.value)}
-                        className="text-black p-2 w-full"
+                        className=" p-2 w-full"
                     />
                     <input
                         type="text"
                         placeholder="Name"
                         onChange={(e) => setName(e.target.value)}
-                        className="text-black p-2 w-full"
+                        className=" p-2 w-full"
                     />
                     <input
                         type="text"
                         placeholder="Surname"
                         onChange={(e) => setSurname(e.target.value)}
-                        className="text-black p-2 w-full"
+                        className=" p-2 w-full"
                     />
                     <input
                         type="text"
                         placeholder="Nickname"
                         onChange={(e) => setNickname(e.target.value)}
-                        className="text-black p-2 w-full"
+                        className=" p-2 w-full"
                     />
                 </div>
 
@@ -150,6 +176,13 @@ export default function Register() {
                             <label className=" opacity-60">{val}</label>
                         </div>
                     ))}
+                    
+                    <input
+                        type="text"
+                        onChange={(e) => setAddTechStack(e.target.value)}
+                        placeholder="more.. ex. c# , C++"
+                        className="p-2 ,m-1 text-sm"
+                    ></input>
                 </div>
 
                 <div className="p-2 border rounded">
@@ -165,6 +198,12 @@ export default function Register() {
                             <label className="opacity-60">{val}</label>
                         </div>
                     ))}
+                    <input
+                        type="text"
+                        onChange={(e) => setAddToolStack(e.target.value)}
+                        placeholder="more.. ex. blender , asdad text-sm"
+                        className="p-2 ,m-1"
+                    ></input>
                 </div>
                 <div className="flex flex-col border rounded h-[20vh] p-2">
                     <p className="text-xl">{"Choose yours path : " + projPerType}</p>
@@ -180,8 +219,8 @@ export default function Register() {
                 
 
                 <div className="flex justify-between items-center mb-[5vh]">
-                    {name && surname && email && username && pwd ? (
-                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+                    {name && surname && email && username && pwd && projPerType && !sent ? (
+                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded" >
                             Submit
                         </button>
                     ) : (
