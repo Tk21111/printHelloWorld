@@ -103,7 +103,6 @@ export default function RootLayout({
       >
         <Analytics/>
         <AuthProvider>
-          {/* <OrientationPrompt /> */}
           <Providers>{children}</Providers>
         </AuthProvider>
       </body>

@@ -1125,7 +1125,6 @@ const CardRightDeco: React.FC = () => {
   );
 };
 
-export { CardRightDeco};
 
 import NavBarTopImg from "../comp/img/front_page/nav.webp"
 const NavBarTop = () => {
