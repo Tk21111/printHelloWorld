@@ -15,7 +15,6 @@ export default function Login() {
 
         try {
 
-            console.log(username)
             const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users`, {
                 method: "POST",
                 headers: {
@@ -24,6 +23,7 @@ export default function Login() {
                 body: JSON.stringify({ user: username, pwd : pwd }),
             }); 
             const data = await res.json();
+            console.log(data);
             if(data.status === 200){
                 navigater.push("/users")
             }
@@ -40,6 +40,7 @@ export default function Login() {
                 <input 
                     type="text"
                     onChange={(e)=> setUsername(e.target.value)}
+                    value={username}
                     placeholder="username..."
                     className="text-white p-1"
                 ></input>
@@ -48,6 +49,7 @@ export default function Login() {
                     type={ show ? "text" : "password"}
                         placeholder="passwrd..."
                         onChange={(e) => setPwd(e.target.value)}
+                        value={pwd}
                         className="text-white p-1"
                     ></input>
                     <input

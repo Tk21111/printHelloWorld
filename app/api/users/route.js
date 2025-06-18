@@ -11,7 +11,6 @@ export async function POST(req) {
     // Parse JSON request body
     const { user, pwd } = await req.json();
 
-    console.log(user , pwd)
     if (!user || !pwd) return NextResponse.json({ status: 400 });
 
     const found = await User.findOne({ username: user }).exec();
@@ -37,7 +36,8 @@ export async function POST(req) {
             accessToken,
             refreshToken,
             userId: found._id,
-            roles : found.roles || null
+            roles : found.roles || null,
+            status : 200
         });
     } else {
         return NextResponse.json({ status: 401 });
