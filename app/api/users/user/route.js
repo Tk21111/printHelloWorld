@@ -4,7 +4,7 @@ import { connectToDatabase } from "../../../lib/mongoose";
 import { NextResponse } from "next/server";
 
 
-//logout
+//get user
 export async function GET() {
     await connectToDatabase();
 

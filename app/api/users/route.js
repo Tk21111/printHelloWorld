@@ -10,6 +10,8 @@ export async function POST(req) {
 
     // Parse JSON request body
     const { user, pwd } = await req.json();
+
+    console.log(user , pwd)
     if (!user || !pwd) return NextResponse.json({ status: 400 });
 
     const found = await User.findOne({ username: user }).exec();
