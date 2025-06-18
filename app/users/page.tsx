@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 // import { useSelector } from "react-redux";
 // import { selectRoles } from "../api/redux/authSlice";
 
@@ -13,7 +13,7 @@ interface User {
     surname: string;
     email: string;
     proj?: string;
-    checkArr?: Record<string, any>;
+    checkArr?: Record<string, undefined>;
     techStack?: string[];
     toolStack?: string[];
     projRefType: string;
@@ -22,7 +22,7 @@ interface User {
 
 export default function UsersPage() {
     const [data, setData] = useState<User[] | null>(null);
-    const router = useRouter();
+    // const router = useRouter();
 
     // const roles = useSelector(selectRoles)
     // if (!roles?.includes("Admin")) {
